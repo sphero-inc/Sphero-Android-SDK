@@ -1,0 +1,7 @@
+#Specific files
+.DS_STORE
+
+#Dirs
+.idea/
+out/
+gen/

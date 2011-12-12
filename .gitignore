@@ -1,0 +1,6 @@
+# Specific files
+.DS_store
+
+# dirs
+.idea/*
+out/*
