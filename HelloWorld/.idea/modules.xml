@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/HelloWorld.iml" filepath="$PROJECT_DIR$/HelloWorld.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../MOBILE-ANDROID-ROBOTLIBRARY/RobotLibrary/RobotLibrary.iml" filepath="$PROJECT_DIR$/../../MOBILE-ANDROID-ROBOTLIBRARY/RobotLibrary/RobotLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../MOBILE-ANDROID-ROBOTLIBRARY/RobotUILibrary/RobotUILibrary.iml" filepath="$PROJECT_DIR$/../../MOBILE-ANDROID-ROBOTLIBRARY/RobotUILibrary/RobotUILibrary.iml" />
     </modules>
   </component>
 </project>
