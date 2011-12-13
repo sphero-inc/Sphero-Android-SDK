@@ -2,5 +2,7 @@
 .DS_store
 
 # dirs
-.idea/*
-out/*
+.idea/
+out/
+
+ButtonDrive/local.properties
