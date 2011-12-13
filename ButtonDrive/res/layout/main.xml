@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ff888888"
+    >
+
+    <Button
+        android:id="@+id/stop_button"
+        style="@style/ControlButton"
+        android:text="STOP"
+        android:layout_centerInParent="true"
+        android:onClick="onStopClick"
+        />
+
+    <Button
+        android:id="@+id/zero_button"
+        style="@style/ControlButton"
+        android:text="0˚"
+        android:layout_above="@id/stop_button"
+        android:layout_alignLeft="@id/stop_button"
+        android:onClick="onControlClick"
+        />
+
+    <Button
+        android:id="@+id/ninety_button"
+        style="@style/ControlButton"
+        android:text="90˚"
+        android:layout_toRightOf="@id/stop_button"
+        android:layout_alignTop="@id/stop_button"
+        android:onClick="onControlClick"
+        />
+    
+    <Button
+        android:id="@+id/one_eighty_button"
+        style="@style/ControlButton"
+        android:text="180˚"
+        android:layout_below="@id/stop_button"
+        android:layout_alignLeft="@id/stop_button"
+        android:onClick="onControlClick"
+        />
+
+    <Button
+        android:id="@+id/two_seventy_button"
+        style="@style/ControlButton"
+        android:text="270˚"
+        android:layout_toLeftOf="@id/stop_button"
+        android:layout_alignTop="@id/stop_button"
+        android:onClick="onControlClick"
+        />
+
+</RelativeLayout>
+
