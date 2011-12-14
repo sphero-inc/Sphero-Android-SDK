@@ -1,0 +1,6 @@
+# Specific files
+local.properties
+
+# Dirs
+.idea/
+gen/

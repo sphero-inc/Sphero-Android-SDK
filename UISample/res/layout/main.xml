@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    To use the JoystickView's extra attributes, be sure to include a namespace for your project. Note the:
+
+        xmlns:app="http://schemas.android.com/apk/res/orbotix.uisample"
+
+    This creates a new namespace, "app", which allows the use of the JoystickView's "puck_radius" attribute.
+-->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/orbotix.uisample"
+
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ff888888"
+    >
+
+    <Button
+        android:id="@+id/sleep_button"
+        style="@style/ControlButton"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:text="Sleep"
+        android:onClick="onSleepClick"
+        />
+
+    <Button
+        android:id="@+id/color_button"
+        style="@style/ControlButton"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:text="Color"
+        android:onClick="onColorClick"
+        />
+
+    <orbotix.robot.widgets.joystick.JoystickView
+        android:id="@+id/joystick"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        app:puck_radius="40dp"
+        app:edge_overlap="20dp"
+        />
+
+    <orbotix.robot.widgets.SlideToSleepView
+        android:id="@+id/slide_to_sleep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"
+        />
+
+    <orbotix.robot.widgets.calibration.CalibrationView
+        android:id="@+id/calibration"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        />
+
+</RelativeLayout>
+
