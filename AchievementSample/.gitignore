@@ -1,0 +1,10 @@
+#Specific files
+*.properties
+proguard.cfg
+build.xml
+*.iml
+
+#Dirs
+gen/
+out/
+.idea/

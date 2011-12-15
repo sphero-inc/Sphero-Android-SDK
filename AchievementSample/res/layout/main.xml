@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#888"
+    >
+
+    <Button
+        android:id="@+id/red_button"
+        style="@style/AchievementButton"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:text="RED"
+        android:textColor="#f00"
+        android:onClick="onRedClick"
+        />
+
+    <Button
+        android:id="@+id/green_button"
+        style="@style/AchievementButton"
+        android:layout_below="@id/red_button"
+        android:text="GREEN"
+        android:textColor="#080"
+        android:onClick="onGreenClick"
+        />
+
+    <Button
+        android:id="@+id/blue_button"
+        style="@style/AchievementButton"
+        android:layout_below="@id/green_button"
+        android:text="BLUE"
+        android:textColor="#00f"
+        android:onClick="onBlueClick"
+        />
+
+    <Button
+        android:id="@+id/sphero_world_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/blue_button"
+        android:layout_margin="10dp"
+        android:text="SpheroWorld"
+        android:onClick="onSpheroWorldClick"
+        />
+
+</RelativeLayout>
+
