@@ -1,6 +1,6 @@
 #HelloWorld
 
-This sample code demonstrates how to connect to a Sphero and blink it's RGB LED blue. Also, the sample code is the bases for the application created in the Quick Start Guide. 
+This sample code demonstrates how to connect to a Sphero and blink it's RGB LED blue. Also, the code sample is the bases for the application created in the Quick Start Guide. 
 
 The connection is made by the StartupActivity which is include in the RobotUILibrary. The StartupActivity is launch in the HelloWorldActivity's ``onStart()`` method, and the `onActivityResult()` is used to capture a Robot object that is used to reference the connected Sphero. The robot's unique identifier is returned in the StartupActivity's results Intent data, and is retrieved with the following code line.
 
@@ -21,6 +21,11 @@ Where `mRobot` is the reference to the Robot object that the API uses determine 
                 RGBLEDOutputCommand.sendCommand(mRobot, 0, 0, 255);
 
 It finally uses a `Handler` object to call it self after a 1 second delayed with the lit boolean parameter toggled, thus toggling the blue LED component on and off.
+
+When the application closes the connection is closed by the following line in the `onStop()` method.
+
+        RobotProvider.getDefaultProvider().removeAllControls();
+ 
 
 
 
