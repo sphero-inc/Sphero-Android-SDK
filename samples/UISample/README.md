@@ -3,7 +3,8 @@
 
 The ColorPickerActivity presents a color wheel and a brightness bar along with a couple preview windows and an RGB readout. This is a very easy way for a user to change the color of their Sphero™. 
 
-![Color Picker](https://github.com/OrbotixInc/MOBILE-ANDROID-SDK/blob/master/samples/UISample/colorPicker.png)
+![Color Picker]("https://github.com/OrbotixInc/MOBILE-ANDROID-SDK/blob/master/samples/UISample/colorPicker.png)
+
 
 The color changes initiated by the user are then broadcast to provide access to anything registered to receive them. 
 
@@ -119,14 +120,14 @@ The `JoystickView` is also meant to be an "all in one" view. Once setup with a `
 The joystick can be added to your Activity's layout with something similar to the following.
 
 ```xml
-	<com.orbotix.spherocam.ui.joystick.JoystickView xmlns:app="http://schemas.android.com/apk/res/your.package.here"
-        android:id="@+id/Joystick"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        app:puck_radius="25dp"
-        app:alpha="0.7"/>
+<com.orbotix.spherocam.ui.joystick.JoystickView xmlns:app="http://schemas.android.com/apk/res/your.package.here"
+	android:id="@+id/Joystick"
+    android:layout_width="200dp"
+    android:layout_height="200dp"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentBottom="true"
+    app:puck_radius="25dp"
+    app:alpha="0.7"/>
 ```
 
 You can adjust the size of the entire joystick using the `layout_width` and `layout_height` attributes. To control the size of the joystick's puck, use the `puck_radius` attribute. `alpha` adjusts the opacity of the joystick control (the higher the value, the more opaque the control). Once you connect (typically in the `StartupActivity`) and obtain a Robot object (usually done in the `onActivityResult(int, int, Intent)` method when returning from the StartupActivity), you can use the JoystickView's `setRobot(Robot)` method to activate the joystick and to begin controlling Sphero.
