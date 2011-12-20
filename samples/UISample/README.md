@@ -27,19 +27,19 @@ To receive the color changes via a `BroadcastIntent`, you must register a broadc
 private Robot mRobot;
 ⋮
 private BroadcastReceiver mColorChangeReceiver = new BroadcastReceiver() {
-@Override
-public void onReceive(Context context, Intent intent) {
-// update colors
-int red = intent.getIntExtra(ColorPickerActivity.EXTRA_COLOR_RED, 0);
-int green = intent.getIntExtra(ColorPickerActivity.EXTRA_COLOR_GREEN, 0);
-int blue = intent.getIntExtra(ColorPickerActivity.EXTRA_COLOR_BLUE, 0);
+	@Override
+	public void onReceive(Context context, Intent intent) {
+		// update colors
+		int red = intent.getIntExtra(ColorPickerActivity.EXTRA_COLOR_RED, 0);
+		int green = intent.getIntExtra(ColorPickerActivity.EXTRA_COLOR_GREEN, 0);
+		int blue = intent.getIntExtra(ColorPickerActivity.EXTRA_COLOR_BLUE, 0);
 			
-// save the current color
-mCurrentColor = Color.rgb(red, green, blue);
+		// save the current color
+		mCurrentColor = Color.rgb(red, green, blue);
 			
-// change the color on the ball
-RGBLEDOutputCommand.sendCommand(mRobot, red, green, blue);
-}
+		// change the color on the ball
+		RGBLEDOutputCommand.sendCommand(mRobot, red, green, blue);
+	}
 };
 ```
 
@@ -54,9 +54,9 @@ Make sure the activity is in your `AndroidManifest.xml`. We have provided exampl
 
 ```xml
 <activity android:name="orbotix.robot.app.ColorPickerActivity"
-android:screenOrientation="landscape"
-android:theme="@android:style/Theme.Translucent"
-android:launchMode="singleTop"/>
+		  android:screenOrientation="landscape"
+          android:theme="@android:style/Theme.Translucent"
+          android:launchMode="singleTop"/>
 ```
 
 Notice the Theme applied here. If you are using the onStop() method to shut down the connection to Sphero and you don't want it called when you just want to go to the color picker, you can show the color picker as a transparent activity. This will only call `onPause()` and `onResume()` on your main activity. Now you can launch the ColorPickerActivity. If you are registering for the color change broadcasts every time you show the color picker, you may want to start the activity for result and unregister the receiver when the activity returns.
@@ -77,8 +77,8 @@ Typically, the `CalibrationView` should take up the whole screen so that, when v
 
 ```xml
 <orbotix.robot.widgets.calibration.CalibrationView android:id="@+id/CalibrationView"
-android:layout_width="fill_parent"
-android:layout_height="fill_parent"/>
+												   android:layout_width="fill_parent"
+	                                               android:layout_height="fill_parent"/>
 ```
 
 Then, in your Activity's `onCreate(Bundle)` method, configure the view itself.
@@ -95,16 +95,16 @@ You can set the colors of the CalibrationView's different pieces to anything you
 	
 ```java
 mCalibrationView.setOnStartRunnable(new Runnable () {
-public void run() {
-map.pauseDrawing();
-map.clear();
-}
+	public void run() {
+		map.pauseDrawing();
+		map.clear();
+	}
 });
 
 mCalibrationView.setOnEndRunnable(new Runnable () {
-public void run() {
-map.resumeDrawing();
-}
+	public void run() {
+		map.resumeDrawing();
+	}
 });
 ```
 
@@ -118,6 +118,7 @@ The `JoystickView` is also meant to be an "all in one" view. Once setup with a `
 
 The joystick can be added to your Activity's layout with something similar to the following.
 
+```xml
 	<com.orbotix.spherocam.ui.joystick.JoystickView xmlns:app="http://schemas.android.com/apk/res/your.package.here"
         android:id="@+id/Joystick"
         android:layout_width="200dp"
@@ -126,5 +127,6 @@ The joystick can be added to your Activity's layout with something similar to th
         android:layout_alignParentBottom="true"
         app:puck_radius="25dp"
         app:alpha="0.7"/>
+```
 
 You can adjust the size of the entire joystick using the `layout_width` and `layout_height` attributes. To control the size of the joystick's puck, use the `puck_radius` attribute. `alpha` adjusts the opacity of the joystick control (the higher the value, the more opaque the control). Once you connect (typically in the `StartupActivity`) and obtain a Robot object (usually done in the `onActivityResult(int, int, Intent)` method when returning from the StartupActivity), you can use the JoystickView's `setRobot(Robot)` method to activate the joystick and to begin controlling Sphero.
