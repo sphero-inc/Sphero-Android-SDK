@@ -9,49 +9,61 @@ The color changes initiated by the user are then broadcast to provide access to 
 
 To use, you must first create an Intent.
 
-	```Intent colorPickerIntent = new Intent(this, ColorPickerActivity.class);```
+```java
+Intent colorPickerIntent = new Intent(this, ColorPickerActivity.class);
+```
 	
 To ensure the color picker starts on the correct color, you must pass the RGB values in the intent.
 
-	```colorPickerIntent.putExtra(ColorPickerActivity.EXTRA_COLOR_RED, Color.red(mCurrentColor));
-    colorPickerIntent.putExtra(ColorPickerActivity.EXTRA_COLOR_GREEN, Color.green(mCurrentColor));
-    colorPickerIntent.putExtra(ColorPickerActivity.EXTRA_COLOR_BLUE, Color.blue(mCurrentColor));```
+```java
+colorPickerIntent.putExtra(ColorPickerActivity.EXTRA_COLOR_RED, Color.red(mCurrentColor));
+colorPickerIntent.putExtra(ColorPickerActivity.EXTRA_COLOR_GREEN, Color.green(mCurrentColor));
+colorPickerIntent.putExtra(ColorPickerActivity.EXTRA_COLOR_BLUE, Color.blue(mCurrentColor));
+```
 
 To receive the color changes via a `BroadcastIntent`, you must register a broadcast receiver using an `IntentFilter`. In the receiver, you can do what you need with the color.
 
-	private Robot mRobot;
-	⋮
-	private BroadcastReceiver mColorChangeReceiver = new BroadcastReceiver() {
-        	@Override
-       	public void onReceive(Context context, Intent intent) {
-       	    // update colors
-       	    int red = intent.getIntExtra(ColorPickerActivity.EXTRA_COLOR_RED, 0);
-       	    int green = intent.getIntExtra(ColorPickerActivity.EXTRA_COLOR_GREEN, 0);
-       	    int blue = intent.getIntExtra(ColorPickerActivity.EXTRA_COLOR_BLUE, 0);
+```java
+private Robot mRobot;
+⋮
+private BroadcastReceiver mColorChangeReceiver = new BroadcastReceiver() {
+@Override
+public void onReceive(Context context, Intent intent) {
+// update colors
+int red = intent.getIntExtra(ColorPickerActivity.EXTRA_COLOR_RED, 0);
+int green = intent.getIntExtra(ColorPickerActivity.EXTRA_COLOR_GREEN, 0);
+int blue = intent.getIntExtra(ColorPickerActivity.EXTRA_COLOR_BLUE, 0);
 			
-			// save the current color
-			mCurrentColor = Color.rgb(red, green, blue);
+// save the current color
+mCurrentColor = Color.rgb(red, green, blue);
 			
-			// change the color on the ball
-            RGBLEDOutputCommand.sendCommand(mRobot, red, green, blue);
-        }
-    };
+// change the color on the ball
+RGBLEDOutputCommand.sendCommand(mRobot, red, green, blue);
+}
+};
+```
 
 Before you show the color picker, create an `IntentFilter` using the `ACTION_COLOR_CHANGE` from the ColorPickerActivity.
 
-	IntentFilter filter = new IntentFilter(ColorPickerActivity.ACTION_COLOR_CHANGE);
-	registerReceiver(mColorChangeReceiver, filter);
+```java
+IntentFilter filter = new IntentFilter(ColorPickerActivity.ACTION_COLOR_CHANGE);
+registerReceiver(mColorChangeReceiver, filter);
+```
 
 Make sure the activity is in your `AndroidManifest.xml`. We have provided example activity elements in the RobotUILibrary's manifest for your convenience. You can simply copy and paste the ColorPickerActivity from there, into the manifest for your application.
 
-	<activity android:name="orbotix.robot.app.ColorPickerActivity"
-           	  android:screenOrientation="landscape"
-           	  android:theme="@android:style/Theme.Translucent"
-           	  android:launchMode="singleTop"/>
+```xml
+<activity android:name="orbotix.robot.app.ColorPickerActivity"
+android:screenOrientation="landscape"
+android:theme="@android:style/Theme.Translucent"
+android:launchMode="singleTop"/>
+```
 
 Notice the Theme applied here. If you are using the onStop() method to shut down the connection to Sphero and you don't want it called when you just want to go to the color picker, you can show the color picker as a transparent activity. This will only call `onPause()` and `onResume()` on your main activity. Now you can launch the ColorPickerActivity. If you are registering for the color change broadcasts every time you show the color picker, you may want to start the activity for result and unregister the receiver when the activity returns.
 
-	startActivityForResult(colorPickerIntent, REQUEST_CHANGE_COLOR);
+```java
+startActivityForResult(colorPickerIntent, REQUEST_CHANGE_COLOR);
+```
 
 ## Calibration View
 
@@ -63,32 +75,38 @@ To use this widget, simply add it to your layout, set it up when you create your
 
 Typically, the `CalibrationView` should take up the whole screen so that, when visible, it focuses the user's attention on the fact that they are aiming their Sphero. Your layout xml file should contain something similar to the following (near the bottom of the layout to ensure it will be placed above everything else).
 
-	<orbotix.robot.widgets.calibration.CalibrationView android:id="@+id/CalibrationView"
-                                                       android:layout_width="fill_parent"
-                                                       android:layout_height="fill_parent"/>
+```xml
+<orbotix.robot.widgets.calibration.CalibrationView android:id="@+id/CalibrationView"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"/>
+```
 
 Then, in your Activity's `onCreate(Bundle)` method, configure the view itself.
 
-	setContentView(R.layout.main);
-    mCalibrationView = (CalibrationView)findViewById(R.id.CalibrationView);
-    mCalibrationView.setColor(Color.WHITE);
-    mCalibrationView.setCircleColor(Color.WHITE);
-    mCalibrationView.enable();
+```java
+setContentView(R.layout.main);
+mCalibrationView = (CalibrationView)findViewById(R.id.CalibrationView);
+mCalibrationView.setColor(Color.WHITE);
+mCalibrationView.setCircleColor(Color.WHITE);
+mCalibrationView.enable();
+```
 
 You can set the colors of the CalibrationView's different pieces to anything you wish. If you need to do something when the calibration view starts and stops, you can give the calibration view runnables to execute at specific times.
 	
-    mCalibrationView.setOnStartRunnable(new Runnable () {
-		public void run() {
-			map.pauseDrawing();
-			map.clear();
-		}
-	});
+```java
+mCalibrationView.setOnStartRunnable(new Runnable () {
+public void run() {
+map.pauseDrawing();
+map.clear();
+}
+});
 
-    mCalibrationView.setOnEndRunnable(new Runnable () {
-		public void run() {
-			map.resumeDrawing();
-		}
-	});
+mCalibrationView.setOnEndRunnable(new Runnable () {
+public void run() {
+map.resumeDrawing();
+}
+});
+```
 
 Now, to actually get it to control a Sphero, use the `setRobot(Robot)` method of the CalibrationView when the robot is available. (most likely in you `onActivityResult(int, int, Intent)` method when you return from the StartupActivity).
 
