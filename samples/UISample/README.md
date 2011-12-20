@@ -9,13 +9,13 @@ The color changes initiated by the user are then broadcast to provide access to 
 
 To use, you must first create an Intent.
 
-	Intent colorPickerIntent = new Intent(this, ColorPickerActivity.class);
+	```Intent colorPickerIntent = new Intent(this, ColorPickerActivity.class);```
 	
 To ensure the color picker starts on the correct color, you must pass the RGB values in the intent.
 
-	colorPickerIntent.putExtra(ColorPickerActivity.EXTRA_COLOR_RED, Color.red(mCurrentColor));
+	```colorPickerIntent.putExtra(ColorPickerActivity.EXTRA_COLOR_RED, Color.red(mCurrentColor));
     colorPickerIntent.putExtra(ColorPickerActivity.EXTRA_COLOR_GREEN, Color.green(mCurrentColor));
-    colorPickerIntent.putExtra(ColorPickerActivity.EXTRA_COLOR_BLUE, Color.blue(mCurrentColor));
+    colorPickerIntent.putExtra(ColorPickerActivity.EXTRA_COLOR_BLUE, Color.blue(mCurrentColor));```
 
 To receive the color changes via a `BroadcastIntent`, you must register a broadcast receiver using an `IntentFilter`. In the receiver, you can do what you need with the color.
 
