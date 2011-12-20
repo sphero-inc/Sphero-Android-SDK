@@ -31,9 +31,13 @@ public class HelloWorldActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        
-        
-        //Launch the StartupActivity to connect to the robot
+    }
+
+    @Override
+    protected void onStart() {
+    	super.onStart();
+
+    	//Launch the StartupActivity to connect to the robot
         Intent i = new Intent(this, StartupActivity.class);
         startActivityForResult(i, STARTUP_ACTIVITY);
     }
@@ -62,7 +66,7 @@ public class HelloWorldActivity extends Activity
         mRobot = null;
 
         //Disconnect Robot
-        RobotProvider.getDefaultProvider().disconnectControlledRobots();
+        RobotProvider.getDefaultProvider().removeAllControls();
     }
 
     /**
