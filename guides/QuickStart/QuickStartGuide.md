@@ -42,34 +42,34 @@
     handle connectioning to a Sphero. When the activity exits, your are ready to 
     send commands.  
     
-   To run the StartupActivity, add the following code to the main activity's onStart() method,  
-
-        Intent i = new Intent(this, StartupActivity.class);  
-        startActivityForResult(i, STARTUP_ACTIVITY);  
-       
-   This will launch the StartupActivity using the intent, and sets an activity results 
-   identifier. The ``STARTUP_ACTIVITY`` constant is returned in the ``onActivityResult()`` method 
-   after the StartupActivity finishes as shown in the code below.  
-   
-       private final static int STARTUP_ACTIVITY = 0;
-
-       protected void onActivityResult(int requestCode, int resultCode, Intent data){
-           super.onActivityResult(requestCode, resultCode, data);
-           if(requestCode == STARTUP_ACTIVITY && resultCode == RESULT_OK){
-               //Get the connected Robot
-               final String robot_id = data.getStringExtra(StartupActivity.EXTRA_ROBOT_ID);  // 1
-               if(robot_id != null && !robot_id.equals("")){
-                   mRobot = RobotProvider.getDefaultProvider().findRobot(robot_id);          // 2
-               }
-               //Start blinking
-               blink(false);                                                                 // 3
-           }
-        }
-    
-   (1)	This line gets an identifier for the robot that was connected returned from the activity.  
-   (2) 	This line gets a Robot object for the robot identifier which is used to identifier the connected
-      Sphero in other API calls. (The API supports connection to multiple Spheros.)  
-   (3) 	This line calls a method that will be used to blink Sphero's LED.  
+	To run the StartupActivity, add the following code to the main activity's onStart() method,  
+	
+	    Intent i = new Intent(this, StartupActivity.class);  
+	    startActivityForResult(i, STARTUP_ACTIVITY);  
+	   
+	This will launch the StartupActivity using the intent, and sets an activity results 
+	identifier. The ``STARTUP_ACTIVITY`` constant is returned in the ``onActivityResult()`` method 
+	after the StartupActivity finishes as shown in the code below.  
+	
+	   private final static int STARTUP_ACTIVITY = 0;
+	
+	   protected void onActivityResult(int requestCode, int resultCode, Intent data){
+	       super.onActivityResult(requestCode, resultCode, data);
+	       if(requestCode == STARTUP_ACTIVITY && resultCode == RESULT_OK){
+	           //Get the connected Robot
+	           final String robot_id = data.getStringExtra(StartupActivity.EXTRA_ROBOT_ID);  // 1
+	           if(robot_id != null && !robot_id.equals("")){
+	               mRobot = RobotProvider.getDefaultProvider().findRobot(robot_id);          // 2
+	           }
+	           //Start blinking
+	           blink(false);                                                                 // 3
+	       }
+	    }
+	
+	(1)	This line gets an identifier for the robot that was connected returned from the activity.  
+	(2) 	This line gets a Robot object for the robot identifier which is used to identifier the connected
+	  Sphero in other API calls. (The API supports connection to multiple Spheros.)  
+	(3) 	This line calls a method that will be used to blink Sphero's LED.  
 
 7. Add code to blink the RGB LED.
 
