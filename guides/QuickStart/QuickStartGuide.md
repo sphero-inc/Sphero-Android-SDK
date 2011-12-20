@@ -100,13 +100,9 @@
 	       }
 	   }
 	
-	(1) This line will send a command to turn off the LED. `mRobot` is the Robot object that will receive the
-		command, and last three parameters turn of the red, green, and blue components of the LED. A 0 value 
-		for the color component will set the LED components brightness off.  
-	(2) This line will send a command to turn on the blue LED at full brightness. 255 is full brightness, and is
-		only set for the blue component of the LED.  
-	(3) This line creates a Handler that is used to post a delayed call to the `blink()` method after 1 second
-		with the lit parameter inverted, so the next call toggles the LED on or off.
+	(1) This line will send a command to turn off the LED. `mRobot` is the Robot object that will receive the command, and last three parameters turn of the red, green, and blue components of the LED. A 0 value for the color component will set the LED components brightness off.  
+	(2) This line will send a command to turn on the blue LED at full brightness. 255 is full brightness, and is only set for the blue component of the LED.  
+	(3) This line creates a Handler that is used to post a delayed call to the `blink()` method after 1 second with the lit parameter inverted, so the next call toggles the LED on or off.
 
 8. Add to the AndroidManifest.xml file.
 
