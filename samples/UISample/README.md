@@ -113,7 +113,7 @@ Now, to actually get it to control a Sphero, use the `setRobot(Robot)` method of
 
 ## Joystick View
 
-The `JoystickView` is also meant to be an "all in one" view. Once setup with a `Robot` object to control, the `JoystickView` takes care of the rest. If you would like more information on how the joystick works or you would like to implement your own joystick using some more advanced techniques, check out our <!--link to DriveControl explanation with link "Drive Control Explanation"-->.
+The `JoystickView` is also meant to be an "all in one" view. Once setup with a `Robot` object to control, the `JoystickView` takes care of the rest. If you would like more information on how the joystick works or you would like to implement your own joystick using some more advanced techniques, check out our DriveControl explanation.
 
 ![SpheroCam Joystick](https://github.com/OrbotixInc/MOBILE-ANDROID-SDK/blob/master/samples/UISample/joystick.jpg)
 
