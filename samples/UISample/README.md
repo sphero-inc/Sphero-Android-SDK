@@ -1,9 +1,9 @@
-# UI Sampler
+# UI Sample
 ## Color Picker
 
 The ColorPickerActivity presents a color wheel and a brightness bar along with a couple preview windows and an RGB readout. This is a very easy way for a user to change the color of their Sphero™. 
 
-![Color Picker](./colorPicker.png)
+![Color Picker](https://github.com/OrbotixInc/MOBILE-ANDROID-SDK/blob/master/samples/UISample/colorPicker.png)
 
 The color changes initiated by the user are then broadcast to provide access to anything registered to receive them. 
 
@@ -57,7 +57,7 @@ Notice the Theme applied here. If you are using the onStop() method to shut down
 
 The calibration view can be used to give the user some visual feedback while "aiming" their Sphero. It is meant to be an "all in one" widget combining the rotation gesture detection with the visual representation of calibration while sending the commands to Sphero to actually rotate and calibrate when finished.
 
-![Calibration View](./calibration_view.png)
+![Calibration View](https://github.com/OrbotixInc/MOBILE-ANDROID-SDK/blob/master/samples/UISample/calibration_view.png)
 
 To use this widget, simply add it to your layout, set it up when you create your activity, and set the robot you would like to control when it is available.
 
@@ -96,7 +96,7 @@ Now, to actually get it to control a Sphero, use the `setRobot(Robot)` method of
 
 The `JoystickView` is also meant to be an "all in one" view. Once setup with a `Robot` object to control, the `JoystickView` takes care of the rest. If you would like more information on how the joystick works or you would like to implement your own joystick using some more advanced techniques, check out our <!--link to DriveControl explanation with link "Drive Control Explanation"-->.
 
-![SpheroCam Joystick](./joystick.jpg)
+![SpheroCam Joystick](https://github.com/OrbotixInc/MOBILE-ANDROID-SDK/blob/master/samples/UISample/joystick.jpg)
 
 The joystick can be added to your Activity's layout with something similar to the following.
 
