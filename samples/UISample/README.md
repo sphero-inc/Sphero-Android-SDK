@@ -3,7 +3,7 @@
 
 The ColorPickerActivity presents a color wheel and a brightness bar along with a couple preview windows and an RGB readout. This is a very easy way for a user to change the color of their Sphero™. 
 
-![Color Picker]("https://github.com/OrbotixInc/MOBILE-ANDROID-SDK/blob/master/samples/UISample/colorPicker.png)
+![Color Picker](https://github.com/OrbotixInc/MOBILE-ANDROID-SDK/blob/master/samples/UISample/colorPicker.png)
 
 
 The color changes initiated by the user are then broadcast to provide access to anything registered to receive them. 
@@ -112,6 +112,8 @@ mCalibrationView.setOnEndRunnable(new Runnable () {
 Now, to actually get it to control a Sphero, use the `setRobot(Robot)` method of the CalibrationView when the robot is available. (most likely in you `onActivityResult(int, int, Intent)` method when you return from the StartupActivity).
 
 ## Joystick View
+
+The joystick view is just one of the ways a user can control Sphero. One of the benefits of a joystick over a two lever RC style control is ability to give direction to Sphero relative to the user's orientation. So, if the user remains stationary and facing the same direction, pushing the joystick puck away always makes Sphero travel in the same direction.
 
 The `JoystickView` is also meant to be an "all in one" view. Once setup with a `Robot` object to control, the `JoystickView` takes care of the rest. If you would like more information on how the joystick works or you would like to implement your own joystick using some more advanced techniques, check out our DriveControl explanation.
 
