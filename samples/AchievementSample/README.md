@@ -1,4 +1,4 @@
-[logo](http://update.orbotix.com/developer/sphero-small.png)
+![logo](http://update.orbotix.com/developer/sphero-small.png)
 
 # Developer Guide: SpheroWorld and Achievements
 
