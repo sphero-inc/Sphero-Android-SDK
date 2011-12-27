@@ -1,4 +1,4 @@
-![logo](http://update.orbotix.com/developer/sphero-small.png)
+[logo](http://update.orbotix.com/developer/sphero-small.png)
 
 # Developer Guide: SpheroWorld and Achievements
 
@@ -14,18 +14,18 @@ There is an achievement sample code project in the dev center that has an exampl
 Click on the “Dev” link in the top right corner of SpheroWorld after you are logged in to create a new application for your app.  The same application can be used for both Android and iOS applications.
 
 
-![image01.png](https://github.com/orbotix/Sphero-iOS-SDK/raw/master/samples/AchievementSample/assets/image001.png)
+![image01.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/samples/AchievementSample/assets/image001.png)
 
 ### Add achievements to your Sphero World application (Universal)
 
 Once your application has been created you can add achievements by clicking on the achievements tap when viewing the application details.  You can then click the “add achievement” button to add an achievement.
 
-![yadda.png](https://github.com/orbotix/Sphero-iOS-SDK/raw/master/samples/AchievementSample/assets/image002.png)
+![yadda.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/samples/AchievementSample/assets/image002.png)
 
 After clicking **Add Achievement** you will see this screen:
 
 
-![newache.png](https://github.com/orbotix/Sphero-iOS-SDK/raw/master/samples/AchievementSample/assets/image003.png)
+![newache.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/samples/AchievementSample/assets/image003.png)
 
 
 
@@ -53,7 +53,7 @@ After clicking **Add Achievement** you will see this screen:
 The first step when integrating your iOS application with any part of Sphero World is to be sure you are setting your app id and app secret when your application first launches.  You can find these two pieces of information by viewing your application while logged into SpheroWorld.
 
 
-![catball.png](https://github.com/orbotix/Sphero-iOS-SDK/raw/master/samples/AchievementSample/assets/image004.png) 
+![catball.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/samples/AchievementSample/assets/image004.png) 
 
 In the *applicaiton:didFinishLaunchingWithOptions:* method inside of the application delegate of your iOS application you will need to set the application id and secret before using any Sphero World functionality.  It is easiest to ensure this happens by making it your first line of code.  **You will need to be sure to import RobotKit.h in your app delegate.**  See example below:
 
@@ -138,7 +138,7 @@ When the notification fires you can extract the RKAchievement object the user ea
 
 The first step to integrate your application with SpheroWorld is to pass in your applicaion id and secret string (*obtained from SpheroWorld as shown below*) when your main activity starts before you make any calls to RobotLibrary. 
 
-![catball.png](https://github.com/orbotix/Sphero-iOS-SDK/raw/master/samples/AchievementSample/assets/image004.png) 
+![catball.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/samples/AchievementSample/assets/image004.png) 
 
  An example of setting up the Achievement Manager is shown below.
 
