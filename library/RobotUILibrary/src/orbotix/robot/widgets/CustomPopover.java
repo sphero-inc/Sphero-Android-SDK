@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.ScrollView;
-import orbotix.robot.R;
+import orbotix.robot.app.R;
 
 /**
  * A popover widget that can be filled with a custom layout. When shown, the popover will be displayed out of the anchor

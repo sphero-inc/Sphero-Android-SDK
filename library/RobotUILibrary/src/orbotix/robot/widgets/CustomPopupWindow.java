@@ -16,7 +16,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 
 import android.widget.PopupWindow;
-import orbotix.robot.R;
+import orbotix.robot.app.R;
 
 public class CustomPopupWindow {
 	protected final View anchor;
