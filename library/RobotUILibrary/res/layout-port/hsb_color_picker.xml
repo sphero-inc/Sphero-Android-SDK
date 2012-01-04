@@ -73,7 +73,7 @@
         <RelativeLayout android:id="@+id/ColorWheelLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <orbotix.robot.app.HSBColorPickerView
+            <orbotix.robot.widgets.HSBColorPickerView
                 android:id="@+id/ColorPickerBase"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
