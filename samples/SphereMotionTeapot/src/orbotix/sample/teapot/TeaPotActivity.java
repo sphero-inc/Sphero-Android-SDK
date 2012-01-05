@@ -5,24 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PowerManager;
-import android.util.Log;
 import android.widget.TextView;
 import orbotix.robot.app.StartupActivity;
 import orbotix.robot.base.*;
 import orbotix.robot.sensor.DeviceSensorData;
 
-import java.util.ArrayList;
-
 public class TeaPotActivity extends Activity {
-    
-    public static final String TAG = "Teapot";
-    public static final boolean DEBUG = true;
+
+    private static final int REQUEST_STARTUP = 101;
 
     private MyGLSurfaceView mGLSurfaceView;
-    private int sensorMode;
-    
-    private static final int REQUEST_STARTUP = 101;
-    
     private Robot mRobot;
     private PowerManager.WakeLock screenWakeLock;
     
@@ -32,22 +24,9 @@ public class TeaPotActivity extends Activity {
         @Override
         public void onDataReceived(DeviceAsyncData data) {
             if (data instanceof DeviceSensorsAsyncData) {
-                //log("Data recieved");
-                ArrayList<DeviceSensorData> dataList = ((DeviceSensorsAsyncData)data).getAsyncData();
-                byte[] rawData = ((DeviceSensorsAsyncData)data).getRawData();
-                int frame = 0, dataPoint = 0;
-                /*for (DeviceSensorData sensorData : dataList) {
-                    pitchText.setText(Double.toString(sensorData.getmAttitudeData().getAttitudeSensor().pitch));
-                    pitchRawText.setText(toBinaryString(rawData[(frame * 3)]) + " " + toBinaryString(rawData[(frame * 3) + 1]));
-                    rollText.setText(Double.toString(sensorData.getmAttitudeData().getAttitudeSensor().roll));
-                    rollRawText.setText(toBinaryString(rawData[(frame * 3) + 2]) + " " + toBinaryString(rawData[(frame * 3) + 3]));
-                    yawText.setText(Double.toString(sensorData.getmAttitudeData().getAttitudeSensor().yaw));
-                    yawRawText.setText(toBinaryString(rawData[(frame * 3) + 4]) + " " + toBinaryString(rawData[(frame * 3) + 5]));
-                    frame++;
-                }*/
+                DeviceSensorData ballData = ((DeviceSensorsAsyncData)data).getAsyncData().get(0);
 
                 float[] sensorData = new float[3];
-                DeviceSensorData ballData = dataList.get(0);
                 sensorData[0] = (float)ballData.getmAttitudeData().getAttitudeSensor().pitch;
                 sensorData[1] = (float)ballData.getmAttitudeData().getAttitudeSensor().roll;
                 sensorData[2] = (float)ballData.getmAttitudeData().getAttitudeSensor().yaw;
@@ -55,27 +34,11 @@ public class TeaPotActivity extends Activity {
             }
         }
     };
-
-    public static String toBinaryString(byte n) {
-        StringBuilder sb = new StringBuilder("00000000");
-        for (int bit = 0; bit < 8; bit++) {
-            if (((n >> bit) & 1) > 0) {
-                sb.setCharAt(7 - bit, '1');
-            }
-        }
-        return sb.toString();
-    }
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*setContentView(R.layout.main);
-        pitchText = (TextView)findViewById(R.id.pitch);
-        pitchRawText = (TextView)findViewById(R.id.pitch_raw);
-        rollText = (TextView)findViewById(R.id.roll);
-        rollRawText = (TextView)findViewById(R.id.roll_raw);
-        yawText = (TextView)findViewById(R.id.yaw);
-        yawRawText = (TextView)findViewById(R.id.yaw_raw);*/
+
         mGLSurfaceView = new MyGLSurfaceView(this);
         mGLSurfaceView.setRenderer(new TeapotRenderer());
         setContentView(mGLSurfaceView);
@@ -89,16 +52,6 @@ public class TeaPotActivity extends Activity {
         screenWakeLock.acquire();
         Intent startupIntent = new Intent(this, StartupActivity.class);
         startActivityForResult(startupIntent, REQUEST_STARTUP);
-    }
-
-    /**
-     * Convenience logging method. This will always log with the default TAG if the DEBUG flag is set to true;
-     * @param message the message to be displayed in the log
-     */
-    public static void log(String message) {
-        if (DEBUG) {
-            Log.d(TAG, message);
-        }
     }
 
     @Override
@@ -146,16 +99,6 @@ public class TeaPotActivity extends Activity {
         mGLSurfaceView.onPause();
     }
 
-    public static double getPositiveAngleDegrees(double angleIn) {
-        if (angleIn < 0.0) {
-            return getPositiveAngleDegrees(angleIn + 360.0);
-        } else if (angleIn > 360.0) {
-            return getPositiveAngleDegrees(angleIn - 360.0);
-        } else {
-            return angleIn;
-        }
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -176,8 +119,26 @@ public class TeaPotActivity extends Activity {
                     StabilizationCommand.sendCommand(mRobot, false);
 
                     // turn data streaming on for the specific types we want
-                    // in this case the accelerometer for all three axes.
-                    SetDataStreamingCommand.sendCommand(mRobot, 1, 1,
+                    //
+                    // Parameters:
+                    // (1) mRobot   - the robot from which we want the data
+                    // (2) 2        - this is the divisor applied to the maximum data rate of 400Hz coming back from the
+                    //                ball we want the data to come back at 200Hz so we use 2 (400Hz/2)
+                    // (3) 1        - this is how many sensor 'snapshots' are delivered every time we get a data packet
+                    //                from the ball. In this case, we only want 1, but if you don't need to process data
+                    //                in real time, you could slow down the data rate and increase the number of
+                    //                snapshots returned. The snapshots are always returned in an
+                    //                ArrayList<DeviceSensorData> in the order they were created.
+                    // (4) mask     - these are the different sensor values we would like to have returned. All of the
+                    //                available sensors are listed in SetDataStreamingCommand
+                    // (4) 0        - this is the total number of packets we want returned. If you just wanted a small
+                    //                window of sensor data from the ball, you could set this to a specific number of
+                    //                packets to cover that time period based on the divisor and snapshot count set
+                    //                in the previous parameters. You can also set this to 0 for infinite packets. This
+                    //                will stream information back to the phone until it is stopped (by sending 0 in the
+                    //                divisor parameter) or the ball shuts down.
+                    //
+                    SetDataStreamingCommand.sendCommand(mRobot, 2, 1,
                             SetDataStreamingCommand.DATA_STREAMING_MASK_IMU_PITCH_ANGLE_FILTERED |
                             SetDataStreamingCommand.DATA_STREAMING_MASK_IMU_ROLL_ANGLE_FILTERED |
                             SetDataStreamingCommand.DATA_STREAMING_MASK_IMU_YAW_ANGLE_FILTERED, 0);

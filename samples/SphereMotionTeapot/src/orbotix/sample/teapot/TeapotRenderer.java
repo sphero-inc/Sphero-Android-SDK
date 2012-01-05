@@ -1846,51 +1846,12 @@ class Teapot {
         int i = 0, start = 0;
         float kTeapotScale = 3.0f;
 
-        /*float length = (float) Math.sqrt(sensorValues[0] * sensorValues[0]
-                + sensorValues[1] * sensorValues[1]
-                + sensorValues[2] * sensorValues[2]);
-
-        float matrix[][] = new float[4][4];
-
-        matrix[3][3] = 1;
-        // Setup first matrix column as gravity vector
-        matrix[0][0] = sensorValues[0] / length;
-        matrix[0][1] = sensorValues[1] / length;
-        matrix[0][2] = sensorValues[2] / length;
-
-        // Setup second matrix column as an arbitrary vector in the plane
-        // perpendicular to the gravity vector {Gx, Gy, Gz} defined by by the
-        // equation "Gx * x + Gy * y + Gz * z = 0" in which we arbitrarily set
-        // x=0 and y=1
-        matrix[1][0] = 0.0f;
-        matrix[1][1] = 1.0f;
-        matrix[1][2] = -sensorValues[1] / sensorValues[2];
-        length = (float) Math.sqrt(matrix[1][0] * matrix[1][0] +
-                matrix[1][1] * matrix[1][1] +
-                matrix[1][2] * matrix[1][2]);
-        matrix[1][0] /= length;
-        matrix[1][1] /= length;
-        matrix[1][2] /= length;
-
-        // Setup third matrix column as the cross product of the first two
-        matrix[2][0] = matrix[0][1] * matrix[1][2] - matrix[0][2] * matrix[1][1];
-        matrix[2][1] = matrix[1][0] * matrix[0][2] - matrix[1][2] * matrix[0][0];
-        matrix[2][2] = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
-
-        m2 = new float[16];
-        for (int j = 0; j < 4; j++) {
-            for (int k = 0; k < 4; k++) {
-                m2[j * 4 + k] = matrix[j][k];
-            }
-        }
-
-        if (length >= 0.1)
-            gl.glMultMatrixf(m2, 0);*/
-
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
+
+        // rotate the teapot according to the incoming sensor values
+        gl.glRotatef(sensorValues[2], 0, 0, 1);
+        gl.glRotatef(-sensorValues[0], 0, 1, 0);
         gl.glRotatef(sensorValues[1] + 90.0f, 1, 0, 0);
-        gl.glRotatef(sensorValues[0], 0, 0, 1);
-        gl.glRotatef(sensorValues[2], 0, 1, 0);
 
         while (i < num_teapot_indices) {
             if (teapot_indices[i] == -1) {
