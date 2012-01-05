@@ -1,9 +1,12 @@
 package orbotix.sample.teapot;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.util.Log;
+import android.widget.TextView;
 import orbotix.robot.app.StartupActivity;
 import orbotix.robot.base.*;
 import orbotix.robot.sensor.DeviceSensorData;
@@ -12,12 +15,18 @@ import java.util.ArrayList;
 
 public class TeaPotActivity extends Activity {
     
-    public static final String TAG = "Orbotix";
+    public static final String TAG = "Teapot";
     public static final boolean DEBUG = true;
+
+    private MyGLSurfaceView mGLSurfaceView;
+    private int sensorMode;
     
     private static final int REQUEST_STARTUP = 101;
     
     private Robot mRobot;
+    private PowerManager.WakeLock screenWakeLock;
+    
+    private TextView pitchText, rollText, yawText, pitchRawText, rollRawText, yawRawText;
     
     private final DeviceMessenger.AsyncDataListener mDataListener = new DeviceMessenger.AsyncDataListener() {
         @Override
@@ -25,11 +34,24 @@ public class TeaPotActivity extends Activity {
             if (data instanceof DeviceSensorsAsyncData) {
                 //log("Data recieved");
                 ArrayList<DeviceSensorData> dataList = ((DeviceSensorsAsyncData)data).getAsyncData();
-                for (DeviceSensorData sensorData : dataList) {
-                    log("Acelerometer x: " + sensorData.getmAccelerometerData().getFilteredAcceleration().x);
-                    log("Acelerometer y: " + sensorData.getmAccelerometerData().getFilteredAcceleration().y);
-                    log("Acelerometer z: " + sensorData.getmAccelerometerData().getFilteredAcceleration().z);
-                }
+                byte[] rawData = ((DeviceSensorsAsyncData)data).getRawData();
+                int frame = 0, dataPoint = 0;
+                /*for (DeviceSensorData sensorData : dataList) {
+                    pitchText.setText(Double.toString(sensorData.getmAttitudeData().getAttitudeSensor().pitch));
+                    pitchRawText.setText(toBinaryString(rawData[(frame * 3)]) + " " + toBinaryString(rawData[(frame * 3) + 1]));
+                    rollText.setText(Double.toString(sensorData.getmAttitudeData().getAttitudeSensor().roll));
+                    rollRawText.setText(toBinaryString(rawData[(frame * 3) + 2]) + " " + toBinaryString(rawData[(frame * 3) + 3]));
+                    yawText.setText(Double.toString(sensorData.getmAttitudeData().getAttitudeSensor().yaw));
+                    yawRawText.setText(toBinaryString(rawData[(frame * 3) + 4]) + " " + toBinaryString(rawData[(frame * 3) + 5]));
+                    frame++;
+                }*/
+
+                float[] sensorData = new float[3];
+                DeviceSensorData ballData = dataList.get(0);
+                sensorData[0] = (float)ballData.getmAttitudeData().getAttitudeSensor().pitch;
+                sensorData[1] = (float)ballData.getmAttitudeData().getAttitudeSensor().roll;
+                sensorData[2] = (float)ballData.getmAttitudeData().getAttitudeSensor().yaw;
+                mGLSurfaceView.onSensorChanged(sensorData);
             }
         }
     };
@@ -47,18 +69,30 @@ public class TeaPotActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        /*setContentView(R.layout.main);
+        pitchText = (TextView)findViewById(R.id.pitch);
+        pitchRawText = (TextView)findViewById(R.id.pitch_raw);
+        rollText = (TextView)findViewById(R.id.roll);
+        rollRawText = (TextView)findViewById(R.id.roll_raw);
+        yawText = (TextView)findViewById(R.id.yaw);
+        yawRawText = (TextView)findViewById(R.id.yaw_raw);*/
+        mGLSurfaceView = new MyGLSurfaceView(this);
+        mGLSurfaceView.setRenderer(new TeapotRenderer());
+        setContentView(mGLSurfaceView);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        PowerManager power_manager = (PowerManager)getSystemService(Context.POWER_SERVICE);
+        screenWakeLock = power_manager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "Teapot");
+        screenWakeLock.acquire();
         Intent startupIntent = new Intent(this, StartupActivity.class);
         startActivityForResult(startupIntent, REQUEST_STARTUP);
     }
 
     /**
-     * Convenience logging method. This will always log with the default Orbotix tag if the DEBUG flag is set to true;
+     * Convenience logging method. This will always log with the default TAG if the DEBUG flag is set to true;
      * @param message the message to be displayed in the log
      */
     public static void log(String message) {
@@ -70,6 +104,10 @@ public class TeaPotActivity extends Activity {
     @Override
     protected void onStop() {
         super.onStop();
+        if (screenWakeLock != null) {
+            screenWakeLock.release();
+            screenWakeLock = null;
+        }
 
         // turn stabilization back on
         StabilizationCommand.sendCommand(mRobot, true);
@@ -97,6 +135,28 @@ public class TeaPotActivity extends Activity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        mGLSurfaceView.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mGLSurfaceView.onPause();
+    }
+
+    public static double getPositiveAngleDegrees(double angleIn) {
+        if (angleIn < 0.0) {
+            return getPositiveAngleDegrees(angleIn + 360.0);
+        } else if (angleIn > 360.0) {
+            return getPositiveAngleDegrees(angleIn - 360.0);
+        } else {
+            return angleIn;
+        }
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         
@@ -117,10 +177,10 @@ public class TeaPotActivity extends Activity {
 
                     // turn data streaming on for the specific types we want
                     // in this case the accelerometer for all three axes.
-                    SetDataStreamingCommand.sendCommand(mRobot, 5, 5,
-                            SetDataStreamingCommand.DATA_STREAMING_MASK_ACCELEROMETER_X_FILTERED |
-                            SetDataStreamingCommand.DATA_STREAMING_MASK_ACCELEROMETER_Y_FILTERED |
-                            SetDataStreamingCommand.DATA_STREAMING_MASK_ACCELEROMETER_Z_FILTERED, 0);
+                    SetDataStreamingCommand.sendCommand(mRobot, 1, 1,
+                            SetDataStreamingCommand.DATA_STREAMING_MASK_IMU_PITCH_ANGLE_FILTERED |
+                            SetDataStreamingCommand.DATA_STREAMING_MASK_IMU_ROLL_ANGLE_FILTERED |
+                            SetDataStreamingCommand.DATA_STREAMING_MASK_IMU_YAW_ANGLE_FILTERED, 0);
                 } else {
                     mRobot = null;
                 }
