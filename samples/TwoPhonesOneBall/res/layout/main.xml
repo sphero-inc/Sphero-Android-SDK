@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res/orbotix.twophones"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#888"
+    >
+
+    <orbotix.robot.widgets.joystick.JoystickView
+            android:id="@+id/joystick"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_centerInParent="true"
+            app:alpha="1.0"
+            android:visibility="visible"
+            app:puck_radius="40dp"
+            />
+
+    <orbotix.robot.widgets.calibration.CalibrationView
+            android:id="@+id/calibration"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:visibility="invisible"
+            />
+
+
+</RelativeLayout>
+
