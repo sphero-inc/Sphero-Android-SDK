@@ -1,0 +1,9 @@
+# files
+
+ant.properties
+build.xml
+*.iml
+
+#dirs
+gen/
+
