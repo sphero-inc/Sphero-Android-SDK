@@ -31,9 +31,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="RobotLibrary" />
-    <orderEntry type="module" module-name="RobotMultiplayerLibrary" />
-    <orderEntry type="module" module-name="RobotUILibrary" />
+    <orderEntry type="module" module-name="RobotLibrary" exported="" />
+    <orderEntry type="module" module-name="RobotMultiplayerLibrary" exported="" />
+    <orderEntry type="module" module-name="RobotUILibrary" exported="" />
   </component>
 </module>
 

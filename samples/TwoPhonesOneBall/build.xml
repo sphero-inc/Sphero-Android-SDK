@@ -12,9 +12,9 @@
          Here are some properties you may want to change/update:
 
          source.dir
-             The name of the source directory. Default is 'src'.
+             The mName of the source directory. Default is 'src'.
          out.dir
-             The name of the output directory. Default is 'bin'.
+             The mName of the output directory. Default is 'bin'.
 
          For other overridable properties, look at the beginning of the rules
          files in the SDK, at tools/ant/build.xml
@@ -49,15 +49,15 @@
 <!-- extension targets. Uncomment the ones where you want to do custom work
      in between standard targets -->
 <!--
-    <target name="-pre-build">
+    <target mName="-pre-build">
     </target>
-    <target name="-pre-compile">
+    <target mName="-pre-compile">
     </target>
 
     /* This is typically used for code obfuscation.
        Compiled code location: ${out.classes.absolute.dir}
        If this is not done in place, override ${out.dex.input.absolute.dir} */
-    <target name="-post-compile">
+    <target mName="-post-compile">
     </target>
 -->
 
