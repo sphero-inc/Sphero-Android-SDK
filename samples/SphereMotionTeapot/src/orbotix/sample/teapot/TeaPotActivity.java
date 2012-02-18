@@ -8,7 +8,7 @@ import android.os.PowerManager;
 import android.widget.TextView;
 import orbotix.robot.app.StartupActivity;
 import orbotix.robot.base.*;
-import orbotix.robot.sensor.DeviceSensorData;
+import orbotix.robot.sensor.DeviceSensorsData;
 
 public class TeaPotActivity extends Activity {
 
@@ -24,12 +24,12 @@ public class TeaPotActivity extends Activity {
         @Override
         public void onDataReceived(DeviceAsyncData data) {
             if (data instanceof DeviceSensorsAsyncData) {
-                DeviceSensorData ballData = ((DeviceSensorsAsyncData)data).getAsyncData().get(0);
+                DeviceSensorsData ballData = ((DeviceSensorsAsyncData)data).getAsyncData().get(0);
 
                 float[] sensorData = new float[3];
-                sensorData[0] = (float)ballData.getmAttitudeData().getAttitudeSensor().pitch;
-                sensorData[1] = (float)ballData.getmAttitudeData().getAttitudeSensor().roll;
-                sensorData[2] = (float)ballData.getmAttitudeData().getAttitudeSensor().yaw;
+                sensorData[0] = (float)ballData.getAttitudeData().getAttitudeSensor().pitch;
+                sensorData[1] = (float)ballData.getAttitudeData().getAttitudeSensor().roll;
+                sensorData[2] = (float)ballData.getAttitudeData().getAttitudeSensor().yaw;
                 mGLSurfaceView.onSensorChanged(sensorData);
             }
         }
