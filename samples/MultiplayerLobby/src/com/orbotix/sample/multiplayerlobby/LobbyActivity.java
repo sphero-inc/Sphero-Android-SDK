@@ -9,9 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import orbotix.robot.multiplayer.LocalMultiplayerClient;
-import orbotix.robot.multiplayer.MultiplayerGame;
-import orbotix.robot.multiplayer.RemotePlayer;
+import orbotix.multiplayer.LocalMultiplayerClient;
+import orbotix.multiplayer.MultiplayerGame;
+import orbotix.multiplayer.RemotePlayer;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -172,7 +172,18 @@ public class LobbyActivity extends Activity {
         });
 
         //Join or host the game, depending on which action was sent
-        doAction();
+        if(i.hasExtra(EXTRA_ACTION) && i.getIntExtra(EXTRA_ACTION, 0) == EXTRA_ACTION_JOIN_GAME){
+
+            //Join game
+            mMultiplayerClient.joinGame((MultiplayerGame)i.getParcelableExtra(EXTRA_GAME));
+
+
+        }else {
+            //Host game
+            mMultiplayerClient.hostNewGame(mMultiplayerClient.getLocalPlayer().getName());
+
+            mStartGameButton.setEnabled(true);
+        }
     }
 
     @Override
@@ -261,26 +272,6 @@ public class LobbyActivity extends Activity {
     public void onResumeGameClick(View v){
 
         mMultiplayerClient.resumeGame();
-    }
-
-    /**
-     * Does the action included in this Activity's Intent
-     */
-    private void doAction(){
-        Intent i = getIntent();
-        
-        if(i.hasExtra(EXTRA_ACTION) && i.getIntExtra(EXTRA_ACTION, 0) == EXTRA_ACTION_JOIN_GAME){
-            
-            //Join game
-            mMultiplayerClient.joinGame((MultiplayerGame)i.getParcelableExtra(EXTRA_GAME));
-
-
-        }else {
-            //Host game
-            mMultiplayerClient.hostNewGame(mMultiplayerClient.getLocalPlayer().getName());
-
-            mStartGameButton.setEnabled(true);
-        }
     }
 
     /**

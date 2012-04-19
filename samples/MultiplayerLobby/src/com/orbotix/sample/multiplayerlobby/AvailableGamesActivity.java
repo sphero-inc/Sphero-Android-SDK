@@ -14,9 +14,9 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import com.orbotix.sample.multiplayerlobby.view.GameListItemView;
-import orbotix.robot.multiplayer.LocalMultiplayerClient;
-import orbotix.robot.multiplayer.MultiplayerGame;
-import orbotix.robot.multiplayer.RemotePlayer;
+import orbotix.multiplayer.LocalMultiplayerClient;
+import orbotix.multiplayer.MultiplayerGame;
+import orbotix.multiplayer.RemotePlayer;
 
 import java.util.ArrayList;
 import java.util.List;
