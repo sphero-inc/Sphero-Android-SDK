@@ -4,8 +4,8 @@ local.properties
 project.properties
 *.apk
 *.ap_
-.project
-.iml
+*.project
+*.iml
 ant.properties
 build.xml
 proguard.cfg
@@ -16,11 +16,3 @@ proguard.cfg
 out/
 gen/
 bin/
-
-
-samples/TwoPhonesOneBall/gen/orbotix/robot/app/R.java
-samples/TwoPhonesOneBall/gen/orbotix/robot/multiplayer/R.java
-samples/TwoPhonesOneBall/gen/orbotix/robot/R.java
-samples/TwoPhonesOneBall/gen/orbotix/twophones/R.java
-
-*.iml
