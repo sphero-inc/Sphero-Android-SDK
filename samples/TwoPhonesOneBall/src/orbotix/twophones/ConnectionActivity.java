@@ -183,7 +183,7 @@ public class ConnectionActivity extends ControllerActivity
      */
     private LocalMultiplayerClient.OnGameDataReceivedListener mOnGameDataReceivedListener = new LocalMultiplayerClient.OnGameDataReceivedListener() {
         @Override
-        public void onGameDataReceived(Context context, JSONObject game_data) {
+        public void onGameDataReceived(Context context, JSONObject game_data, RemotePlayer player) {
 
             try {
                 
@@ -246,7 +246,7 @@ public class ConnectionActivity extends ControllerActivity
 
 
         //Set unique session id
-        mMultiplayerClient.setSessionId("twop8989");
+        mMultiplayerClient.setSessionId("TwoPhone");
 
         //Start multiplayer service
         mMultiplayerClient.open();
@@ -432,7 +432,8 @@ public class ConnectionActivity extends ControllerActivity
             hideControls();
             showJoiningMessage();
 
-            new JoinThread().start();
+            mMultiplayerClient.requestAvailableGames();
+            //new JoinThread().start();
         }
     }
 

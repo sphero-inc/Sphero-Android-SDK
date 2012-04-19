@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item  android:drawable="@drawable/list_button_selected_bg"
+            android:state_pressed="true"
+            android:state_enabled="true">`
+    </item>
+
+    <item android:state_enabled="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#ff252525" />
+        </shape>
+    </item>
+</selector>

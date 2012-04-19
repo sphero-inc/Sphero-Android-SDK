@@ -1,8 +1,26 @@
 # Specific files
 .DS_store
+local.properties
+project.properties
+*.apk
+*.ap_
+.project
+.iml
+ant.properties
+build.xml
+proguard.cfg
+
 
 # dirs
 .idea/
 out/
+gen/
+bin/
 
-ButtonDrive/local.properties
+
+samples/TwoPhonesOneBall/gen/orbotix/robot/app/R.java
+samples/TwoPhonesOneBall/gen/orbotix/robot/multiplayer/R.java
+samples/TwoPhonesOneBall/gen/orbotix/robot/R.java
+samples/TwoPhonesOneBall/gen/orbotix/twophones/R.java
+
+*.iml
