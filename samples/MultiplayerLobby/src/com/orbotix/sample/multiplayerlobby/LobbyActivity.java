@@ -184,6 +184,9 @@ public class LobbyActivity extends Activity {
 
             mStartGameButton.setEnabled(true);
         }
+
+        //Start a poll of player information to keep the latest latency information
+        mMultiplayerClient.startPollingPlayers(1000);
     }
 
     @Override
