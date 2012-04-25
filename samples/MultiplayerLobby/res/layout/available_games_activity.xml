@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+
+    <TextView
+        android:id="@+id/titlebar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:text="Available Games"
+        />
+
+    <ListView
+        android:id="@+id/games_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/titlebar"
+        />
+
+
+    <com.orbotix.sample.multiplayerlobby.view.FooterView
+        android:id="@+id/footer"
+        style="@style/Footer"
+        >
+
+        <Button
+            android:id="@+id/set_name_button"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="Set Name"
+            android:layout_margin="5dp"
+            android:onClick="onSetNameClick"
+            />
+
+        <Button
+            android:id="@+id/create_game_button"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="Create Game"
+            android:layout_margin="5dp"
+            android:onClick="onCreateGameClick"
+            />
+
+    </com.orbotix.sample.multiplayerlobby.view.FooterView>
+</RelativeLayout>
+

@@ -1,8 +1,18 @@
 # Specific files
 .DS_store
+local.properties
+project.properties
+*.apk
+*.ap_
+*.project
+*.iml
+ant.properties
+build.xml
+proguard.cfg
+
 
 # dirs
 .idea/
 out/
-
-ButtonDrive/local.properties
+gen/
+bin/

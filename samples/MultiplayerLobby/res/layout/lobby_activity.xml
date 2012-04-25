@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:focusableInTouchMode="true"
+              android:descendantFocusability="beforeDescendants">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Game Lobby"
+        android:gravity="center_horizontal"
+        />
+
+    <View
+        android:id="@+id/top_hr"
+        style="@style/Hr"
+        android:layout_below="@+id/title"
+        />
+
+    <RelativeLayout
+        android:id="@+id/panel_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/top_hr"
+        android:background="#ff252525"
+        >
+
+        <!-- Game State -->
+        <TextView
+            android:id="@+id/game_state_label"
+            style="@style/Label"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="2dp"
+            android:text="Game State: "
+            />
+
+        <TextView
+            android:id="@+id/game_state_text"
+            style="@style/Label.Light"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/game_state_label"
+            android:layout_margin="2dp"
+            android:text="Lobby"
+            />
+
+        <!-- Players -->
+        <TextView
+            android:id="@+id/players_label"
+            style="@style/Label"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="2dp"
+            android:layout_alignLeft="@+id/resume_game_button"
+            android:text="Players:"
+            />
+
+        <ScrollView
+            android:id="@+id/players_scroll"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/players_label"
+            android:layout_above="@+id/resume_button"
+            android:layout_alignLeft="@+id/resume_game_button"
+            android:layout_margin="2dp"
+            >
+
+            <TextView
+                android:id="@+id/players_text"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                />
+
+        </ScrollView>
+
+        <!-- Controls -->
+        <Button
+            android:id="@+id/start_game_button"
+            style="@style/ControlButton"
+            android:layout_below="@+id/game_state_text"
+            android:layout_alignParentLeft="true"
+            android:text="Start Game"
+            android:enabled="false"
+            android:onClick="onStartGameClick"
+            />
+
+        <Button
+            android:id="@+id/end_game_button"
+            style="@style/ControlButton"
+            android:layout_below="@+id/start_game_button"
+            android:layout_alignParentLeft="true"
+            android:text="End Game"
+            android:enabled="false"
+            android:onClick="onEndGameClick"
+            />
+
+        <Button
+            android:id="@+id/pause_game_button"
+            style="@style/ControlButton"
+            android:layout_below="@+id/end_game_button"
+            android:layout_alignParentLeft="true"
+            android:text="Pause Game"
+            android:enabled="false"
+            android:onClick="onPauseGameClick"
+            />
+
+        <Button
+            android:id="@+id/resume_game_button"
+            style="@style/ControlButton"
+            android:layout_below="@+id/end_game_button"
+            android:layout_alignParentRight="true"
+            android:text="Resume Game"
+            android:enabled="false"
+            android:onClick="onResumeGameClick"
+            />
+
+        <!-- Chat -->
+        <TextView
+            android:id="@+id/chatroom_label"
+            style="@style/Label"
+            android:text="Chatroom"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/pause_game_button"
+            />
+        <TextView
+            android:id="@+id/chatroom_text"
+            style="@style/Chatroom"
+            android:layout_above="@+id/chat_field"
+            android:layout_below="@+id/chatroom_label"
+            />
+
+        <EditText
+            android:id="@+id/chat_field"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@+id/send_button"
+            android:layout_margin="2dp"
+            android:maxLines="1"
+            android:hint="Type Chat Message Here"
+            />
+
+        <Button
+            android:id="@+id/send_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="2dp"
+            android:text="Send"
+            android:onClick="onSendClick"
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>

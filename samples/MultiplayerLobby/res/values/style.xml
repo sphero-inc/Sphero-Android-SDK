@@ -1,0 +1,51 @@
+<resources>
+
+
+    <!-- HR -->
+    <style name="Hr">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">#88ffffff</item>
+    </style>
+
+    <style name="Footer">
+
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:background">@drawable/black_titlebar_bg</item>
+    </style>
+
+    <style name="Label">
+
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    
+    <style name="Label.Light">
+        
+        <item name="android:textColor">#aaa</item>
+    </style>
+
+    <style name="ControlButton">
+        <item name="android:layout_width">150dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">2dp</item>
+    </style>
+    
+
+    <style name="Chatroom">
+
+        <item name="android:background">#eee</item>
+        <item name="android:textColor">#222</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:padding">2dp</item>
+        <item name="android:layout_margin">5dp</item>
+
+    </style>
+
+</resources>
