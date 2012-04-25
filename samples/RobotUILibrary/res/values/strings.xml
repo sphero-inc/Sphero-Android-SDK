@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scanning">Scanning for Spheros</string>
+    <string name="startup_retry">Retry</string>
+    <string name="startup_connecting">Connecting to</string>
+    <string name="startup_connection_failed">Connection Failed</string>
+    <string name="startup_select_robot">Select your Sphero</string>
+    <string name="startup_pick_robot">Pick your Sphero</string>
+    <string name="startup_no_robots">No Spheros available</string>
+	<string name="startup_no_paired_robots">No Spheros paired with this device...</string>
+    <string name="app_name">SpheroUI</string>
+    <string name="color_picker_title">Color Picker</string>
+    <string name="done_button_text">DONE</string>
+    <string name="calibration_title">calibration</string>
+    <string name="BuySphero">Buy a Sphero™</string>
+</resources>

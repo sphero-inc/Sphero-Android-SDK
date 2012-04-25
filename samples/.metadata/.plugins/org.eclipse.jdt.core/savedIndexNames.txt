@@ -1,0 +1,8 @@
+INDEX VERSION 1.126+/Users/brian/Documents/Codework/MOBILE-ANDROID-SDK/samples/.metadata/.plugins/org.eclipse.jdt.core
+4280287671.index
+48437032.index
+3349602636.index
+3648105384.index
+250194757.index
+3854056952.index
+3789154453.index
