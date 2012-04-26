@@ -16,3 +16,5 @@ proguard.cfg
 out/
 gen/
 bin/
+
+samples/MultiplayerLobby/.classpath
