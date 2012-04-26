@@ -4,7 +4,6 @@ local.properties
 project.properties
 *.apk
 *.ap_
-*.project
 *.iml
 ant.properties
 build.xml
@@ -16,5 +15,3 @@ proguard.cfg
 out/
 gen/
 bin/
-
-samples/MultiplayerLobby/.classpath
