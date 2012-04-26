@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/acceleration_label" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/x_label" />
+    <TextView
+        android:id="@+id/accel_x_value"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/y_label" />
+    <TextView
+        android:id="@+id/accel_y_value"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/z_label" />
+    <TextView
+        android:id="@+id/accel_z_value"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView 
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content"
+        android:text="@string/axis_label" />   
+    <CheckBox 
+        android:id="@+id/axis_x_checkbox"
+        android:text="@string/x_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <CheckBox 
+        android:id="@+id/axis_y_checkbox"
+        android:text="@string/y_label"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"/>
+    
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/power_label"/>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+		android:text="@string/x_label"/>
+    <TextView
+        android:id="@+id/power_x_value"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>    
+	<TextView 
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:text="@string/y_label"/>
+	<TextView
+	    android:id="@+id/power_y_value"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"/>
+
+	<TextView 
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:text="@string/speed_label"/>
+	<TextView
+	    android:id="@+id/speed_value"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"/>
+
+	<TextView
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:text="@string/time_stamp_label"/>
+	<TextView
+	    android:id="@+id/time_stamp_value"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"/>
+	
+</LinearLayout>
