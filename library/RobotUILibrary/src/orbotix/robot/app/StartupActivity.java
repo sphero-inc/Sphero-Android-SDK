@@ -354,12 +354,4 @@ public class StartupActivity extends Activity {
             robotProvider.setBroadcastContext(null);
         }
     }
-
-	/**
-	 * Finishes the activity.
-	 */
-	@Override
-	public void onBackPressed() {
-		finish();
-	}
 }

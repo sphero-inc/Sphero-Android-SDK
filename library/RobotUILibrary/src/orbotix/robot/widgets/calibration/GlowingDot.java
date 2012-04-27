@@ -24,6 +24,7 @@ public class GlowingDot implements WidgetGraphicPart {
     private int mOuterBlur   = 0;
     private boolean mShowing = false;
     private boolean mCleared = false;
+    private boolean mShowGlow = true;
 
     private final Paint mInnerPaint = new Paint();
     private final Paint mOuterPaint = new Paint();
@@ -121,7 +122,9 @@ public class GlowingDot implements WidgetGraphicPart {
 
         if(mShowing){
 
-            canvas.drawCircle(mPosition.x, mPosition.y, mOuterRadius, mOuterPaint);
+            if(mShowGlow){
+                canvas.drawCircle(mPosition.x, mPosition.y, mOuterRadius, mOuterPaint);
+            }
             canvas.drawCircle(mPosition.x, mPosition.y, mInnerRadius, mInnerPaint);
         }else{
             mCleared = true;
@@ -135,5 +138,13 @@ public class GlowingDot implements WidgetGraphicPart {
                 mPosition.y-dirty_radius,
                 mPosition.x+dirty_radius,
                 mPosition.y+dirty_radius);
+    }
+
+    /**
+     *
+     * @param val set this to true to show the "glow", or false to not. Defaults to true.
+     */
+    public void setShowGlow(boolean val){
+        mShowGlow = val;
     }
 }

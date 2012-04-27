@@ -7,9 +7,11 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import orbotix.robot.animation.VectorAnimation;
-import orbotix.robot.base.*;
+import orbotix.robot.base.CalibrateCommand;
+import orbotix.robot.base.FrontLEDOutputCommand;
+import orbotix.robot.base.Robot;
+import orbotix.robot.base.RollCommand;
 import orbotix.robot.widgets.Controller;
-import orbotix.robot.widgets.MotionInterpreter;
 import orbotix.robot.widgets.WidgetGraphicView;
 
 import java.util.ArrayList;
@@ -259,13 +261,19 @@ public class CalibrationView extends WidgetGraphicView implements Controller {
         mOnRotationRunnable = on_rotation;
     }
 
+    @Override
+    public void setEnabled(boolean val){
+        super.setEnabled(val);
+        mEnabled = val;
+    }
+
     /**
      * Disables this CalibrationDialView. Will not show the calibration Widgets. Will not calibrate robot.
      * @see #enable()
      */
     @Override
     public void disable(){
-        mEnabled = false;
+        setEnabled(false);
     }
 
     /**
@@ -274,7 +282,7 @@ public class CalibrationView extends WidgetGraphicView implements Controller {
      */
     @Override
     public void enable(){
-        mEnabled = true;
+        setEnabled(true);
     }
 
     /**
@@ -465,6 +473,19 @@ public class CalibrationView extends WidgetGraphicView implements Controller {
         }
 
         super.onDraw(canvas);
+    }
+
+    /**
+     * If set to false, will not show the "glow" behind the widget. Defaults to true.
+     * @param val
+     */
+    public void setShowGlow(boolean val){
+
+        mGlowingCircle.setShowGlow(val);
+        mInnerDashedCircle.setShowGlow(val);
+        mOuterDashedCircle.setShowGlow(val);
+        mDot1.setShowGlow(val);
+        mDot2.setShowGlow(val);
     }
 
 

@@ -23,6 +23,7 @@ public class CalibrationCircle implements WidgetGraphicPart {
     private boolean mDashed  = false;
     private boolean mShowing = false;
     private boolean mCleared = false;
+    private boolean mShowGlow = true;
     private int mDirtyRadius = 0;
 
     private final Paint mInnerPaint = new Paint();
@@ -200,7 +201,9 @@ public class CalibrationCircle implements WidgetGraphicPart {
 
         if(mShowing){
             //Draw the two circles
-            canvas.drawCircle(mPosition.x, mPosition.y, mRadius, mOuterPaint);
+            if(mShowGlow){
+                canvas.drawCircle(mPosition.x, mPosition.y, mRadius, mOuterPaint);
+            }
             canvas.drawCircle(mPosition.x, mPosition.y, mRadius, mInnerPaint);
         }
 
@@ -219,5 +222,13 @@ public class CalibrationCircle implements WidgetGraphicPart {
 
         //Return empty rect if nothing has been done
         return new Rect();
+    }
+
+    /**
+     *
+     * @param val set this to true to show the "glow", or false to not. Defaults to true.
+     */
+    public void setShowGlow(boolean val){
+        mShowGlow = val;
     }
 }
