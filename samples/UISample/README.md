@@ -3,7 +3,7 @@
 
 The ColorPickerActivity presents a color wheel and a brightness bar along with a couple preview windows and an RGB readout. This is a very easy way for a user to change the color of their Sphero™. 
 
-![Color Picker](https://github.com/orbotix/Sphero-Android-SDK/raw/master/samples/UISample/assets/image001.png)
+![Color Picker](https://github.com/orbotix/Sphero-Android-SDK/raw/master/samples/UISample/colorPicker.png)
 
 
 The color changes initiated by the user are then broadcast to provide access to anything registered to receive them. 
@@ -70,7 +70,7 @@ startActivityForResult(colorPickerIntent, REQUEST_CHANGE_COLOR);
 
 The calibration view can be used to give the user some visual feedback while "aiming" their Sphero. It is meant to be an "all in one" widget combining the rotation gesture detection with the visual representation of calibration while sending the commands to Sphero to actually rotate and calibrate when finished.
 
-![Calibration View](https://github.com/orbotix/Sphero-Android-SDK/raw/master/samples/UISample/assets/image002.png)
+![Calibration View](https://github.com/orbotix/Sphero-Android-SDK/raw/master/samples/UISample/calibration_view.png)
 
 To use this widget, simply add it to your layout, set it up when you create your activity, and set the robot you would like to control when it is available.
 
@@ -117,7 +117,7 @@ The joystick view is just one of the ways a user can control Sphero. One of the 
 
 The `JoystickView` is also meant to be an "all in one" view. Once setup with a `Robot` object to control, the `JoystickView` takes care of the rest. If you would like more information on how the joystick works or you would like to implement your own joystick using some more advanced techniques, check out our DriveControl explanation.
 
-![SpheroCam Joystick](https://github.com/orbotix/Sphero-Android-SDK/raw/master/samples/UISample/assets/image003.jpg)
+![SpheroCam Joystick](https://github.com/orbotix/Sphero-Android-SDK/raw/master/samples/UISample/joystick.jpg)
 
 The joystick can be added to your Activity's layout with something similar to the following.
 

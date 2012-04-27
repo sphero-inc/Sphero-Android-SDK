@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="orbotix.twophones"
+      android:versionCode="1"
+      android:versionName="1.0">
+
+    <!-- For Bonjour -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- For Sphero -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+
+    <application android:label="@string/app_name" >
+        <activity
+            android:name=".ConnectionActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboard|keyboardHidden"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Connecting to Sphero -->
+        <activity
+            android:name="orbotix.robot.app.StartupActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboard|keyboardHidden"
+            />
+
+        <!-- Multiplayer service -->
+        <service
+            android:name="orbotix.multiplayer.MultiplayerManager"
+            android:label="@string/multiplayer_service_label"
+            android:description="@string/multiplayer_service_desc"
+            />
+
+    </application>
+
+
+
+
+</manifest> 

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <Button
+        android:id="@+id/red_button"
+        style="@style/ColorButton"
+        android:text="@string/red_button_text"
+        android:layout_alignParentTop="true"
+        />
+
+    <Button
+        android:id="@+id/green_button"
+        style="@style/ColorButton"
+        android:text="@string/green_button_text"
+        android:layout_below="@id/red_button"
+        />
+
+    <Button
+        android:id="@+id/blue_button"
+        style="@style/ColorButton"
+        android:text="@string/blue_button_text"
+        android:layout_below="@id/green_button"
+        />
+
+</merge>

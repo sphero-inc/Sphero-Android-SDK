@@ -1,0 +1,22 @@
+package orbotix.robot.widgets;
+
+import android.graphics.Canvas;
+import android.graphics.Rect;
+
+/**
+ * A Type that is drawable to a provided Canvas
+ *
+ * Created by Orbotix Inc.
+ * Author: Adam Williams
+ * Date: 11/22/11
+ * Time: 8:35 AM
+ */
+public interface Graphic {
+
+    /**
+     * Draws this Graphic to the provided Canvas
+     * @param canvas
+     * @return a Rect containing only the area of the Canvas used by this Graphic.
+     */
+    public Rect draw(Canvas canvas);
+}

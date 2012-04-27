@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/BackgroundLayout"
+  	style="@style/Dialog.Background">
+
+    <TextView android:id="@+id/StatusLabel"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentTop="true"
+              android:layout_centerHorizontal="true"
+              android:gravity="center_horizontal"
+              android:background="@drawable/status_background"
+              android:textSize="26sp"
+              android:textColor="@android:color/white"
+              android:textStyle="bold"
+              android:paddingLeft="20dip"
+              android:paddingRight="20dip"
+              android:text="@string/startup_scanning"/>
+
+    <Button android:id="@+id/RetryConnectButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/blue_button_background"
+            android:textSize="20sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+		    android:visibility="invisible"
+            android:layout_marginBottom="10dip"/>
+
+	<!-- list view for resolving multiple devices -->
+	<ListView android:id="@+id/RobotList"
+              android:layout_width="320dip"
+              android:layout_height="fill_parent"
+              android:layout_above="@id/RetryConnectButton"
+              android:layout_margin="5dip"
+              android:layout_centerInParent="true"
+              android:divider="@null"
+              android:layout_below="@id/StatusLabel"/>
+
+
+    <Button android:id="@+id/BuyButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@id/RetryConnectButton"
+            android:background="@drawable/blue_button_background"
+            android:textSize="20sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+		    android:visibility="invisible"
+            android:text="@string/BuySphero"
+            android:onClick="buyButtonPressed"
+            android:layout_marginBottom="10dip"/>
+
+    <ProgressBar android:id="@+id/StartupProgress"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:visibility="invisible"
+                 android:padding="30dip"
+                 android:layout_centerInParent="true"
+                 android:background="@drawable/popover_background"/>
+</RelativeLayout>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TwoPhonesOneBall</string>
+    <string name="multiplayer_service_label">Sphero Multiplayer Service</string>
+    <string name="multiplayer_service_desc">This service allows multiple users of Sphero to connect to multiplayer Sphero games.</string>
+
+    <string name="red_button_text">Red</string>
+    <string name="green_button_text">Green</string>
+    <string name="blue_button_text">Blue</string>
+
+    <string name="pass_button_text">Pass!</string>
+</resources>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res/orbotix.twophones"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#888"
+    >
+
+    <TextView
+        android:id="@+id/hosting_game_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Waiting for a player to join ..."
+        android:visibility="invisible"
+        />
+
+    <TextView
+        android:id="@+id/joining_game_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Looking for a player with a robot ..."
+        android:visibility="invisible"
+        />
+
+    <orbotix.robot.widgets.joystick.JoystickView
+        android:id="@+id/joystick"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_centerInParent="true"
+        app:alpha="1.0"
+        android:visibility="invisible"
+        app:puck_radius="40dp"
+        />
+
+    <Button
+        android:id="@+id/pass_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PASS"
+        android:layout_margin="10dp"
+        android:layout_toRightOf="@+id/joystick"
+        android:layout_centerVertical="true"
+        android:visibility="invisible"
+        android:onClick="onPassClick"
+        />
+
+    <orbotix.robot.widgets.calibration.CalibrationView
+        android:id="@+id/calibration"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="invisible"
+        />
+
+    <orbotix.twophones.ColorButtonView
+        android:id="@+id/color_button_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="invisible"
+        />
+
+
+</RelativeLayout>
+

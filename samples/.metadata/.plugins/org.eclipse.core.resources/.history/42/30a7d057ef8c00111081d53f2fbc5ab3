@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Collisions</string>
+    <string name="acceleration_label">Acceleration</string>
+    <string name="x_label">x</string>
+    <string name="y_label">y</string>
+    <string name="z_label">z</string>
+    <string name="power_label">Power</string>
+
+</resources>
