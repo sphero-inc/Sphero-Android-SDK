@@ -329,12 +329,18 @@ public class JoystickView extends View implements Controller {
 	}
 
     @Override
+    public void setEnabled(boolean val){
+        super.setEnabled(val);
+        mEnabled = val;
+    }
+
+    @Override
     public void enable() {
-        mEnabled = true;
+        setEnabled(true);
     }
 
     @Override
     public void disable() {
-        mEnabled = false;
+        setEnabled(false);
     }
 }
