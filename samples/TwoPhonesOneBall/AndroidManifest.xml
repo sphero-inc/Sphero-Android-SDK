@@ -34,7 +34,7 @@
 
         <!-- Multiplayer service -->
         <service
-            android:name="orbotix.robot.multiplayer.MultiplayerManager"
+            android:name="orbotix.multiplayer.MultiplayerManager"
             android:label="@string/multiplayer_service_label"
             android:description="@string/multiplayer_service_desc"
             />

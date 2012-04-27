@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-import orbotix.achievement.AchievementManager;
 import orbotix.robot.app.StartupActivity;
 import orbotix.robot.base.DeviceCommand;
 import orbotix.robot.base.DeviceCommandFactory;
@@ -218,8 +217,6 @@ public class ConnectionActivity extends ControllerActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-
-        AchievementManager.setupApplication("twop8989ffcfb7b8591a5c7ec656ad266b6f", "94RAt5xxt2wxiYgf5LDl", this);
 
         //Instantiate the LocalMultiplayerClient
         mMultiplayerClient = new LocalMultiplayerClient(this);
@@ -443,35 +440,5 @@ public class ConnectionActivity extends ControllerActivity
 
         mMultiplayerClient.setLocalPlayer(new RemotePlayer("TPOB Android Guest Player", 0, false, false, true));
         mMultiplayerClient.joinGame(game);
-    }
-
-    /**
-     * Thread that checks for available games while trying to join a game.
-     */
-    public class JoinThread extends Thread {
-
-        /**
-         * Amount of time to pass between checks
-         */
-        private final static int sInterval = 1000;
-        
-        private long mLastCheckedTime = 0;
-        
-        @Override
-        public void run() {
-
-            setPriority(2);
-
-            while (mLookingForGame){
-                
-                final long time = System.currentTimeMillis();
-                
-                if(time - mLastCheckedTime > sInterval){
-                    mLastCheckedTime = time;
-                    
-                    mMultiplayerClient.requestAvailableGames();
-                }
-            }
-        }
     }
 }
