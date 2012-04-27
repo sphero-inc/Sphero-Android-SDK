@@ -7,4 +7,12 @@
 <fullyQualifiedTypeName name="android.widget.CheckBox"/>
 <fullyQualifiedTypeName name="com.orbotix.collisions.R.id"/>
 <fullyQualifiedTypeName name="android.os.SystemClock"/>
+<fullyQualifiedTypeName name="orbotix.robot.base.DeviceMessenger.AsyncDataListener"/>
+<fullyQualifiedTypeName name="orbotix.robot.base.Robot"/>
+<fullyQualifiedTypeName name="orbotix.robot.base.DeviceAsyncData"/>
+<fullyQualifiedTypeName name="orbotix.robot.sensor.Acceleration"/>
+<fullyQualifiedTypeName name="orbotix.robot.base.CollisionDetectedAsyncData"/>
+<fullyQualifiedTypeName name="orbotix.robot.base.CollisionDetectedAsyncData.CollisionPower"/>
+<fullyQualifiedTypeName name="orbotix.robot.base.ConfigureCollisionDetectionCommand"/>
+<fullyQualifiedTypeName name="orbotix.robot.base.DeviceMessenger"/>
 </qualifiedTypeNameHistroy>
