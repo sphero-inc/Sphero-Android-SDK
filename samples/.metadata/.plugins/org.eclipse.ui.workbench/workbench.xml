@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="19" version="2.0">
+<workbench progressCount="16" version="2.0">
 <workbenchAdvisor/>
-<window height="937" width="1532" x="43" y="22">
+<window height="937" maximized="true" width="1663" x="5" y="22">
 <fastViewData fastViewLocation="1024"/>
 <perspectiveBar>
 <itemSize x="160"/>
@@ -18,10 +18,11 @@
 <coolItem id="org.eclipse.search.searchActionSet" itemType="typeToolBarContribution" x="62" y="22"/>
 <coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="98" y="22"/>
 <coolItem id="org.eclipse.wst.xml.ui.perspective.NewFileToolBar" itemType="typeToolBarContribution" x="-1" y="-1"/>
-<coolItem id="org.eclipse.wst.xml.ui.design.DesignToolBar" itemType="typeToolBarContribution" x="54" y="22"/>
+<coolItem id="org.eclipse.wst.xml.ui.design.DesignToolBar" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="group.nav" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.navigate" itemType="typeToolBarContribution" x="152" y="22"/>
 <coolItem id="group.editor" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.jdt.ui.PropertiesFileEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="com.android.ide.eclipse.editors.CommonXmlEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="group.help" itemType="typeGroupMarker"/>
@@ -38,15 +39,12 @@
 </folder>
 </info>
 </editorArea>
-<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="CollisionsActivity.java" partName="CollisionsActivity.java" path="/Users/brian/Documents/Codework/MOBILE-ANDROID-SDK/samples/Collisions/src/com/orbotix/collisions/CollisionsActivity.java" title="CollisionsActivity.java" tooltip="Collisions/src/com/orbotix/collisions/CollisionsActivity.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Collisions/src/com/orbotix/collisions/CollisionsActivity.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="213" selectionTopPixel="0"/>
+<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AchievementActivity.java" partName="AchievementActivity.java" path="/Users/brian/Documents/Codework/MOBILE-ANDROID-SDK/samples/AchievementSample/src/orbotix/sample/achievement/AchievementActivity.java" title="AchievementActivity.java" tooltip="AchievementSample/src/orbotix/sample/achievement/AchievementActivity.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/AchievementSample/src/orbotix/sample/achievement/AchievementActivity.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="19" selectionOffset="422" selectionTopPixel="0"/>
 </editor>
 </editors>
 <views>
-<view id="org.eclipse.ui.navigator.ProjectExplorer" partName="Project Explorer">
-<viewState CommonNavigator.LINKING_ENABLED="0" org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets="0"/>
-</view>
 <view id="com.android.ide.eclipse.ddms.views.LogCatView" partName="LogCat">
 <viewState/>
 </view>
@@ -55,8 +53,7 @@
 </view>
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
-<expanded>
-<category IMemento.internal.id="Warnings (21 items)"/>
+<expanded>&#x0A;<category IMemento.internal.id="Warnings (21 items)"/>
 </expanded>
 <columnWidths org.eclipse.ui.ide.locationField="0" org.eclipse.ui.ide.markerType="0" org.eclipse.ui.ide.pathField="0" org.eclipse.ui.ide.resourceField="0" org.eclipse.ui.ide.severityAndDescriptionField="0"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
@@ -290,70 +287,49 @@
 <view id="org.eclipse.debug.ui.BreakpointView"/>
 <view id="org.eclipse.ui.views.ContentOutline"/>
 <view id="com.android.ide.eclipse.ddms.views.LogCatView"/>
-<view id="org.eclipse.ui.navigator.ProjectExplorer"/>
 <fastViewBars/>
-<layout>
-<mainWindow>
-<info folder="true" part="org.eclipse.debug.internal.ui.NavigatorFolderView">
-<folder activePageID="org.eclipse.debug.ui.DebugView" appearance="2" expanded="2">
-<page content="org.eclipse.debug.ui.DebugView" label="Debug"/>
+<layout>&#x0A;<mainWindow>&#x0A;<info folder="true" part="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder activePageID="org.eclipse.debug.ui.DebugView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.debug.ui.DebugView" label="Debug"/>
 <page content="org.eclipse.ui.views.ResourceNavigator" label="LabelNotFound"/>
 <page content="org.eclipse.jdt.ui.PackageExplorer" label="LabelNotFound"/>
 <page content="org.eclipse.jdt.ui.TypeHierarchy" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="stickyFolderRight" ratio="0.75" ratioLeft="1143" ratioRight="381" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
-<folder appearance="2" expanded="2">
-<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
+<info folder="true" part="stickyFolderRight" ratio="0.75" ratioLeft="1143" ratioRight="381" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder appearance="2" expanded="2">&#x0A;<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
 <page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="LabelNotFound"/>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.debug.internal.ui.ConsoleFolderView" ratio="0.75" ratioLeft="639" ratioRight="213" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
-<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
-<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
+<info folder="true" part="org.eclipse.debug.internal.ui.ConsoleFolderView" ratio="0.75" ratioLeft="639" ratioRight="213" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
 <page content="org.eclipse.ui.views.TaskList" label="Tasks"/>
 <page content="org.eclipse.ui.views.BookmarkView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.PropertySheet" label="LabelNotFound"/>
 <page content="org.eclipse.jdt.debug.ui.DisplayView" label="LabelNotFound"/>
 <page content="org.eclipse.search.SearchResultView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
 <part id="1"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@24f891a7" ratio="0.5" ratioLeft="762" ratioRight="762" relationship="2" relative="org.eclipse.debug.internal.ui.ConsoleFolderView">
-<folder activePageID="com.android.ide.eclipse.ddms.views.LogCatView" appearance="2" expanded="2">
-<page content="com.android.ide.eclipse.ddms.views.LogCatView" label="LogCat"/>
-<page content="org.eclipse.ui.navigator.ProjectExplorer" label="Project Explorer"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-<part id="1"/>
-</presentation>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@24f891a7" ratio="0.5" ratioLeft="762" ratioRight="762" relationship="2" relative="org.eclipse.debug.internal.ui.ConsoleFolderView">&#x0A;<folder appearance="2" expanded="2">&#x0A;<page content="org.eclipse.ui.navigator.ProjectExplorer" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 <info part="org.eclipse.ui.editorss" ratio="0.44913927" ratioLeft="287" ratioRight="352" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView"/>
-<info folder="true" part="org.eclipse.debug.internal.ui.OutlineFolderView" ratio="0.75" ratioLeft="1143" ratioRight="381" relationship="2" relative="org.eclipse.ui.editorss">
-<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">
-<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
+<info folder="true" part="org.eclipse.debug.internal.ui.OutlineFolderView" ratio="0.527861" ratioLeft="881" ratioRight="788" relationship="2" relative="org.eclipse.ui.editorss">&#x0A;<folder activePageID="com.android.ide.eclipse.ddms.views.LogCatView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
+<page content="com.android.ide.eclipse.ddms.views.LogCatView" label="LogCat"/>
 <page content="org.eclipse.ant.ui.views.AntView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
+<part id="1"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.debug.internal.ui.ToolsFolderView" ratio="0.5" ratioLeft="762" ratioRight="762" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
-<folder activePageID="org.eclipse.debug.ui.BreakpointView" appearance="2" expanded="2">
-<page content="org.eclipse.debug.ui.VariableView" label="Variables"/>
+<info folder="true" part="org.eclipse.debug.internal.ui.ToolsFolderView" ratio="0.5" ratioLeft="762" ratioRight="762" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder activePageID="org.eclipse.debug.ui.BreakpointView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.debug.ui.VariableView" label="Variables"/>
 <page content="org.eclipse.debug.ui.BreakpointView" label="Breakpoints"/>
 <page content="org.eclipse.debug.ui.ExpressionView" label="LabelNotFound"/>
 <page content="org.eclipse.debug.ui.RegisterView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
 <part id="1"/>
 </presentation>
 </folder>
@@ -365,99 +341,10 @@
 <workingSets/>
 <navigationHistory>
 <editors>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/TwoPhonesOneBall/src/orbotix/twophones/ConnectionActivity.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/TwoPhonesOneBall/MultiplayerTest/src/orbotix/twophones/MultiplayerClientTest.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.manifest.ManifestEditor" path="/TwoPhonesOneBall/AndroidManifest.xml"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/TwoPhonesOneBall/src/orbotix/twophones/ConnectionActivity.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.CommonXmlEditor" path="/Collisions/res/layout/main.xml"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Collisions/src/com/orbotix/collisions/CollisionsActivity.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/RobotUILibrary/src/orbotix/robot/app/StartupActivity.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/TwoPhonesOneBall/src/orbotix/twophones/ConnectionActivity.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.manifest.ManifestEditor" path="/Collisions/AndroidManifest.xml"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/AchievementSample/src/orbotix/sample/achievement/AchievementActivity.java"/>
 </editors>
-<item historyLabel="ConnectionActivity.java" index="0">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="ConnectionActivity.java" index="0">
-<position info="not_deleted" x="1662" y="22"/>
-</item>
-<item historyLabel="ConnectionActivity.java" index="0">
-<position info="not_deleted" x="1101" y="0"/>
-</item>
-<item historyLabel="ConnectionActivity.java" index="0">
-<position info="not_deleted" x="618" y="0"/>
-</item>
-<item historyLabel="MultiplayerClientTest.java" index="1">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="ConnectionActivity.java" index="0">
-<position info="not_deleted" x="618" y="0"/>
-</item>
-<item historyLabel="TwoPhonesOneBall Manifest" index="2"/>
-<item historyLabel="ConnectionActivity.java" index="3">
-<position info="not_deleted" x="618" y="0"/>
-</item>
-<item historyLabel="main.xml" index="4"/>
-<item historyLabel="CollisionsActivity.java" index="5">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="CollisionsActivity.java" index="5">
-<position info="not_deleted" x="4559" y="4"/>
-</item>
-<item historyLabel="CollisionsActivity.java" index="5">
-<position/>
-</item>
-<item historyLabel="ConnectionActivity.java" index="3">
-<position info="not_deleted" x="9847" y="275"/>
-</item>
-<item historyLabel="CollisionsActivity.java" index="5">
-<position info="not_deleted" x="5512" y="0"/>
-</item>
-<item historyLabel="CollisionsActivity.java" index="5">
-<position info="not_deleted" x="2699" y="0"/>
-</item>
-<item historyLabel="CollisionsActivity.java" index="5">
-<position info="not_deleted" x="2875" y="0"/>
-</item>
-<item historyLabel="CollisionsActivity.java" index="5">
-<position info="not_deleted" x="2780" y="0"/>
-</item>
-<item historyLabel="StartupActivity.java" index="6">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="StartupActivity.java" index="6">
-<position info="not_deleted" x="13856" y="6"/>
-</item>
-<item historyLabel="CollisionsActivity.java" index="5">
-<position info="not_deleted" x="2780" y="0"/>
-</item>
-<item historyLabel="ConnectionActivity.java" index="7">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="CollisionsActivity.java" index="5">
-<position info="not_deleted" x="4897" y="0"/>
-</item>
-<item historyLabel="Collisions Manifest" index="8"/>
-<item historyLabel="CollisionsActivity.java" index="5">
-<position info="not_deleted" x="4897" y="0"/>
-</item>
-<item historyLabel="Collisions Manifest" index="8"/>
-<item historyLabel="CollisionsActivity.java" index="5">
-<position info="not_deleted" x="4897" y="0"/>
-</item>
-<item historyLabel="CollisionsActivity.java" index="5">
-<position info="not_deleted" x="8" y="22"/>
-</item>
-<item historyLabel="Collisions Manifest" index="8"/>
-<item historyLabel="CollisionsActivity.java" index="5">
-<position info="not_deleted" x="8" y="22"/>
-</item>
-<item historyLabel="Collisions Manifest" index="8"/>
-<item historyLabel="CollisionsActivity.java" index="5">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item active="true" historyLabel="CollisionsActivity.java" index="5">
-<position info="not_deleted" x="221" y="33"/>
+<item active="true" historyLabel="AchievementActivity.java" index="0">
+<position info="not_deleted" x="422" y="19"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -476,6 +363,15 @@
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AchievementActivity.java" tooltip="AchievementSample/src/orbotix/sample/achievement/AchievementActivity.java">
+<persistable path="/AchievementSample/src/orbotix/sample/achievement/AchievementActivity.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="HelloWorldActivity.java" tooltip="HelloWorld/src/com/orbotix/sample/helloworld/HelloWorldActivity.java">
+<persistable path="/HelloWorld/src/com/orbotix/sample/helloworld/HelloWorldActivity.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.PropertiesFileEditor" name="project.properties" tooltip="HelloWorld/project.properties">
+<persistable path="/HelloWorld/project.properties"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="CollisionsActivity.java" tooltip="Collisions/src/com/orbotix/collisions/CollisionsActivity.java">
 <persistable path="/Collisions/src/com/orbotix/collisions/CollisionsActivity.java"/>
 </file>
