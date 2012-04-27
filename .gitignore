@@ -1,7 +1,6 @@
 # Specific files
 .DS_store
 local.properties
-project.properties
 *.apk
 *.ap_
 *.iml

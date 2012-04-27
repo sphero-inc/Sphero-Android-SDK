@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
-	<item value="/Users/brian/Documents/Codework/MOBILE-ANDROID-SDK/samples/TwoPhonesOneBall/libs" key="org.eclipse.jdt.ui.lastextjar"/>
+	<item value="/Users/brian/Documents/Codework/MOBILE-ANDROID-SDK/samples/MultiplayerLobby/libs" key="org.eclipse.jdt.ui.lastextjar"/>
 	<section name="org.eclipse.jdt.internal.ui.packageview.PackageExplorerPart">
 		<item value="true" key="group_libraries"/>
 		<item value="false" key="linkWithEditor"/>
