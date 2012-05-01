@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+
+    <TextView
+            android:id="@+id/title_text"
+            style="@style/ListItemLabel"
+            android:layout_alignParentTop="true"
+            android:text="Title"
+            />
+
+    <TextView
+            android:id="@+id/x_label"
+            style="@style/ListItemLabel.Child"
+            android:layout_below="@+id/title_text"
+            android:text="@string/x_label"
+            />
+
+    <TextView
+            android:id="@+id/x_value"
+            style="@style/Label.Value"
+            android:layout_below="@+id/title_text"
+            android:layout_toRightOf="@+id/x_label"
+            android:text="0"
+            />
+
+    <TextView
+            android:id="@+id/y_label"
+            style="@style/ListItemLabel.Child"
+            android:layout_below="@+id/x_label"
+            android:text="@string/y_label"
+            />
+
+    <TextView
+            android:id="@+id/y_value"
+            style="@style/Label.Value"
+            android:layout_below="@+id/x_label"
+            android:layout_toRightOf="@+id/x_label"
+            android:text="0"
+            />
+
+    <TextView
+            android:id="@+id/z_label"
+            style="@style/ListItemLabel.Child"
+            android:layout_below="@+id/y_label"
+            android:text="@string/z_label"
+            />
+
+
+    <TextView
+            android:id="@+id/z_val"
+            style="@style/Label.Value"
+            android:layout_below="@+id/y_label"
+            android:layout_toRightOf="@+id/x_label"
+            android:text="0"
+            />
+
+</RelativeLayout>
