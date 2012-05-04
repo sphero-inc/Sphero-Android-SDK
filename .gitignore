@@ -7,7 +7,7 @@ local.properties
 ant.properties
 build.xml
 proguard.cfg
-
+.metadata
 
 # dirs
 .idea/
