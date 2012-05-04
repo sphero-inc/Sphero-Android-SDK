@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+
+    <!-- IMU -->
+    <TextView
+        android:id="@+id/imu_label"
+        style="@style/Label.Title"
+        android:text="@string/imu"
+        />
+
+    <com.orbotix.streamingexample.ImuView
+        android:id="@+id/imu_values"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imu_label"
+        android:text=""
+        />
+
+    <!-- Accelerometer -->
+    <TextView
+        android:id="@+id/accelerometer_label"
+        style="@style/Label.Title"
+        android:text="@string/accelerometer"
+        android:layout_below="@+id/imu_values"
+        />
+
+    <!-- Filtered -->
+    <com.orbotix.streamingexample.CoordinateView
+        android:id="@+id/accelerometer_filtered_coordinates"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/accelerometer_label"
+        android:text="@string/filtered"
+        />
+
+</RelativeLayout>
+

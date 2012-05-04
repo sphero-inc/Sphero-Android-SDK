@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">StreamingExample</string>
+
+    <!-- Values -->
+    <string name="gyro">Gyro:</string>
+    <string name="imu">IMU:</string>
+    <string name="accelerometer">Accelerometer:</string>
+    <string name="filtered">Filtered:</string>
+    <string name="raw">Raw:</string>
+    <string name="x_label">X:</string>
+    <string name="y_label">Y:</string>
+    <string name="z_label">Z:</string>
+
+
+</resources>

@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">&#x0A;<refactoring comment="Delete resource &apos;Collision Detection&apos;" deleteContents="false" description="Delete resource &apos;Collision Detection&apos;" element1="/Collision Detection" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1333031505659"/>&#x0A;<refactoring comment="Delete resource &apos;orbotix_robot_app&apos;" deleteContents="false" description="Delete resource &apos;orbotix_robot_app&apos;" element1="/orbotix_robot_app" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1333052275236"/>
-</session>
