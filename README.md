@@ -1,4 +1,4 @@
-![android.jpg](https://github.com/orbotix/Sphero-Android-SDK/raw/master/android.jpg)
+![android.jpg](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/image001.jpg)
 
 # Android Developer Quick Start Guide
 
@@ -36,20 +36,20 @@ When creating a new project it is important to take special notice to the Androi
 
  Place the libs folder from the SDK into your Android project's folder.  
    
-   ![QSG-libs.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/QSG-libs.png)
+   ![QSG-libs.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/image002.png)
 
 ### Setting the dependency to RobotLibrary.jar.  
    
   Set the dependency in the project's properties in the Properties->Java Build Path-> Libraries dialog.  This will allow your project access to all the public method names in RobotLibrary.jar. 
  
- ![QSG-jar-depend.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/QSG-jar-depend.png)
+ ![QSG-jar-depend.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/image003.png)
     
 ### Adding the RobotUILibrary source library into the workspace.  
 
  Import the library into workspace using Import->General->Existing projects    
  into Workspace. You can have the importer copy the source into your workspace folder or you can place it into the workspace folder before importing. Once it is imported, you need to set the project dependent on RobotLibrary.jar, which is  added using the Properties->Java Build ->Libraries dialog. You will need to add RobotUILibrary as library project to your application project from the projects Properties dialog.
     
-  ![QSG-library-project.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/QSG-library-project.png)
+  ![QSG-library-project.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/image004.png)
     
   RobotUILibrary is distributed as source, so you can customize the look of the resources to fit in with your applications.  
 
