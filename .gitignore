@@ -4,5 +4,7 @@
 # dirs
 .idea/
 out/
+gen/
+bin/
 
 ButtonDrive/local.properties
