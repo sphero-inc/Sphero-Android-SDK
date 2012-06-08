@@ -140,6 +140,7 @@ file. Add the following,
 - You will also need to add permissions to use bluetooth, 
 
 		    <uses-permission android:name="android.permission.BLUETOOTH" />
+		    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
 - Add `android:launchMode="singleTask"` to the main activity.
 

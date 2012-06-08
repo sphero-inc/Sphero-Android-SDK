@@ -10,6 +10,7 @@
 
     <!-- For Sphero -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <application android:label="@string/app_name" >
         <activity
