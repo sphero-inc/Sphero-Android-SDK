@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">OptionFlags</string>
+    <string name="bit0_description">Prevent Sleep in Charger: </string>
+    <string name="bit1_description">Enable Vector Drive: </string>
+    <string name="bit2_description">Disable Self-Level in Charger: </string>
+    <string name="bit3_description">Tail Light Always On: </string>
+    <string name="bit4_description">Enable Motion Timeout: </string>
+    <string name="bits">Bits: </string>
+
+</resources>
