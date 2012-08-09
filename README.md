@@ -37,7 +37,7 @@ In the samples directory, you will find the RobotUILibrary directory.  Because a
 
 From this screen, browse to the RobotUILibrary directory in the samples directory.  Once the screen looks like the one below, click finish.  You do not need to check the "Copy Project into Workspace" box.
 
-  ![QSG-library-project.png](https://github.com/michaelorbotix/Sphero-Android-SDK/raw/master/assets/image005.png)
+  ![QSG-library-project.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/image005.png)
 
 ### Importing the HellowWorld Sample
 
@@ -47,7 +47,7 @@ Within the same Eclipse workspace, follow the same steps for importing RobotUILi
 
 Also, if you see the error below, you imported the wrong RobotUILibrary.  Make sure you imported the RobotUILibrary under the samples directory.
 
-   ![QSG-library-project.png](https://github.com/michaelorbotix/Sphero-Android-SDK/raw/master/assets/image006.png)
+   ![QSG-library-project.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/image006.png)
 
 Run the HelloWorld sample as an Android Application, and you should see the UI to connect to a Sphero pop up.  If you click connect, and you see Sphero blink, you have completely your first Sphero app!  
 
@@ -64,7 +64,7 @@ When creating a new project, or using an existing project, it is important to ta
 
  Place the libs folder from the SDK into your Android project's folder.  
    
-  ![QSG-library-project.png](https://github.com/michaelorbotix/Sphero-Android-SDK/raw/master/assets/image002.png)
+  ![QSG-library-project.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/image002.png)
 
 <!--### Setting the dependency to RobotLibrary.jar.  
    
@@ -77,7 +77,7 @@ When creating a new project, or using an existing project, it is important to ta
  Import the library into workspace using Import->General->Existing projects    
  into Workspace. You can have the importer copy the source into your workspace folder or you can place it into the workspace folder before importing. You will need to add RobotUILibrary as library project to your application project from the projects Properties dialog.
     
-  ![QSG-library-project.png](https://github.com/michaelorbotix/Sphero-Android-SDK/raw/master/assets/image004.png)
+  ![QSG-library-project.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/image004.png)
     
   RobotUILibrary is distributed as source, so you can customize the look of the resources to fit in with your applications.  
 
