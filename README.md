@@ -33,7 +33,7 @@ The first step to making Sphero apps is getting the HelloWorld sample to run cor
 
 Start by creating a new Eclipse workspace.  Name it something like SpheroDev or MyBallsWorkshop.
 
-In the samples directory, you will find the RobotUILibrary directory.  It contains the UI code to connect to a Sphero packaged as a source library.  Since almost all Sphero applications rely on this, we need to import this project first.  Right click in the package explorer, or click "File" from the menu, and choose import. Under the "General" directory, choose "Existing Projects into Workspace".
+In the samples directory, you will find the RobotUILibrary directory.  Because almost all Sphero applications rely on the RobotUILibrary project to connect to a Sphero, we need to import this first.  Right click in the package explorer, or click "File" from the menu, and choose import. Under the "General" directory, choose "Existing Projects into Workspace".
 
 From this screen, browse to the RobotUILibrary directory in the samples directory.  Once the screen looks like the one below, click finish.  You do not need to check the "Copy Project into Workspace" box.
 
