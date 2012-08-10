@@ -39,7 +39,7 @@ Start by creating a new Eclipse workspace.  Name it something like SpheroDev or 
 
 In the samples directory, you will find the RobotUILibrary directory.  Because almost all Sphero applications rely on the RobotUILibrary project to connect to a Sphero, we need to import this first.  Right click in the package explorer, or click "File" from the menu, and choose import. Under the "General" directory, choose "Existing Projects into Workspace".
 
-From this screen, browse to the RobotUILibrary directory in the samples directory.  Once the screen looks like the one below, click finish.  You #SHOULD NOT# check the "Copy Project into Workspace" box.
+From this screen, browse to the RobotUILibrary directory in the samples directory.  Once the screen looks like the one below, click finish.  You **SHOULD NOT** check the "Copy Project into Workspace" box.
 
   ![QSG-library-project.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/image005.png)
 
