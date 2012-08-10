@@ -31,7 +31,11 @@ The first step to making Sphero apps is getting the HelloWorld sample to run cor
 
 ### Importing the RobotUILibrary
 
-Start by creating a new Eclipse workspace.  Name it something like SpheroDev or MyBallsWorkshop.
+Start by creating a new Eclipse workspace.  Name it something like SpheroDev or MyBallsWorkshop.  Make sure you have these workspace settings.
+
+- Andriod API level 8 (Android 2.2) or greater.
+- Java language compliance level 6.0(1.6) .
+
 
 In the samples directory, you will find the RobotUILibrary directory.  Because almost all Sphero applications rely on the RobotUILibrary project to connect to a Sphero, we need to import this first.  Right click in the package explorer, or click "File" from the menu, and choose import. Under the "General" directory, choose "Existing Projects into Workspace".
 
@@ -43,7 +47,9 @@ From this screen, browse to the RobotUILibrary directory in the samples director
 
 Within the same Eclipse workspace, follow the same steps for importing RobotUILibrary, but this time for the HelloWorld sample.
 
-	Notice: After this step, some samples will show an error of "The project cannot be built until build path errors are resolved".  To resolve this, simply do Project -> Clean…
+	Notice: After this step, some samples will show an error of: 
+	"The project cannot be built until build path errors are resolved".  
+	To resolve this, simply do Project -> Clean…
 
 Also, if you see the error below, you imported the wrong RobotUILibrary.  Make sure you imported the RobotUILibrary under the samples directory.
 
