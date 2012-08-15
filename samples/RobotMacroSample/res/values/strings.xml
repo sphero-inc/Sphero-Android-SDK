@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Sphero Hello World</string>
+    <string name="instruction">Click the \"Hello, World!\" button to flash the LED</string>
+</resources>
