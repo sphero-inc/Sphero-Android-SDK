@@ -33,7 +33,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
-import com.orbotix.sample.helloworld.FileManager;
 import com.orbotix.sample.helloworld.R;
 
 /**
@@ -66,7 +65,7 @@ public class RobotMacroActivity extends Activity
         
         //Change Text and Value depending on slider
         final TextView robotspeedlabel = (TextView) findViewById(R.id.speedlabel);
-        final TextView robotdelaylabel = (TextView) findViewById(R.id.delayLabel);
+        final TextView robotdelaylabel = (TextView) findViewById(R.id.delaylabel);
         final TextView robotlooplabel = (TextView) findViewById(R.id.looplabel);
 
         
@@ -75,16 +74,16 @@ public class RobotMacroActivity extends Activity
         robotspeedBar.setMax(10);
         robotspeedBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
    
-   @Override
+ 
    public void onStopTrackingTouch(SeekBar robotspeedBar) {
    }
    
-   @Override
+
    public void onStartTrackingTouch(SeekBar robotspeedBar) {
     // TODO Auto-generated method stub
    }
    
-   @Override
+ 
    public void onProgressChanged(SeekBar robotspeedBar, int progress,
      boolean fromUser) {
     robotdelaylabel.setText("Processing "+progress+"% ");
@@ -99,16 +98,16 @@ public class RobotMacroActivity extends Activity
         robotdelayBar.setMax(10000);
         robotdelayBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
    
-   @Override
+ 
    public void onStopTrackingTouch(SeekBar robotdelayBar) {
    }
    
-   @Override
+
    public void onStartTrackingTouch(SeekBar robotdelayBar) {
     // TODO Auto-generated method stub
    }
    
-   @Override
+
    public void onProgressChanged(SeekBar robotdelayBar, int progress,
      boolean fromUser) {
 	    //pass delayBar's value to delayValue
@@ -125,16 +124,16 @@ public class RobotMacroActivity extends Activity
         robotloopBar.setMax(10);
         robotloopBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
    
-   @Override
+
    public void onStopTrackingTouch(SeekBar robotloopBar) {
    }
    
-   @Override
+
    public void onStartTrackingTouch(SeekBar robotloopBar) {
     // TODO Auto-generated method stub
    }
    
-   @Override
+
    public void onProgressChanged(SeekBar robotloopBar, int progress,
      boolean fromUser) {
     robotdelaylabel.setText("Processing "+progress+"% ");
@@ -155,7 +154,7 @@ public class RobotMacroActivity extends Activity
         //Abort macro
         
         //ColorFade with Loop
-        ImageButton macrobutton1 = (ImageButton) findViewById(R.id.button1);  
+        Button macrobutton1 = (Button) findViewById(R.id.button1);  
     	macrobutton1.setOnClickListener(new View.OnClickListener() { 
     		
     	    public void onClick(View v) {  
@@ -166,7 +165,7 @@ public class RobotMacroActivity extends Activity
     	        
     	    	if(mRobot != null){
                     MacroObject macro= null;
-                    try {
+        
                     	//Create a new macro object to send to Sphero
                         MacroObject fadeMacro = new MacroObject();
                         fadeMacro.addCommand(new LoopStart(loopValue));
@@ -177,17 +176,13 @@ public class RobotMacroActivity extends Activity
                         fadeMacro.setMode(MacroObject.MacroObjectMode.Normal);
                         fadeMacro.setRobot(mRobot);
                         fadeMacro.playMacro();
-					} catch (IOException e) {
-						throw new RuntimeException(e);
-					} catch (Exception e) {
-						throw new RuntimeException(e);
-					}
+
                 }
     	    }  
     	});
     
     	//Set up Shape Square
-    	ImageButton macrobutton2 = (ImageButton) findViewById(R.id.button1);  
+    	Button macrobutton2 = (Button) findViewById(R.id.button1);  
     	macrobutton2.setOnClickListener(new View.OnClickListener() { 
     		
     	    public void onClick(View v) {  
@@ -200,7 +195,7 @@ public class RobotMacroActivity extends Activity
     	    	
     	    	if(mRobot != null){
                     MacroObject macro= null;
-                    try {
+         
                     	//Create a new macro object to send to Sphero
                         MacroObject squareMacro = new MacroObject();
                         //Change Color
@@ -233,17 +228,13 @@ public class RobotMacroActivity extends Activity
                         squareMacro.setMode(MacroObject.MacroObjectMode.Normal);
                         squareMacro.setRobot(mRobot);
                         squareMacro.playMacro();
-					} catch (IOException e) {
-						throw new RuntimeException(e);
-					} catch (Exception e) {
-						throw new RuntimeException(e);
-					}
+
                 }
     	    }  
     	});
      	
     	//Set up Shape 
-     	ImageButton macrobutton3 = (ImageButton) findViewById(R.id.button1);  
+     	Button macrobutton3 = (Button) findViewById(R.id.button1);  
      	macrobutton2.setOnClickListener(new View.OnClickListener() { 
      		
      	    public void onClick(View v) {  
@@ -254,7 +245,7 @@ public class RobotMacroActivity extends Activity
      	    	
      	    	if(mRobot != null){
                      MacroObject macro= null;
-                     try {
+         
                      	//Create a new macro object to send to Sphero
                         MacroObject shapeMacro = new MacroObject();
                         //Sets loop from slider value
@@ -283,17 +274,13 @@ public class RobotMacroActivity extends Activity
                        shapeMacro.setRobot(mRobot);
                        //Send Macro
                        shapeMacro.playMacro();
- 					} catch (IOException e) {
- 						throw new RuntimeException(e);
- 					} catch (Exception e) {
- 						throw new RuntimeException(e);
- 					}
+
                  }
      	    }  
      	});
      	
      	//Set up Shape Figure8
-     	ImageButton macrobutton4 = (ImageButton) findViewById(R.id.button1);  
+     	Button macrobutton4 = (Button) findViewById(R.id.button1);  
      	macrobutton2.setOnClickListener(new View.OnClickListener() { 
      		
      	    public void onClick(View v) {  
@@ -304,7 +291,7 @@ public class RobotMacroActivity extends Activity
      	    	
      	    	if(mRobot != null){
                      MacroObject macro= null;
-                     try {
+         
                      	//Create a new macro object to send to Sphero
                         MacroObject figureMacro = new MacroObject();
                         //Tell Robot to look forward and to start driving
@@ -326,18 +313,14 @@ public class RobotMacroActivity extends Activity
                         figureMacro.setMode(MacroObject.MacroObjectMode.Normal);
                        figureMacro.setRobot(mRobot);
                        figureMacro.playMacro();
- 					} catch (IOException e) {
- 						throw new RuntimeException(e);
- 					} catch (Exception e) {
- 						throw new RuntimeException(e);
- 					}
+
                  }
      	    }  
      	});
 
     	
 
-    	ImageButton stopbutton = (ImageButton) findViewById(R.id.button1);  
+    	Button stopbutton = (Button) findViewById(R.id.button1);  
     	stopbutton.setOnClickListener(new View.OnClickListener() { 
     		
     	    public void onClick(View v) {  
