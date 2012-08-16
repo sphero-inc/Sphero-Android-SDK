@@ -1,4 +1,4 @@
-package com.orbotix.sample.helloworld;
+package com.orbotix.sample.macroloader;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

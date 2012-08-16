@@ -1,4 +1,4 @@
-package com.orbotix.sample.helloworld;
+package com.orbotix.sample.macrosample;
 
 import java.io.IOException;
 
@@ -33,12 +33,12 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
-import com.orbotix.sample.helloworld.R;
+import com.orbotix.sample.macrosample.R;
 
 /**
  * Connects to an available Sphero robot, and then flashes its LED.
  */
-public class RobotMacroActivity extends Activity
+public class MacroSample extends Activity
 {
     /**
      * ID for launching the StartupActivity for result to connect to the robot
@@ -144,12 +144,6 @@ public class RobotMacroActivity extends Activity
   });
         
         
-        
-        
-        
-        
-        
-        
         //Macros
         //Abort macro
         
@@ -251,22 +245,19 @@ public class RobotMacroActivity extends Activity
                         //Sets loop from slider value
                         shapeMacro.addCommand(new LoopStart(loopValue));
                         //Change Color
-                        shapeMacro.addCommand(new RGB(0, 255, 0, 255));
-                        //Sphero Roll
-                        shapeMacro.addCommand(new Roll(speedValue, 0, delayValue));
-                        //Change Color
                         shapeMacro.addCommand(new RGB(0, 0, 255, 255));
-                        shapeMacro.addCommand(new Roll(0.0f,0,255));
-                        //Change heading to the angle of the desired Shape
-                        //
-                        //
-                        shapeMacro.addCommand(new Calibrate((360 / loopValue), 255));
+                        for (int i=0; i< loopValue; ++i){
+                        
+                        shapeMacro.addCommand(new Calibrate(i*(360 / loopValue), 255));
                         //Set new calibrated heading to Zero 
                         shapeMacro.addCommand(new Calibrate(0, 255));
                         //Change Color
-                        shapeMacro.addCommand(new RGB(255, 255, 255, 255));
+                        shapeMacro.addCommand(new RGB(0, 255, 0, 255));
                         //Come to Stop
-                       shapeMacro.addCommand(new Roll(0.0f,0,255));
+                       shapeMacro.addCommand(new Roll(speedValue,i*(360 / loopValue),delayValue));
+                       shapeMacro.addCommand(new Roll(0.0f,0,255));  
+                        }
+                        
                        //Loop End
                        shapeMacro.addCommand(new LoopEnd());
                        //Set Macro size

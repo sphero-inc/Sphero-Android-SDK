@@ -1,4 +1,4 @@
-package com.orbotix.sample.helloworld;
+package com.orbotix.sample.macroloader;
 
 import java.io.IOException;
 
@@ -23,12 +23,12 @@ import orbotix.robot.base.RollCommand;
 import orbotix.robot.base.RobotProvider;
 import orbotix.robot.base.StabilizationCommand;
 //import com.orbotix.sample.helloworld.FileManager;
-import com.orbotix.sample.helloworld.R;
+import com.orbotix.sample.macroloader.R;
 
 /**
  * Connects to an available Sphero robot, and then flashes its LED.
  */
-public class MacroSampleActivity extends Activity
+public class MacroLoader extends Activity
 {
     /**
      * ID for launching the StartupActivity for result to connect to the robot
