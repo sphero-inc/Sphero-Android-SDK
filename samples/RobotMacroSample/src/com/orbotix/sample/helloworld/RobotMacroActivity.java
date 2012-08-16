@@ -86,7 +86,7 @@ public class RobotMacroActivity extends Activity
  
    public void onProgressChanged(SeekBar robotspeedBar, int progress,
      boolean fromUser) {
-    robotdelaylabel.setText("Processing "+progress+"% ");
+    robotspeedlabel.setText("Processing "+progress+"% ");
     speedValue = (progress /10);
 
    }
@@ -136,7 +136,7 @@ public class RobotMacroActivity extends Activity
 
    public void onProgressChanged(SeekBar robotloopBar, int progress,
      boolean fromUser) {
-    robotdelaylabel.setText("Processing "+progress+"% ");
+    robotlooplabel.setText("Processing "+progress);
     //pass loopBar's value to loopValue
 	 loopValue = progress;
 
