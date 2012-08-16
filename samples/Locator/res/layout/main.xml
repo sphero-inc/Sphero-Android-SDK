@@ -201,7 +201,7 @@
                             android:id="@+id/txt_locator_vx"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0 mm/s"
+                            android:text="0 cm/s"
                             android:paddingLeft="10dp"
                             />
 
@@ -224,7 +224,7 @@
                             android:id="@+id/txt_locator_vy"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0 mm/s"
+                            android:text="0 cm/s"
                             android:paddingLeft="10dp"
                             />
 
@@ -251,7 +251,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="U"
+                        android:text="0°"
                         android:onClick="upPressed"
                         />
 
@@ -265,21 +265,21 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:text="L"
+                            android:text="270°"
                             android:onClick="leftPressed"
                             />
                     <Button
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:text="S"
+                            android:text="Stop"
                             android:onClick="stopPressed"
                             />
                     <Button
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:text="R"
+                            android:text="90°"
                             android:onClick="rightPressed"
                             />
 
@@ -289,7 +289,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="D"
+                        android:text="180°"
                         android:onClick="downPressed"
                         />
 
