@@ -24,6 +24,13 @@ public class LocatorActivity extends Activity
      * ID for starting the StartupActivity
      */
     private final static int sStartupActivity = 0;
+    
+    /**
+     * Data Streaming Packet Counts
+     */
+    private final static int TOTAL_PACKET_COUNT = 200;
+    private final static int PACKET_COUNT_THRESHOLD = 50;
+    private int mPacketCounter;
 
     /**
      * Robot to from which we are streaming
@@ -39,6 +46,12 @@ public class LocatorActivity extends Activity
         public void onDataReceived(DeviceAsyncData data) {
 
             if(data instanceof DeviceSensorsAsyncData){
+            	
+            	// If we are getting close to packet limit, request more
+            	mPacketCounter++;
+            	if( mPacketCounter > (TOTAL_PACKET_COUNT - PACKET_COUNT_THRESHOLD) ) {
+            		requestDataStreaming();
+            	}
 
                 //get the frames in the response
                 List<DeviceSensorsData> data_list = ((DeviceSensorsAsyncData)data).getAsyncData();
@@ -51,8 +64,8 @@ public class LocatorActivity extends Activity
                         if( locatorData != null ) {
                             ((TextView)findViewById(R.id.txt_locator_x)).setText(locatorData.getPositionX() + " cm");
                             ((TextView)findViewById(R.id.txt_locator_y)).setText(locatorData.getPositionY() + " cm");
-                            ((TextView)findViewById(R.id.txt_locator_vx)).setText(locatorData.getVelocityX() + " mm/s");
-                            ((TextView)findViewById(R.id.txt_locator_vy)).setText(locatorData.getVelocityY() + " mm/s");
+                            ((TextView)findViewById(R.id.txt_locator_vx)).setText(locatorData.getVelocityX() + " cm/s");
+                            ((TextView)findViewById(R.id.txt_locator_vy)).setText(locatorData.getVelocityY() + " cm/s");
                         }
                     }
                 }
@@ -84,10 +97,10 @@ public class LocatorActivity extends Activity
                 mRobot = RobotProvider.getDefaultProvider().findRobot(id);
 
                 // Start streaming Locator values
-                startStreaming();
-
-                // Send a roll command
-                RollCommand.sendCommand(mRobot, 0.0f, 0.6f);
+                requestDataStreaming();
+                
+                //Set the AsyncDataListener that will process each response.
+                DeviceMessenger.getInstance().addAsyncDataListener(mRobot, mDataListener);
 
                 // Let Calibration View know which robot we are connected to
                 CalibrationView calibrationView = (CalibrationView)findViewById(R.id.calibration_widget);
@@ -118,20 +131,13 @@ public class LocatorActivity extends Activity
         }
     }
 
-    private void startStreaming(){
+    private void requestDataStreaming(){
 
         if(mRobot == null) return;
 
-        final int mask = SetDataStreamingCommand.DATA_STREAMING_MASK_OFF;
-
         // Set up a bitmask containing the sensor information we want to stream, in this case locator
-        // With Firmware 1.16, we introduced a 2nd mask to the data streaming command, since we exceeded the options
-        // for the first mask.  Locator's mask is on mask 2.
-        final int mask2 =
-                SetDataStreamingCommand.DATA_STREAMING_MASK2_LOCATOR_X  |
-                SetDataStreamingCommand.DATA_STREAMING_MASK2_LOCATOR_Y  |
-                SetDataStreamingCommand.DATA_STREAMING_MASK2_VELOCITY_X |
-                SetDataStreamingCommand.DATA_STREAMING_MASK2_VELOCITY_Y;
+        // with which only works with Firmware 1.20 or greater.
+        final long mask = SetDataStreamingCommand.DATA_STREAMING_MASK_LOCATOR_ALL;
 
         //Specify a divisor. The frequency of responses that will be sent is 400hz divided by this divisor.
         final int divisor = 50;
@@ -140,16 +146,19 @@ public class LocatorActivity extends Activity
         //and send them at once with a lower frequency, but more packets per response.
         final int packet_frames = 1;
 
-        //Total number of responses before streaming ends. 0 is infinite.
-        final int response_count = 0;
+        // Reset finite packet counter
+        mPacketCounter = 0;
+        
+        // Count is the number of async data packets Sphero will send you before
+        // it stops.  You want to register for a finite count and then send the command
+        // again once you approach the limit.  Otherwise data streaming may be left
+        // on when your app crashes, putting Sphero in a bad state 
+        final int response_count = TOTAL_PACKET_COUNT;
 
-        // Send this command to Sphero to start streaming
-        // This command was added with Firmware 1.16, so if you call this with a ball that has an older version
-        // it may not work. However the old command with only one mask will still work on Firmware >= 1.16
-        SetDataStreamingCommand.sendCommand(mRobot, divisor, packet_frames, mask, response_count, mask2);
 
-        //Set the AsyncDataListener that will process each response.
-        DeviceMessenger.getInstance().addAsyncDataListener(mRobot, mDataListener);
+        // Send this command to Sphero to start streaming.  
+        // If your Sphero is on Firmware less than 1.20, Locator values will display as 0's
+        SetDataStreamingCommand.sendCommand(mRobot, divisor, packet_frames, mask, response_count);
     }
 
     /**
