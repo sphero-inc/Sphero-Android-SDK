@@ -293,7 +293,7 @@ public class MacroSample extends Activity
                         figureMacro.addCommand(new RotateOverTime(360, delayValue));
                         //Add delay to allow the rotateovertime command to perform.
                         figureMacro.addCommand(new Delay(delayValue));
-                        //Rotate to pertform the 2nd turn in the negitive direction
+                        //Rotate to perform the 2nd turn in the negitive direction
                         figureMacro.addCommand(new RotateOverTime(-360, delayValue));
                         //Add delay to allow the rotateovertime command to perform.
                         figureMacro.addCommand(new Delay(delayValue));

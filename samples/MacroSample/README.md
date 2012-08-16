@@ -1,31 +1,82 @@
-#HelloWorld
 
-This sample code demonstrates how to connect to a Sphero and blink it's RGB LED blue. Also, the code sample is the bases for the application created in the Quick Start Guide. 
+![logo](http://update.orbotix.com/developer/sphero-small.png)
 
-The connection is made by the StartupActivity which is include in the RobotUILibrary. The StartupActivity is launch in the HelloWorldActivity's ``onStart()`` method, and the `onActivityResult()` is used to capture a Robot object that is used to reference the connected Sphero. The robot's unique identifier is returned in the StartupActivity's results Intent data, and is retrieved with the following code line.
+# Temporary Macro Sample
 
-	            final String robot_id = data.getStringExtra(StartupActivity.EXTRA_ROBOT_ID);
+Adding MacroLab macros to app
+importing the files out of MacroLab:
 
-Next, you need to get a reference to a Robot object from RobotProvider using the following line of code.
+Follow the tutorial below to get the file attached to an E-mail to your own address.
 
-                mRobot = RobotProvider.getDefaultProvider().findRobot(robot_id);
+http://forum.gosphero.com/showthread...5-Share-Macros
 
-RobotProvider is a singleton that is used to manage connected Spheros, and is capable of allowing multiple connections. So, the Robot object is how you reference which Sphero to communicate with. 
+Placing Files in Xcode:
 
-The final call in `onActivityResult()` is to ``blink()``, which is method that toggles the RGB LED's blue component on or off every second. The LED is controlled by using the RGBLEDOutputCommand class to message the device. This is a subclass of DeviceCommand which is used to encapsulate commands, and posted to DeviceMessenger. DeviceCommand subclasses have `sendCommand()` class methods that post the command to DeviceMessenger for convenience. The blink method commands the device to turn off the LED with the following code line.
+Drag file into assets.
 
-                RGBLEDOutputCommand.sendCommand(mRobot, 0, 0, 0);
+Import MacroCommands and AbortMacro from RobotLibrary:
+</br>
 
-Where `mRobot` is the reference to the Robot object that the API uses determine which device to send a command to, and the last arguments set the brightness of red, green, and blue components of the LED. In this case, all color components are turned off. The method sets the blue LED component to full brightness with the following code line.
+Calling the files in Main Activity:
 
-                RGBLEDOutputCommand.sendCommand(mRobot, 0, 0, 255);
+Code:
+  
+	Button macrobutton1 = (Button) findViewById(R.id.button1);  
+    	macrobutton1.setOnClickListener(new View.OnClickListener() { 
+    		
+    	    public void onClick(View v) {  
+                //Aborts Previous Macro Command
+    	        AbortMacroCommand.sendCommand(mRobot);
+    	        StabilizationCommand.sendCommand(mRobot, true);
+    	        RGBLEDOutputCommand.sendCommand(mRobot, 255, 255, 255);
+    	        
+    	        //Checks if Robot is Null
+    	    	if(mRobot != null){
+                	FileManager files= new FileManager();
+                    MacroObject macro= null;
+                    try {
+                    	 //opens the Macro Binary dance1
+						 macro = files.getMacro(v.getContext(), "dance1.sphero"); //Small Dance
+						 //Sets the macro size
+						 macro.setMode(MacroObjectMode.Normal);
+	                     //Set Robot
+						 macro.setRobot(mRobot);
+						 //Send Macro to Sphero
+	                     macro.playMacro(); 
+					} catch (IOException e) {
+						throw new RuntimeException(e);
+					} catch (Exception e) {
+						throw new RuntimeException(e);
+					}
+                }
+    	    }  
+    	});
+    
 
-It finally uses a `Handler` object to call it self after a 1 second delayed with the lit boolean parameter toggled, thus toggling the blue LED component on and off.
+Stopping all actions:
 
-When the application closes the connection is closed by the following line in the `onStop()` method.
+</br>
+When you want to stop a previous played command, its easy to send in an Abort and then reset the Sphero's state you want it to continue in.
+Code:
 
-        RobotProvider.getDefaultProvider().removeAllControls();
- 
+                //Aborts Previous Macro Command
+    	        AbortMacroCommand.sendCommand(mRobot);
+    	        StabilizationCommand.sendCommand(mRobot, true);
+
+Chunky Macros vs Normal Macros:
+</br>
+There are two forms of macro sizes; normal and chunky. 
+</br>
+Most macros can be loaded as normal macros but for long events or dances, (like the example below) the user would need to load it as a chunky command.
+Chunky Macro are any commands exceeding 254 bytes
+	
+	 //opens the Macro Binary dance1
+						 macro = files.getMacro(v.getContext(), "bigdance.sphero"); //Shape
+						 //Sets the macro size
+						 macro.setMode(MacroObjectMode.Chunky);
+	                     
 
 
 
+</br>
+The Sample includes 4 macros that include a strobe, clover, small dance and large dance.
