@@ -394,7 +394,7 @@ public class CalibrationView extends WidgetGraphicView implements Controller {
 
         //If there is a robot, then rotate it
         if(mRobot != null){
-            RollCommand.sendCommand(mRobot, angle, 0.0f, true);
+            RollCommand.sendCommand(mRobot, angle, 0.0f, false);
         }
 
         //Run any possibly overridden onRotation method
