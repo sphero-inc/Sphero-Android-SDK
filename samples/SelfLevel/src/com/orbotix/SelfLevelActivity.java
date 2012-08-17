@@ -123,7 +123,7 @@ public class SelfLevelActivity extends Activity
     public void abortPressed(View v) {
         // Easy command to abort self level
         SelfLevelCommand.sendCommandAbortSelfLevel(mRobot);
-
+        
         // Let the user know the ball is aborting self level
         ((TextView)findViewById(R.id.txt_self_level)).setText("Aborting...");
     }
@@ -145,7 +145,7 @@ public class SelfLevelActivity extends Activity
                 // Print result to text view at the top of the screen
                 TextView resultTextView = (TextView)SelfLevelActivity.this.findViewById(R.id.txt_self_level);
 
-                // Print result
+                // Print result code in human readable format
                 switch( resultCode.getResultCode() ) {
 
                     case SelfLevelCompleteAsyncData.RESULT_CODE_UKNOWN:
@@ -167,7 +167,11 @@ public class SelfLevelActivity extends Activity
                     case SelfLevelCompleteAsyncData.RESULT_CODE_ABORTED:
                         resultTextView.setText("Aborted");
                         break;
-
+                        
+                    case SelfLevelCompleteAsyncData.RESULT_CODE_CHARGER_NOT_FOUND:
+                    	resultTextView.setText("Charger Not Found");
+                        break;
+                        
                     case SelfLevelCompleteAsyncData.RESULT_CODE_SUCCESS:
                         resultTextView.setText("Success");
                         break;

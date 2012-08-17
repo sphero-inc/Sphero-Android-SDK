@@ -36,7 +36,6 @@ public class StreamingActivity extends Activity
 
     /**
      * AsyncDataListener that will be assigned to the DeviceMessager, listen for streaming data, and then do the
-     *
      */
     private DeviceMessenger.AsyncDataListener mDataListener = new DeviceMessenger.AsyncDataListener() {
         @Override
