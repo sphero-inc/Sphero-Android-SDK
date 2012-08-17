@@ -48,153 +48,135 @@ public class MacroLoader extends Activity
         setContentView(R.layout.main);
    
         
-        
+    }
         
         //Normal Macro
         //Smaller macros can be used with Normal Marco
-    	Button macrobutton1 = (Button) findViewById(R.id.button1);  
-    	macrobutton1.setOnClickListener(new View.OnClickListener() { 
-    		
-    	    public void onClick(View v) {  
-                //Aborts Previous Macro Command
-    	        AbortMacroCommand.sendCommand(mRobot);
-    	        StabilizationCommand.sendCommand(mRobot, true);
-    	        RGBLEDOutputCommand.sendCommand(mRobot, 255, 255, 255);
-    	        
-    	        //Checks if Robot is Null
-    	    	if(mRobot != null){
-                	FileManager files= new FileManager();
-                    MacroObject macro= null;
-                    try {
-                    	 //opens the Macro Binary dance1
-						 macro = files.getMacro(v.getContext(), "dance1.sphero"); //Small Dance
-						 //Sets the macro size
-						 macro.setMode(MacroObjectMode.Normal);
-	                     //Set Robot
-						 macro.setRobot(mRobot);
-						 //Send Macro to Sphero
-	                     macro.playMacro(); 
-					} catch (IOException e) {
-						throw new RuntimeException(e);
-					} catch (Exception e) {
-						throw new RuntimeException(e);
-					}
-                }
-    	    }  
-    	});
-    
+
     	
     	//Change Colors:
     	//Chunky Macro are large macros files 
-    	Button macrobutton2 = (Button) findViewById(R.id.button2);  
-    	macrobutton2.setOnClickListener(new View.OnClickListener() { 
-    		
-    	    public void onClick(View v) {  
-                //Aborts Previous Macro Command
-    	    	AbortMacroCommand.sendCommand(mRobot);
-    	        StabilizationCommand.sendCommand(mRobot, true);
-    	        RGBLEDOutputCommand.sendCommand(mRobot, 255, 255, 255);
-    	        //Checks if Robot is Null
-    	    	if(mRobot != null){
-                	FileManager files= new FileManager();
-                    MacroObject macro= null;
-                    try {
-                   	 //opens the Macro Binary dance1
-						 macro = files.getMacro(v.getContext(), "strobelight.sphero");// Large Dance
-						 //Sets the macro size
-						 macro.setMode(MacroObjectMode.Chunky);
-	                     
-	                     //Set Robot
-						 macro.setRobot(mRobot);
-						 //Send Macro to Sphero
-	                     macro.playMacro(); 
-					} catch (IOException e) {
-						throw new RuntimeException(e);
-					} catch (Exception e) {
-						throw new RuntimeException(e);
-					}
-                }
-    	    }  
-    	});
-    	
-    	
-    	//Shape Macros:
-    	//Chunky Macro are large macros files 
-    	Button macrobutton3 = (Button) findViewById(R.id.button4);  
-    	macrobutton2.setOnClickListener(new View.OnClickListener() { 
-    		
-    	    public void onClick(View v) {  
-                //Aborts Previous Macro Command
-    	    	AbortMacroCommand.sendCommand(mRobot);
-    	        StabilizationCommand.sendCommand(mRobot, true);
-    	        RGBLEDOutputCommand.sendCommand(mRobot, 255, 255, 255);
-    	        //Checks if Robot is Null
-    	    	if(mRobot != null){
-                	FileManager files= new FileManager();
-                    MacroObject macro= null;
-                    try {
-                   	 //opens the Macro Binary dance1
-						 macro = files.getMacro(v.getContext(), "symboll.sphero");//Fade
-						 //Sets the macro size
-						 macro.setMode(MacroObjectMode.Chunky);
-	                     //Set Robot
-						 macro.setRobot(mRobot);
-						 //Send Macro to Sphero
-	                     macro.playMacro(); 
-					} catch (IOException e) {
-						throw new RuntimeException(e);
-					} catch (Exception e) {
-						throw new RuntimeException(e);
-					}
-                }
-    	    }  
-    	});
-    	
-    	//Large Dance
-    	//Chunky Macro are large macros files 
-    	Button macrobutton4 = (Button) findViewById(R.id.button5);  
-    	macrobutton2.setOnClickListener(new View.OnClickListener() { 		
-    	    public void onClick(View v) {  
-                //Aborts Previous Macro Command
-    	    	AbortMacroCommand.sendCommand(mRobot);
-    	        StabilizationCommand.sendCommand(mRobot, true);
-    	        RGBLEDOutputCommand.sendCommand(mRobot, 255, 255, 255);
-    	        //Checks if Robot is Null
-    	    	if(mRobot != null){
-                	FileManager files= new FileManager();
-                    MacroObject macro= null;
-                    try {
-                   	 //opens the Macro Binary dance1
-						 macro = files.getMacro(v.getContext(), "bigdance.sphero"); //Shape
-						 //Sets the macro size
-						 macro.setMode(MacroObjectMode.Chunky);
-	                     //Set Robot
-						 macro.setRobot(mRobot);
-						 //Send Macro to Sphero
-	                     macro.playMacro(); 
-					} catch (IOException e) {
-						throw new RuntimeException(e);
-					} catch (Exception e) {
-						throw new RuntimeException(e);
-					}
-                }
-    	    }  
-    	});
-    	
-    	//Abort Macro Commands:
-    	Button stopbutton = (Button) findViewById(R.id.button3);  
-    	stopbutton.setOnClickListener(new View.OnClickListener() { 
-    		
-    	    public void onClick(View v) {  
-    	        AbortMacroCommand.sendCommand(mRobot);//abort command
-    	        StabilizationCommand.sendCommand(mRobot, true); //turn on stabilization
-    	        RGBLEDOutputCommand.sendCommand(mRobot, 255, 255, 255);//make Sphero White
-    	    }  
-    	});
 
+    	
+
+
+
+    //Shape Macros:
+    //Chunky Macro are large macros files 
+    public void commandClicked(View v) {
+        //Aborts Previous Macro Command
+    	AbortMacroCommand.sendCommand(mRobot);
+        StabilizationCommand.sendCommand(mRobot, true);
+        RGBLEDOutputCommand.sendCommand(mRobot, 255, 255, 255);
+        //Checks if Robot is Null
+    	if(mRobot != null){
+        	FileManager files= new FileManager();
+            MacroObject macro= null;
+            try {
+           	 //opens the Macro Binary dance1
+				 macro = files.getMacro(v.getContext(), "symboll.sphero");//Fade
+				 //Sets the macro size
+				 macro.setMode(MacroObjectMode.Chunky);
+                 //Set Robot
+				 macro.setRobot(mRobot);
+				 //Send Macro to Sphero
+                 macro.playMacro(); 
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+        }	
+    }	
+    	
+    public void smalldanceClicked(View v) {
+    	//Aborts Previous Macro Command
+        AbortMacroCommand.sendCommand(mRobot);
+        StabilizationCommand.sendCommand(mRobot, true);
+        RGBLEDOutputCommand.sendCommand(mRobot, 255, 255, 255);
+        
+        //Checks if Robot is Null
+    	if(mRobot != null){
+        	FileManager files= new FileManager();
+            MacroObject macro= null;
+            try {
+            	 //opens the Macro Binary dance1
+				 macro = files.getMacro(v.getContext(), "dance1.sphero"); //Small Dance
+				 //Sets the macro size
+				 macro.setMode(MacroObjectMode.Normal);
+                 //Set Robot
+				 macro.setRobot(mRobot);
+				 //Send Macro to Sphero
+                 macro.playMacro(); 
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+        }
     }
-
+        
+    public void strobeClicked(View v) {
+        //Aborts Previous Macro Command
+    	AbortMacroCommand.sendCommand(mRobot);
+        StabilizationCommand.sendCommand(mRobot, true);
+        RGBLEDOutputCommand.sendCommand(mRobot, 255, 255, 255);
+        //Checks if Robot is Null
+    	if(mRobot != null){
+        	FileManager files= new FileManager();
+            MacroObject macro= null;
+            try {
+           	 //opens the Macro Binary dance1
+				 macro = files.getMacro(v.getContext(), "strobelight.sphero");// Large Dance
+				 //Sets the macro size
+				 macro.setMode(MacroObjectMode.Chunky);
+                 
+                 //Set Robot
+				 macro.setRobot(mRobot);
+				 //Send Macro to Sphero
+                 macro.playMacro(); 
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+    	}
+    }
     
+	//Large Dance
+	//Chunky Macro are large macros files 
+    public void largedanceClicked(View v) {
+        //Aborts Previous Macro Command
+    	AbortMacroCommand.sendCommand(mRobot);
+        StabilizationCommand.sendCommand(mRobot, true);
+        RGBLEDOutputCommand.sendCommand(mRobot, 255, 255, 255);
+        //Checks if Robot is Null
+    	if(mRobot != null){
+        	FileManager files= new FileManager();
+            MacroObject macro= null;
+            try {
+           	 //opens the Macro Binary dance1
+				 macro = files.getMacro(v.getContext(), "bigdance.sphero"); //Shape
+				 //Sets the macro size
+				 macro.setMode(MacroObjectMode.Chunky);
+                 //Set Robot
+				 macro.setRobot(mRobot);
+				 //Send Macro to Sphero
+                 macro.playMacro(); 
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+    	}
+    	}
+    
+    	//Abort Macro Commands:
+    public void stopClicked(View v) {
+        AbortMacroCommand.sendCommand(mRobot);//abort command
+        StabilizationCommand.sendCommand(mRobot, true); //turn on stabilization
+        RGBLEDOutputCommand.sendCommand(mRobot, 255, 255, 255);//make Sphero White
+    }
     
     
     @Override
