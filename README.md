@@ -23,45 +23,11 @@ Before you begin to develop applications that interface with Sphero on Android, 
 ## Installing the Sphero Android SDK
 
  - Download the latest version of the [Sphero Android SDK](https://github.com/orbotix/Sphero-Android-SDK/zipball/master)
-     * *You can always keep up to date by watching our [GitHub Repository](https://github.com/orbotix/Sphero-Android-SDK)*          
+     * *You can always keep up to date by watching our [GitHub Repository](https://github.com/orbotix/Sphero-Android-SDK)*
 
-## The HelloWorld Sample in Eclipse
+### Create a new Android project in Eclipse.  
 
-The first step to making Sphero apps is getting the HelloWorld sample to run correctly.  The sample establishes a Bluetooth connection to your Sphero and makes it blink a color.  If you can get this sample to work, you are clear to try out more advanced samples (using the same steps), and even integrate Sphero into an existing application.
-
-### Importing the RobotUILibrary
-
-Start by creating a new Eclipse workspace.  Name it something like SpheroDev or MyBallsWorkshop.  Make sure you have these workspace settings.
-
-- Andriod API level 8 (Android 2.2) or greater.
-- Java language compliance level 6.0(1.6) .
-
-
-In the samples directory, you will find the RobotUILibrary directory.  Because almost all Sphero applications rely on the RobotUILibrary project to connect to a Sphero, we need to import this first.  Right click in the package explorer, or click "File" from the menu, and choose import. Under the "General" directory, choose "Existing Projects into Workspace".
-
-From this screen, browse to the RobotUILibrary directory in the samples directory.  Once the screen looks like the one below, click finish.  You **SHOULD NOT** check the "Copy Project into Workspace" box.
-
-  ![QSG-library-project.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/image005.png)
-
-### Importing the HellowWorld Sample
-
-Follow the same steps for importing RobotUILibrary, but this time for the HelloWorld sample.
-
-	Notice: After this step, some samples will show an error of: 
-	"The project cannot be built until build path errors are resolved".  
-	To resolve this, simply do Project -> Clean…
-
-Also, if you see the error below, you imported the wrong RobotUILibrary.  Make sure you imported the RobotUILibrary under the samples directory.
-
-   ![QSG-library-project.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/image006.png)
-
-Run the HelloWorld sample as an Android Application, and you should see the UI to connect to a Sphero pop up.  If you click connect, and you see Sphero blink, you have completely your first Sphero app!  
-
-At this point, feel free to try out some of the more advanced samples, like StreamingExample, by importing them into your current workspace.  If you want to take the awesome game you've already made and integrate Sphero, read on!
-
-## Integrating Sphero into an Existing Android Application 
-
-When creating a new project, or using an existing project, it is important to take special notice to the Android API Level and the Java compliance level. The Sphero SDK currently supports: 
+When creating a new project it is important to take special notice to the Android API Level and the Java compliance level. The Sphero SDK currently supports: 
     
  - Andriod API level 8 (Android 2.2) or greater. 
  - Java language compliance level 6.0(1.6) .
@@ -70,41 +36,24 @@ When creating a new project, or using an existing project, it is important to ta
 
  Place the libs folder from the SDK into your Android project's folder.  
    
-  ![QSG-library-project.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/image002.png)
+   ![QSG-libs.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/image002.png)
 
-<!--### Setting the dependency to RobotLibrary.jar.  
+### Setting the dependency to RobotLibrary.jar.  
    
   Set the dependency in the project's properties in the Properties->Java Build Path-> Libraries dialog.  This will allow your project access to all the public method names in RobotLibrary.jar. 
  
- ![QSG-jar-depend.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/image003.png)-->
+ ![QSG-jar-depend.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/image003.png)
     
 ### Adding the RobotUILibrary source library into the workspace.  
 
  Import the library into workspace using Import->General->Existing projects    
- into Workspace. You can have the importer copy the source into your workspace folder or you can place it into the workspace folder before importing. You will need to add RobotUILibrary as library project to your application project from the projects Properties dialog.
+ into Workspace. You can have the importer copy the source into your workspace folder or you can place it into the workspace folder before importing. Once it is imported, you need to set the project dependent on RobotLibrary.jar, which is  added using the Properties->Java Build ->Libraries dialog. You will need to add RobotUILibrary as library project to your application project from the projects Properties dialog.
     
   ![QSG-library-project.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/image004.png)
     
   RobotUILibrary is distributed as source, so you can customize the look of the resources to fit in with your applications.  
 
 ## Using the Sphero Android SDK
-
-### Modify the AndroidManifest.xml file.
-
-Before running the application, you need to add an activity entry for the StartupActivity to the 
-AndroidManifest.xml file. For convenience, you can copy this from the RobotUILibrary project's AndroidManifest.xml 
-file. Add the following,
-
-		<activity android:name="orbotix.robot.app.StartupActivity"
-			android:theme="@android:style/Theme.Translucent"
-			android:launchMode="singleTop"/>
-
-- You will also need to add permissions to use bluetooth, 
-
-		    <uses-permission android:name="android.permission.BLUETOOTH" />
-		    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-
-- Add `android:launchMode="singleTask"` to the main activity.
      
 ### Add code to connect to a sphero.  
     
@@ -114,28 +63,27 @@ file. Add the following,
     
   - To run the StartupActivity, add the following code to the main activity's onStart() method,  
 
-            Intent i = new Intent(this, StartupActivity.class);  
-            startActivityForResult(i, STARTUP_ACTIVITY);  
+        Intent i = new Intent(this, StartupActivity.class);  
+        startActivityForResult(i, STARTUP_ACTIVITY);  
        
    This will launch the StartupActivity using the intent, and sets an activity results 
    identifier. The ``STARTUP_ACTIVITY`` constant is returned in the ``onActivityResult()`` method 
    after the StartupActivity finishes as shown in the code below.  
    
-           private final static int STARTUP_ACTIVITY = 0;
-           private Robot mRobot;
+       private final static int STARTUP_ACTIVITY = 0;
 
-           protected void onActivityResult(int requestCode, int resultCode, Intent data){
-               super.onActivityResult(requestCode, resultCode, data);
-               if(requestCode == STARTUP_ACTIVITY && resultCode == RESULT_OK){
-                   //Get the connected Robot
-                   final String robot_id = data.getStringExtra(StartupActivity.EXTRA_ROBOT_ID);  // 1
-                   if(robot_id != null && !robot_id.equals("")){
-                       mRobot = RobotProvider.getDefaultProvider().findRobot(robot_id);          // 2
-                   }
-                   //Start blinking
-                   blink(false);                                                                 // 3
-              }
-            }
+       protected void onActivityResult(int requestCode, int resultCode, Intent data){
+           super.onActivityResult(requestCode, resultCode, data);
+           if(requestCode == STARTUP_ACTIVITY && resultCode == RESULT_OK){
+               //Get the connected Robot
+               final String robot_id = data.getStringExtra(StartupActivity.EXTRA_ROBOT_ID);  // 1
+               if(robot_id != null && !robot_id.equals("")){
+                   mRobot = RobotProvider.getDefaultProvider().findRobot(robot_id);          // 2
+               }
+               //Start blinking
+               blink(false);                                                                 // 3
+           }
+        }
     
    1.	This line gets an identifier for the robot that was connected returned from the activity.  
    2. 	This line gets a Robot object for the robot identifier which is used to identifier the connected
@@ -179,20 +127,23 @@ methods that will post messages to the DeviceMessenger singleton. Here is the co
 3.  This line creates a Handler that is used to post a delayed call to the `blink()` method after 1 second
 	with the lit parameter inverted, so the next call toggles the LED on or off.
 
+### Modify the AndroidManifest.xml file.
 
-### Closing the Connection
+Before running the application, you need to add an activity entry for the StartupActivity to the 
+AndroidManifest.xml file. For convenience, you can copy this from the RobotUILibrary project's AndroidManifest.xml 
+file. Add the following,
 
-When your application is closing, it will call the onStop() method.  This is where we should properly disconnect Sphero and revert any changes we made to the device.  For example, if we turned on the tail light, we should be sure to turn it off here.  Or, if our application drives Sphero, we should be sure to send a `RollCommand.sendStop(mRobot)` to avoid a runaway ball. 
+		<activity android:name="orbotix.robot.app.StartupActivity"
+			android:theme="@android:style/Theme.Translucent"
+			android:launchMode="singleTop"/>
 
-    @Override
-    protected void onStop() {
-        super.onStop();
+- You will also need to add permissions to use bluetooth, 
 
-        mRobot = null;
+		    <uses-permission android:name="android.permission.BLUETOOTH" />
+		    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
-        //Disconnect Robot
-        RobotProvider.getDefaultProvider().removeAllControls();
-    }
+- Add `android:launchMode="singleTask"` to the main activity.
+
 
 ### Run on a device.
 

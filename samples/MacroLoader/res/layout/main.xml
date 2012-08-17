@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ff888888" >
+
+    
+        <Button
+        android:id="@+id/button1"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        android:text="Small Dance" 
+        android:onClick="smalldanceClicked"/>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:text="Strobe" android:layout_centerHorizontal="true"
+        android:onClick="strobeClicked"/>
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button2"
+        android:layout_alignRight="@+id/button2"
+        android:layout_below="@+id/button2"
+        android:layout_marginTop="100dp"
+        android:text="Stop" 
+        android:onClick="stopClicked"/>
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="300dp"
+        android:text="Large Dance" 
+        android:onClick="largedanceClicked"/>
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="Command symbol" android:layout_marginTop="250dp"
+        android:onClick="commandClicked"/>
+
+    
+    
+</RelativeLayout>

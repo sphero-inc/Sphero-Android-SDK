@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ff888888"
+    >
+    
+    
+    <SeekBar
+        android:id="@+id/speedBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="32dp" />
+
+    <SeekBar
+        android:id="@+id/loopBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="100dp" android:keepScreenOn="false"
+        />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="Stop" android:layout_centerHorizontal="true"
+        android:onClick="stopClicked"/>
+
+    <SeekBar
+        android:id="@+id/delayBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="175dp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="320dp"
+        android:text="Fade Colors" android:layout_centerHorizontal="true"
+        android:onClick="fadeClicked"/>
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:text="Shapes" android:layout_marginTop="270dp" android:layout_centerHorizontal="true"
+        android:onClick="shapeClicked"/>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="Speed"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:text="Loop"
+        android:textAppearance="?android:attr/textAppearanceLarge" android:layout_marginTop="75dp"/>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:text="Delay"
+        android:textAppearance="?android:attr/textAppearanceLarge" android:layout_marginTop="150dp"/>
+
+    <TextView
+        android:id="@+id/speedlabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="0"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/looplabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="0"
+        android:textAppearance="?android:attr/textAppearanceLarge" android:layout_marginTop="75dp"/>
+
+    <TextView
+        android:id="@+id/delaylabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView3"
+        android:layout_alignBottom="@+id/textView3"
+        android:layout_alignParentRight="true"
+        android:text="0"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="Square" android:layout_centerHorizontal="true"
+        android:onClick="squareClicked"/>
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:text="Figure 8" android:layout_marginTop="370dp" android:layout_centerHorizontal="true"
+        android:onClick="figureeightClicked"/>
+    
+</RelativeLayout>
+
