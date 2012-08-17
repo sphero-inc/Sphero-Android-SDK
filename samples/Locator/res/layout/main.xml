@@ -300,9 +300,11 @@
     </LinearLayout>
 
     <!-- Calibration View must be in a FrameLayout to work, since it draws over top the other objects -->
+
     <orbotix.robot.widgets.calibration.CalibrationView
-            android:id="@+id/calibration_widget" android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        android:id="@+id/calibration_widget"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </FrameLayout>
 
