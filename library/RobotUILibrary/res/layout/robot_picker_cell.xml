@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:padding="5dip">
+
+	<CheckedTextView 
+		android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+		android:padding="5dp"
+		android:layout_height="wrap_content" 
+		android:layout_width="match_parent"
+		android:id="@+id/name_label" 
+		android:checkMark="?android:attr/listChoiceIndicatorSingle"
+        android:gravity="center_vertical|center_horizontal"
+        android:background="@drawable/robot_row_background"/>
+</RelativeLayout>

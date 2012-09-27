@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- Generic Dialog Styles -->
+	<style name="Dialog">
+	</style>
+	<style name="Dialog.TitleSpace">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:layout_marginBottom">3dip</item>
+	</style>
+	<style name="Dialog.Title">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_marginLeft">10dip</item>
+	</style>
+	<style name="Dialog.Title.Icon">
+        <item name="android:layout_marginTop">3dip</item>
+		<item name="android:src">@drawable/dialog_icon</item>
+	</style>
+	<style name="Dialog.Title.Text">
+		<item name="android:textColor">#fff</item>
+		<item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+	</style>
+	<style name="Dialog.Background">
+		<item name="android:background">@drawable/dialog_bg</item>
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">match_parent</item>
+	</style>
+	<style name="Dialog.ViewAnimator">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">match_parent</item>
+		<item name="android:inAnimation">@anim/flip_show</item>
+		<item name="android:outAnimation">@anim/flip_hide</item>
+	</style>
+
+	<!-- Color Picker Styles -->
+	<style name="ColorPicker">
+	</style>
+	<style name="ColorPicker.RGBPicker">
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_alignParentLeft">true</item>
+	</style>
+	<style name="ColorPicker.RGBPicker.Text">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_marginLeft">10dp</item>
+		<item name="android:textColor">#fff</item>
+		<item name="android:gravity">center_vertical|right</item>
+	</style>
+	<style name="ColorPicker.RGBPicker.SeekBar">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_marginTop">20dip</item>
+		<item name="android:layout_marginLeft">50dip</item>
+		<item name="android:layout_marginRight">10dip</item>
+		<item name="android:max">255</item>
+	</style>
+	<style name="ColorPicker.DoneButton">
+        <item name="android:background">@drawable/dialog_button_big</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:text">@string/done_button_text</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+	</style>
+	<style name="ColorPicker.DoneButtonLayout">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:padding">5dip</item>
+		<item name="android:layout_alignParentBottom">true</item>
+	</style>
+	<style name="ColorPicker.RGBConversion">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+	</style>
+	<style name="ColorPicker.RGBConversion.HorizontalLayout">
+		<item name="android:orientation">vertical</item>
+		<item name="android:gravity">center_vertical</item>
+		<item name="android:background">@drawable/color_picker_preview_background_wide</item>
+		<item name="android:layout_marginRight">20dip</item>
+		<item name="android:layout_marginLeft">20dip</item>
+		<item name="android:clickable">true</item>
+
+	</style>
+	<style name="ColorPicker.RGBConversion.Text">
+		<item name="android:layout_weight">1.0</item>
+		<item name="android:gravity">center_horizontal</item>
+		<item name="android:textSize">18sp</item>
+	</style>
+	<style name="ColorPicker.RGBConversion.Text.Black">
+		<item name="android:textColor">#000</item>
+	</style>
+	<style name="ColorPicker.RGBConversion.Text.Light">
+		<item name="android:textColor">#fff</item>
+	</style>
+	<style name="ColorPicker.RGBConversion.Text.Dark">
+		<item name="android:textColor">#777</item>
+	</style>
+	<style name="ColorPicker.RGBConversion.Text.Light.Bold">
+		<item name="android:textStyle">bold</item>
+	</style>
+	<style name="ColorPicker.RGBConversion.Text.Dark.Bold">
+		<item name="android:textStyle">bold</item>
+	</style>
+	<style name="ColorPicker.RGBConversion.Layout">
+		<item name="android:background">@drawable/color_picker_rgb_background</item>
+		<item name="android:clickable">true</item>
+	</style>
+	<style name="ColorPicker.RGBConversion.Layout.Landscape">
+		<item name="android:paddingTop">15dip</item>
+		<item name="android:layout_margin">10dip</item>
+	</style>
+	<style name="ColorPicker.ColorPreviews"></style>
+	<style name="ColorPicker.ColorPreviews.Layout">
+		<item name="android:orientation">vertical</item>
+		<item name="android:layout_width">wrap_content</item>
+	</style>
+	<style name="ColorPicker.ColorPreviews.Layout.Overall">
+		<item name="android:layout_height">match_parent</item>
+	</style>
+	<style name="ColorPicker.ColorPreviews.Layout.Previews">
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_margin">10dip</item>
+		<item name="android:background">@drawable/color_picker_preview_background</item>
+
+	</style>
+	<style name="ColorPicker.ColorPreviews.Button">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+
+
+
+	<item name="android:layout_weight">1.0</item></style>
+	<style name="ColorPicker.ColorPreviews.HorizontalPreviews">
+		<item name="android:layout_margin">10dip</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_width">match_parent</item>
+	</style>
+	<style name="ColorPicker.ColorPreviews.Button.Landscape">
+		<item name="android:layout_marginLeft">10dip</item>
+		<item name="android:layout_marginRight">10dip</item>
+	</style>
+
+    <!-- Popover Styles -->
+    <style name="Animations" />
+
+	<!-- PopDownMenu -->
+	<style name="Animations.PopDownMenu" />
+
+	<style name="Animations.PopDownMenu.Center">
+		<item name="@android:windowEnterAnimation">@anim/grow_from_top</item>
+		<item name="@android:windowExitAnimation">@anim/shrink_from_bottom</item>
+	</style>
+
+	<style name="Animations.PopDownMenu.Left">
+		<item name="@android:windowEnterAnimation">@anim/grow_from_topleft_to_bottomright</item>
+		<item name="@android:windowExitAnimation">@anim/shrink_from_bottomright_to_topleft</item>
+	</style>
+
+	<style name="Animations.PopDownMenu.Right">
+		<item name="@android:windowEnterAnimation">@anim/grow_from_topright_to_bottomleft</item>
+		<item name="@android:windowExitAnimation">@anim/shrink_from_bottomleft_to_topright</item>
+	</style>
+
+	<style name="Animations.PopDownMenu.Reflect">
+		<item name="@android:windowEnterAnimation">@anim/pump_top</item>
+		<item name="@android:windowExitAnimation">@anim/disappear</item>
+	</style>
+
+	<!-- PopUpMenu -->
+	<style name="Animations.PopUpMenu" />
+
+	<style name="Animations.PopUpMenu.Center">
+		<item name="@android:windowEnterAnimation">@anim/grow_from_bottom</item>
+		<item name="@android:windowExitAnimation">@anim/shrink_from_top</item>
+	</style>
+
+	<style name="Animations.PopUpMenu.Left">
+		<item name="@android:windowEnterAnimation">@anim/grow_from_bottomleft_to_topright</item>
+		<item name="@android:windowExitAnimation">@anim/shrink_from_topright_to_bottomleft</item>
+	</style>
+
+	<style name="Animations.PopUpMenu.Right">
+		<item name="@android:windowEnterAnimation">@anim/grow_from_bottomright_to_topleft</item>
+		<item name="@android:windowExitAnimation">@anim/shrink_from_topleft_to_bottomright</item>
+	</style>
+
+	<style name="Animations.PopUpMenu.Reflect">
+		<item name="@android:windowEnterAnimation">@anim/pump_bottom</item>
+		<item name="@android:windowExitAnimation">@anim/disappear</item>
+	</style>
+
+
+	<style name="Animations.PopUpMenu.Appear">
+		<item name="@android:windowEnterAnimation">@anim/appear</item>
+		<item name="@android:windowExitAnimation">@anim/disappear</item>
+	</style>
+
+</resources>

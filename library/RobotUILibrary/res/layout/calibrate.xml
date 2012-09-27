@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/BackgroundLayout"
+	style="@style/Dialog.Background">
+	<include layout="@layout/title_space"/>
+
+	<!-- Bottom Bar - done button -->
+	<RelativeLayout android:id="@+id/DoneButtonSpace"
+		style="@style/ColorPicker.DoneButtonLayout">
+		<Button android:id="@+id/DoneButton"
+			style="@style/ColorPicker.DoneButton"
+            android:onClick="onDoneButtonClicked"/>
+	</RelativeLayout>
+
+	<orbotix.robot.widgets.calibration.CalibrationDialView
+		android:id="@+id/CalibrationView"
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:layout_centerHorizontal="true"
+        android:layout_above="@id/DoneButtonSpace"
+        android:layout_below="@+id/TitleSpace"/>
+</RelativeLayout>
