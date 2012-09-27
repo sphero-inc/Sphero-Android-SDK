@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Portrait version of the hsb color picker layout -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/HSBColorPickerBackground"
+	style="@style/Dialog.Background">
+
+	<!-- Top Bar - title and icon -->
+	<TextView android:id="@+id/Title"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerHorizontal="true"
+              android:layout_alignParentTop="true"
+              android:textSize="26dip"
+              android:textStyle="bold"
+              android:textColor="@android:color/white"
+              android:text="@string/color_picker_title"
+              android:layout_marginTop="5dip"
+              android:layout_marginBottom="15dip"/>
+
+
+	<!-- Color Previews -->
+	<LinearLayout android:id="@+id/OldNewPreview"
+		style="@style/ColorPicker.ColorPreviews.HorizontalPreviews"
+		android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp">
+		<Button android:id="@+id/previous_color"
+			style="@style/ColorPicker.ColorPreviews.Button"
+			android:minHeight="60dip"
+			android:layout_marginRight="10dip"
+			android:layout_marginLeft="20dip"/>
+		<Button android:id="@+id/new_color"
+			style="@style/ColorPicker.ColorPreviews.Button"
+			android:minHeight="60dip"
+			android:layout_marginRight="20dip"
+			android:layout_marginLeft="10dip"/>
+	</LinearLayout>
+
+	<!-- RGB Conversion -->
+	<LinearLayout android:id="@+id/RGBConversionLayout"
+		style="@style/ColorPicker.RGBConversion.HorizontalLayout"
+		android:layout_above="@id/OldNewPreview">
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent">
+			<TextView style="@style/ColorPicker.RGBConversion.Text.Dark.Bold"
+				android:layout_marginLeft="15dip"
+				android:text="RED"/>
+			<TextView style="@style/ColorPicker.RGBConversion.Text.Dark.Bold"
+				android:text="GREEN"/>
+			<TextView style="@style/ColorPicker.RGBConversion.Text.Dark.Bold"
+				android:layout_marginRight="18dip"
+				android:text="BLUE"/>
+		</LinearLayout>
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent">
+			<TextView style="@style/ColorPicker.RGBConversion.Text.Light.Bold"
+				android:layout_marginLeft="15dip"
+				android:id="@+id/RValueText"/>
+			<TextView style="@style/ColorPicker.RGBConversion.Text.Light.Bold"
+				android:id="@+id/GValueText"/>
+			<TextView style="@style/ColorPicker.RGBConversion.Text.Light.Bold"
+				android:layout_marginRight="18dip"
+				android:id="@+id/BValueText"/>
+		</LinearLayout>
+	</LinearLayout>
+
+	<!-- Color Wheel -->
+    <ViewAnimator android:id="@+id/ColorPickerViewAnimator"
+            style="@style/Dialog.ViewAnimator"
+            android:layout_above="@id/RGBConversionLayout"
+            android:layout_below="@id/TitleSpace">
+        <RelativeLayout android:id="@+id/ColorWheelLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <orbotix.robot.widgets.HSBColorPickerView
+                android:id="@+id/ColorPickerBase"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
+        <RelativeLayout android:layout_weight="1.0"
+            android:id="@+id/SliderLayout"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content">
+            <TextView android:id="@+id/RedTextView"
+                style="@style/ColorPicker.RGBPicker.Text"
+                android:text="Red"
+                android:layout_alignTop="@+id/RedSeekBar"
+                android:layout_alignBottom="@+id/RedSeekBar"/>
+            <SeekBar android:id="@+id/RedSeekBar"
+                style="@style/ColorPicker.RGBPicker.SeekBar"
+                android:layout_below="@+id/TitleSpace"/>
+            <TextView android:id="@+id/GreenTextView"
+                style="@style/ColorPicker.RGBPicker.Text"
+                android:text="Green"
+                android:layout_alignTop="@+id/GreenSeekBar"
+                android:layout_alignBottom="@+id/GreenSeekBar"/>
+            <SeekBar android:id="@+id/GreenSeekBar"
+                style="@style/ColorPicker.RGBPicker.SeekBar"
+                android:layout_below="@+id/RedSeekBar"/>
+            <TextView android:id="@+id/BlueTextView"
+                style="@style/ColorPicker.RGBPicker.Text"
+                android:text="Blue"
+                android:layout_alignTop="@+id/BlueSeekBar"
+                android:layout_alignBottom="@+id/BlueSeekBar"/>
+            <SeekBar android:id="@+id/BlueSeekBar"
+                style="@style/ColorPicker.RGBPicker.SeekBar"
+                android:layout_below="@+id/GreenSeekBar"/>
+        </RelativeLayout>
+    </ViewAnimator>
+</RelativeLayout>
