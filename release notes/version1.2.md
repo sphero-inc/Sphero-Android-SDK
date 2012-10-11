@@ -14,8 +14,8 @@
 #### New sample code
 
 * Locator - Demonstrates the use of the new Locator API.
-* RobotMacroSample - Demonstrates creating macros in code, and sending them to Sphero.
-* MacroSample - Demonstrates loading macros made in MacroLab from your code.
+* MacroSample - Demonstrates creating macros in code, and sending them to Sphero.
+* MacroLoader - Demonstrates loading macros made in MacroLab from your code.
 * OptionsFlags - Demonstrates the use of the new options flag command.
 * SelfLevel - Demonstrates how to use the self level command which levels the drive mechanism inside Sphero.
 
@@ -33,6 +33,7 @@
 - Multiplayer improvements in handling players disconnecting.
 - Fixed issue with closing connection if app enters the background in Multiplayer.
 - Multiplayer API can transition from started state back to lobby state.
+- The RobotUILibrary's CalibrationActivity sends roll commands correctly for for fast rotations supported in firmware 1.20 or greater.
 
 #### In the samples
 

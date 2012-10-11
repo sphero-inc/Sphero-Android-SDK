@@ -14,3 +14,8 @@ proguard.cfg
 out/
 gen/
 bin/
+
+samples/MacroLoader/.classpath~HEAD
+samples/MacroLoader/.classpath~upstream_master
+samples/MacroLoader/lint.xml~HEAD
+samples/MacroLoader/lint.xml~upstream_master

@@ -34,7 +34,9 @@ When creating a new project it is important to take special notice to the Androi
     
 ### Integrating the Sphero Libraries 
 
- Place the libs folder from the SDK into your Android project's folder.  
+ You can start a new Sphero project using the libraries in the library folder or start a project using one of the sample projects from the samples folder. This quick start guide describes how to start a new project. 
+ 
+ To start, create a new Android project in your Eclipse workspace. Then, place the libs folder from the SDK's library folder into your Android project's folder.  
    
    ![QSG-libs.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/image002.png)
 
@@ -46,8 +48,8 @@ When creating a new project it is important to take special notice to the Androi
     
 ### Adding the RobotUILibrary source library into the workspace.  
 
- Import the library into workspace using Import->General->Existing projects    
- into Workspace. You can have the importer copy the source into your workspace folder or you can place it into the workspace folder before importing. Once it is imported, you need to set the project dependent on RobotLibrary.jar, which is  added using the Properties->Java Build ->Libraries dialog. You will need to add RobotUILibrary as library project to your application project from the projects Properties dialog.
+ Import the source library into your workspace by using Import->General->"Existing projects    
+into Workspace". You can have the importer copy the source into your workspace folder or you can place it into the workspace folder before importing. Once it is imported, you need to set the project dependent on RobotLibrary.jar, which is  added using the Properties->Java Build ->Libraries dialog. You will need to add RobotUILibrary as library project to your application project from the projects Properties dialog.
     
   ![QSG-library-project.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/image004.png)
     
