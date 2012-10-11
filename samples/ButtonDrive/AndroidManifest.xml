@@ -19,10 +19,5 @@
             </intent-filter>
         </activity>
         
-            <!-- Connecting to Sphero -->
-        <activity android:name="orbotix.robot.app.StartupActivity"
-	            android:screenOrientation="portrait"
-	            android:configChanges="orientation|keyboard|keyboardHidden"
-	            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
     </application>
 </manifest> 

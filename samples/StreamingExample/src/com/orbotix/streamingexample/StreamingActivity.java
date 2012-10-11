@@ -1,23 +1,26 @@
 package com.orbotix.streamingexample;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import orbotix.robot.app.StartupActivity;
+import android.os.Handler;
+import android.view.View;
 import orbotix.robot.base.*;
 import orbotix.robot.sensor.AccelerometerData;
 import orbotix.robot.sensor.AttitudeData;
 import orbotix.robot.sensor.DeviceSensorsData;
+import orbotix.view.connection.SpheroConnectionView;
+import orbotix.view.connection.SpheroConnectionView.OnRobotConnectionEventListener;
 
 import java.util.List;
 
 public class StreamingActivity extends Activity
 {
     /**
-     * ID for starting the StartupActivity
+     * Sphero Connection Activity
      */
-    private final static int sStartupActivity = 0;
-    
+    private SpheroConnectionView mSpheroConnectionView;
+    private Handler mHandler = new Handler();
+
     /**
      * Data Streaming Packet Counts
      */
@@ -43,12 +46,12 @@ public class StreamingActivity extends Activity
 
             if(data instanceof DeviceSensorsAsyncData){
 
-            	// If we are getting close to packet limit, request more
-            	mPacketCounter++;
-            	if( mPacketCounter > (TOTAL_PACKET_COUNT - PACKET_COUNT_THRESHOLD) ) {
-            		requestDataStreaming();
-            	}
-            	
+                // If we are getting close to packet limit, request more
+                mPacketCounter++;
+                if( mPacketCounter > (TOTAL_PACKET_COUNT - PACKET_COUNT_THRESHOLD) ) {
+                    requestDataStreaming();
+                }
+
                 //get the frames in the response
                 List<DeviceSensorsData> data_list = ((DeviceSensorsAsyncData)data).getAsyncData();
                 if(data_list != null){
@@ -88,53 +91,63 @@ public class StreamingActivity extends Activity
         mImuView = (ImuView)findViewById(R.id.imu_values);
         mAccelerometerFilteredView = (CoordinateView)findViewById(R.id.accelerometer_filtered_coordinates);
 
-        //Show the StartupActivity to connect to Sphero
-        startActivityForResult(new Intent(this, StartupActivity.class), sStartupActivity);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(resultCode == RESULT_OK){
-
-            if(requestCode == sStartupActivity){
-
-                //Get the Robot from the StartupActivity
-                String id = data.getStringExtra(StartupActivity.EXTRA_ROBOT_ID);
-                mRobot = RobotProvider.getDefaultProvider().findRobot(id);
-
-                requestDataStreaming();
-                
-                //Set the AsyncDataListener that will process each response.
-                DeviceMessenger.getInstance().addAsyncDataListener(mRobot, mDataListener);
-
-                StabilizationCommand.sendCommand(mRobot, false);
-                FrontLEDOutputCommand.sendCommand(mRobot, 1f);
-            }
-        }
+		// Find Sphero Connection View from layout file
+		mSpheroConnectionView = (SpheroConnectionView)findViewById(R.id.sphero_connection_view);
+		// This event listener will notify you when these events occur, it is up to you what you want to do during them
+		mSpheroConnectionView.setOnRobotConnectionEventListener(new OnRobotConnectionEventListener() {
+			@Override
+			public void onRobotConnectionFailed(Robot arg0) {}
+			@Override
+			public void onNonePaired() {}
+			
+			@Override
+			public void onRobotConnected(Robot arg0) {
+				// Set the robot
+				mRobot = arg0;
+				// Hide the connection view. Comment this code if you want to connect to multiple robots
+				mSpheroConnectionView.setVisibility(View.GONE);
+				
+				// Calling Stream Data Command right after the robot connects, will not work
+				// You need to wait a second for the robot to initialize
+				mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // turn rear light on
+                        FrontLEDOutputCommand.sendCommand(mRobot, 1.0f);
+                        // turn stabilization off
+                        StabilizationCommand.sendCommand(mRobot, false);
+                        // register the async data listener
+                        DeviceMessenger.getInstance().addAsyncDataListener(mRobot, mDataListener);
+                        // Start streaming data
+                        requestDataStreaming();
+                    }
+                }, 1000);
+			}
+		});
     }
 
     @Override
     protected void onStop() {
         super.onStop();
 
+		// Shutdown Sphero connection view
+		mSpheroConnectionView.shutdown();
         if(mRobot != null){
 
             StabilizationCommand.sendCommand(mRobot, true);
             FrontLEDOutputCommand.sendCommand(mRobot, 0f);
 
-            RobotProvider.getDefaultProvider().disconnectControlledRobots();
+            RobotProvider.getDefaultProvider().removeAllControls();
         }
     }
 
     private void requestDataStreaming() {
 
         if(mRobot != null){
-        	
+
             // Set up a bitmask containing the sensor information we want to stream
             final long mask = SetDataStreamingCommand.DATA_STREAMING_MASK_ACCELEROMETER_FILTERED_ALL |
-            				  SetDataStreamingCommand.DATA_STREAMING_MASK_IMU_ANGLES_FILTERED_ALL;
+                    SetDataStreamingCommand.DATA_STREAMING_MASK_IMU_ANGLES_FILTERED_ALL;
 
             // Specify a divisor. The frequency of responses that will be sent is 400hz divided by this divisor.
             final int divisor = 50;
@@ -145,7 +158,7 @@ public class StreamingActivity extends Activity
 
             // Reset finite packet counter
             mPacketCounter = 0;
-            
+
             // Count is the number of async data packets Sphero will send you before
             // it stops.  You want to register for a finite count and then send the command
             // again once you approach the limit.  Otherwise data streaming may be left

@@ -1,0 +1,3 @@
+10 let A = 9
+20 B = A + 11
+30 print A,B

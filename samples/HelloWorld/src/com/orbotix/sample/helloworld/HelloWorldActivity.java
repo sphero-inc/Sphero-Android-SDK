@@ -1,25 +1,22 @@
 package com.orbotix.sample.helloworld;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import orbotix.robot.app.StartupActivity;
+import android.widget.Toast;
 import orbotix.robot.base.RGBLEDOutputCommand;
 import orbotix.robot.base.Robot;
-import orbotix.robot.base.RobotControl;
 import orbotix.robot.base.RobotProvider;
+import orbotix.robot.base.RobotProvider.OnRobotConnectedListener;
+import orbotix.robot.base.RobotProvider.OnRobotDisconnectedListener;
 
 /**
  * Connects to an available Sphero robot, and then flashes its LED.
  */
 public class HelloWorldActivity extends Activity
 {
-    /**
-     * ID for launching the StartupActivity for result to connect to the robot
-     */
-    private final static int STARTUP_ACTIVITY = 0;
-
     /**
      * The Sphero Robot
      */
@@ -31,42 +28,44 @@ public class HelloWorldActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-    }
 
-    @Override
-    protected void onStart() {
-    	super.onStart();
-
-    	//Launch the StartupActivity to connect to the robot
-        Intent i = new Intent(this, StartupActivity.class);
-        startActivityForResult(i, STARTUP_ACTIVITY);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        
-        if(requestCode == STARTUP_ACTIVITY && resultCode == RESULT_OK){
-
-            //Get the connected Robot
-            final String robot_id = data.getStringExtra(StartupActivity.EXTRA_ROBOT_ID);
-            if(robot_id != null && !robot_id.equals("")){
-                mRobot = RobotProvider.getDefaultProvider().findRobot(robot_id);
-            }
-            
-            //Start blinking
-            blink(false);
+        // Tell the Robot Provider to find all the paired robots
+        RobotProvider.getDefaultProvider().findRobots();
+        // Obtain the list of paired Spheros
+        ArrayList<Robot> robots = RobotProvider.getDefaultProvider().getRobots();
+        // Connect to first available robot (only works if 1 or more robots are paired)
+        if( robots.size() > 0 ) {
+        	RobotProvider.getDefaultProvider().control(robots.get(0));
+        	RobotProvider.getDefaultProvider().connectControlledRobots();
         }
-    }
+        
+        // Set the Listener for when the robot has successfully connected
+        RobotProvider.getDefaultProvider().setOnRobotConnectedListener( new OnRobotConnectedListener() {
+			
+			@Override
+			public void onRobotConnected(Robot robot) {
+				// Remember the connected robot reference
+				mRobot = robot;
+				// Blink the robot's LED
+				HelloWorldActivity.this.blink(false);
+			}
+		});
+        
+        // Register to be notified when Sphero disconnects (out of range, battery dead, sleep, etc.)
+        RobotProvider.getDefaultProvider().setOnRobotDisconnectedListener(new OnRobotDisconnectedListener() {
+			@Override
+			public void onRobotDisconnected(Robot robot) {
+				Toast.makeText(HelloWorldActivity.this, "Sphero Disconnected", Toast.LENGTH_SHORT);
+			}
+		});
+    } 
 
     @Override
     protected void onStop() {
         super.onStop();
-
-        mRobot = null;
-
+        mRobot = null;        
         //Disconnect Robot
-        RobotProvider.getDefaultProvider().removeAllControls();
+        RobotProvider.getDefaultProvider().disconnectControlledRobots();
     }
 
     /**

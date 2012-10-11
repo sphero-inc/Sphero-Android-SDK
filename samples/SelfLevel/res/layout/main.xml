@@ -1,167 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-        >
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
-    <TextView
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <TextView
             android:id="@+id/txt_self_level"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:padding="5dip"
-            android:text="Waiting for self level command..."
-            />
+            android:text="Waiting for self level command..." />
 
-    <LinearLayout
-            android:orientation="horizontal"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:orientation="horizontal" >
 
-        <TextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Angle Limit:"
-                />
+                android:text="Angle Limit:" />
 
-        <EditText
+            <EditText
                 android:id="@+id/txtbox_angle_limit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0"
-                />
+                android:text="0" />
+        </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-            android:orientation="horizontal"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:orientation="horizontal" >
 
-        <TextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Timeout (s):"
-                />
+                android:text="Timeout (s):" />
 
-        <EditText
+            <EditText
                 android:id="@+id/txtbox_timeout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0"
-                />
+                android:text="0" />
+        </LinearLayout>
 
-    </LinearLayout>
-
-
-    <LinearLayout
-            android:orientation="horizontal"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:orientation="horizontal" >
 
-        <TextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Accuracy:"
-                />
+                android:text="Accuracy:" />
 
-        <EditText
+            <EditText
                 android:id="@+id/txtbox_accuracy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0"
-                />
+                android:text="0" />
+        </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-            android:orientation="horizontal"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:orientation="horizontal" >
 
-        <TextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Maintain Heading:"
-                />
+                android:text="Maintain Heading:" />
 
-        <CheckBox
+            <CheckBox
                 android:id="@+id/checkbox_heading"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-            android:orientation="horizontal"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:orientation="horizontal" >
 
-        <TextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sleep After:"
-                />
+                android:text="Sleep After:" />
 
-        <CheckBox
+            <CheckBox
                 android:id="@+id/checkbox_sleep"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-            android:orientation="horizontal"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:orientation="horizontal" >
 
-        <TextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Control System:"
-                />
+                android:text="Control System:" />
 
-        <CheckBox
+            <CheckBox
                 android:id="@+id/checkbox_control_system"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-            android:orientation="horizontal"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:orientation="horizontal" >
 
-
-        <Button
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Self Level"
                 android:onClick="selfLevelPressed"
-                />
+                android:text="Self Level" />
 
-        <Button
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Abort!"
                 android:layout_gravity="center"
                 android:onClick="abortPressed"
-                />
-
+                android:text="Abort!" />
+        </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+    <orbotix.view.connection.SpheroConnectionView
+        android:id="@+id/sphero_connection_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#FFF" />
 
+</FrameLayout>

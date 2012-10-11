@@ -89,7 +89,7 @@ public class AvailableGamesActivity extends Activity
             }
         });
 
-        //When the multiplayer service is online, start requesting games
+        // When the multiplayer service is online, start requesting games
         mMultiplayerClient.setOnOnlineListener(new LocalMultiplayerClient.OnOnlineListener() {
             @Override
             public void onOnline(Context context) {

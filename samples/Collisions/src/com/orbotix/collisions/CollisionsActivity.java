@@ -1,12 +1,12 @@
 package com.orbotix.collisions;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import orbotix.robot.app.StartupActivity;
 import orbotix.robot.base.CollisionDetectedAsyncData;
 import orbotix.robot.base.CollisionDetectedAsyncData.CollisionPower;
 import orbotix.robot.base.ConfigureCollisionDetectionCommand;
@@ -16,10 +16,10 @@ import orbotix.robot.base.DeviceAsyncData;
 import orbotix.robot.base.Robot;
 import orbotix.robot.base.RobotProvider;
 import orbotix.robot.sensor.Acceleration;
+import orbotix.view.connection.SpheroConnectionView;
+import orbotix.view.connection.SpheroConnectionView.OnRobotConnectionEventListener;
 
 public class CollisionsActivity extends Activity {
-
-	private static final int STARTUP_ACTIVITY_RESULTS = 0;
 
 	private TextView mAccelXValueLabel;
 	private TextView mAccelYValueLabel;
@@ -32,12 +32,20 @@ public class CollisionsActivity extends Activity {
 	private TextView mTimestampLabel;
 
 	private Robot mRobot;
+	
+    /**
+     * The Sphero Connection View
+     */
+    private SpheroConnectionView mSpheroConnectionView;
+    
+    private Handler mHandler = new Handler();
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		findViewById(R.id.back_layout).requestFocus();
 
 		// initialize value labels
 		mAccelXValueLabel = (TextView) findViewById(R.id.accel_x_value);
@@ -66,14 +74,39 @@ public class CollisionsActivity extends Activity {
 
 		mTimestampLabel = (TextView) findViewById(R.id.time_stamp_value);
 		mTimestampLabel.setText(SystemClock.uptimeMillis() + " ms");
-	}
+		
+        mSpheroConnectionView = (SpheroConnectionView)findViewById(R.id.sphero_connection_view);
+        // Set the connection event listener 
+        mSpheroConnectionView.setOnRobotConnectionEventListener(new OnRobotConnectionEventListener() {
+        	// If the user clicked a Sphero and it failed to connect, this event will be fired
+			@Override
+			public void onRobotConnectionFailed(Robot robot) {}
+			// If there are no Spheros paired to this device, this event will be fired
+			@Override
+			public void onNonePaired() {}
+			// The user clicked a Sphero and it successfully paired.
+			@Override
+			public void onRobotConnected(Robot robot) {
+				mRobot = robot;
+				// Skip this next step if you want the user to be able to connect multiple Spheros
+				mSpheroConnectionView.setVisibility(View.GONE);
+			
+				// Calling Configure Collision Detection Command right after the robot connects, will not work
+				// You need to wait a second for the robot to initialize
+				mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+        				// Start streaming collision detection data
+        				//// First register a listener to process the data
+        				DeviceMessenger.getInstance().addAsyncDataListener(mRobot,
+        						mCollisionListener);
 
-	@Override
-	protected void onStart() {
-		super.onStart();
-
-		Intent intent = new Intent(this, StartupActivity.class);
-		startActivityForResult(intent, STARTUP_ACTIVITY_RESULTS);
+        				ConfigureCollisionDetectionCommand.sendCommand(mRobot, ConfigureCollisionDetectionCommand.DEFAULT_DETECTION_METHOD,
+        						45, 45, 100, 100, 100);
+                    }
+                }, 1000);
+			}
+		});
 	}
 
 	@Override
@@ -85,6 +118,9 @@ public class CollisionsActivity extends Activity {
 		
 		// Remove async data listener
 		DeviceMessenger.getInstance().removeAsyncDataListener(mRobot, mCollisionListener);
+		
+		// Shutdown Sphero connection view
+		mSpheroConnectionView.shutdown();
 		
 		// Disconnect from the robot.
 		RobotProvider.getDefaultProvider().removeAllControls();
@@ -128,31 +164,4 @@ public class CollisionsActivity extends Activity {
 			}
 		}
 	};
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-
-		if (requestCode == STARTUP_ACTIVITY_RESULTS
-				&& resultCode == Activity.RESULT_OK) {
-			// Get a reference to the connected Sphero
-			final String robot_id = data
-					.getStringExtra(StartupActivity.EXTRA_ROBOT_ID);
-
-			if (robot_id != null && !robot_id.equals("")) {
-				mRobot = RobotProvider.getDefaultProvider().findRobot(robot_id);
-			}
-
-			// Start streaming collision detection data
-			//// First register a listener to process the data
-			DeviceMessenger.getInstance().addAsyncDataListener(mRobot,
-					mCollisionListener);
-
-			//// Now send a command to enable streaming collisions
-			//// 
-			ConfigureCollisionDetectionCommand.sendCommand(mRobot, ConfigureCollisionDetectionCommand.DEFAULT_DETECTION_METHOD,
-					45, 45, 100, 100, 100);
-		}
-
-	}
 }

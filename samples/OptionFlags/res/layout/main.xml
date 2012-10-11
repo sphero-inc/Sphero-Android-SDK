@@ -1,225 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-        >
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
-    <ScrollView
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <ScrollView
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent" >
 
-        <LinearLayout
-                android:orientation="vertical"
+            <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                >
+                android:orientation="vertical" >
 
-            <TextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20dp"
                     android:padding="5dp"
-                    android:textStyle="bold"
                     android:text="Set Options"
-                    />
-
-            <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="40dp">
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
 
                 <LinearLayout
-                        android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="40dp" >
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="right">
+                        android:layout_gravity="right"
+                        android:orientation="horizontal" >
 
-                    <TextView
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/bit0_description"
-                            />
+                            android:text="@string/bit0_description" />
 
-                    <CheckBox
+                        <CheckBox
                             android:id="@+id/checkbox_bit0"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            />
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
 
-                </LinearLayout>
-
-                <LinearLayout
-                        android:orientation="horizontal"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="right">
+                        android:layout_gravity="right"
+                        android:orientation="horizontal" >
 
-                    <TextView
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/bit1_description"
-                            />
+                            android:text="@string/bit1_description" />
 
-                    <CheckBox
+                        <CheckBox
                             android:id="@+id/checkbox_bit1"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            />
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
 
-                </LinearLayout>
-
-                <LinearLayout
-                        android:orientation="horizontal"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="right">
+                        android:layout_gravity="right"
+                        android:orientation="horizontal" >
 
-                    <TextView
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/bit2_description"
-                            />
+                            android:text="@string/bit2_description" />
 
-                    <CheckBox
+                        <CheckBox
                             android:id="@+id/checkbox_bit2"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            />
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
 
-                </LinearLayout>
-
-                <LinearLayout
-                        android:orientation="horizontal"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="right">
+                        android:layout_gravity="right"
+                        android:orientation="horizontal" >
 
-                    <TextView
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/bit3_description"
-                            />
+                            android:text="@string/bit3_description" />
 
-                    <CheckBox
+                        <CheckBox
                             android:id="@+id/checkbox_bit3"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            />
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
 
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/bit4_description" />
+
+                        <CheckBox
+                            android:id="@+id/checkbox_bit4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right">
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/bit4_description"
-                            />
-
-                    <CheckBox
-                            android:id="@+id/checkbox_bit4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center">
+                    android:layout_gravity="center"
+                    android:orientation="horizontal" >
 
-                <Button
+                    <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Set Flags"
                         android:onClick="setOptionFlagsPressed"
-                        />
+                        android:text="Set Flags" />
 
-                <Button
+                    <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Restore Defaults"
                         android:layout_gravity="center"
                         android:onClick="restoreDefaultOptionFlagsPressed"
-                        />
+                        android:text="Restore Defaults" />
+                </LinearLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
+                <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingRight="50dp">
+                    android:paddingRight="50dp" >
 
-                <TextView
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="20dp"
                         android:padding="5dp"
-                        android:textStyle="bold"
                         android:text="Current Option Flags"
-                        />
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
 
-                <TextView
+                    <TextView
                         android:id="@+id/txt_bit0"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/bit0_description"
                         android:layout_gravity="right"
-                        />
-                <TextView
+                        android:text="@string/bit0_description" />
+
+                    <TextView
                         android:id="@+id/txt_bit1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/bit1_description"
                         android:layout_gravity="right"
-                        />
-                <TextView
+                        android:text="@string/bit1_description" />
+
+                    <TextView
                         android:id="@+id/txt_bit2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/bit2_description"
                         android:layout_gravity="right"
-                        />
-                <TextView
+                        android:text="@string/bit2_description" />
+
+                    <TextView
                         android:id="@+id/txt_bit3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/bit3_description"
                         android:layout_gravity="right"
-                        />
-                <TextView
+                        android:text="@string/bit3_description" />
+
+                    <TextView
                         android:id="@+id/txt_bit4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/bit4_description"
                         android:layout_gravity="right"
-                        />
+                        android:text="@string/bit4_description" />
+                </LinearLayout>
 
-            </LinearLayout>
-
-            <Button
+                <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Refresh Flags"
                     android:layout_gravity="center"
                     android:onClick="refreshOptionFlagsPressed"
-                    />
+                    android:text="Refresh Flags" />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
 
-        </LinearLayout>
+    <orbotix.view.connection.SpheroConnectionView
+        android:id="@+id/sphero_connection_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#FFF" />
 
-    </ScrollView>
-
-</LinearLayout>
-
+</FrameLayout>
