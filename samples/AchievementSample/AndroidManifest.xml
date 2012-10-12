@@ -3,6 +3,8 @@
       package="orbotix.sample.achievement"
       android:versionCode="1"
       android:versionName="1.0">
+      
+    <uses-sdk android:minSdkVersion="8" />
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -18,7 +20,7 @@
             </intent-filter>
         </activity>
         
-        <activity android:name="orbotix.achievement.SpheroWorldWebView"
+        <activity android:name="SpheroWorldWebView"
                   android:screenOrientation="portrait"
                   android:configChanges="orientation|keyboard|keyboardHidden"
                   android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"

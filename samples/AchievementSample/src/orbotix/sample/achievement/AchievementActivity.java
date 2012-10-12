@@ -1,16 +1,10 @@
 package orbotix.sample.achievement;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 import orbotix.achievement.AchievementManager;
-import orbotix.achievement.SpheroWorldWebView;
 
 public class AchievementActivity extends Activity
 {

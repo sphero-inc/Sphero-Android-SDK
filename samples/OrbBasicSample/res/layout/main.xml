@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <Button
+            android:id="@+id/button_load"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:onClick="loadPressed"
+            android:text="Load" />
+
+        <Button
+            android:id="@+id/button_execute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_toRightOf="@id/button_load"
+            android:onClick="executePressed"
+            android:text="Execute" />
+
+        <Button
+            android:id="@+id/button_erase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_toRightOf="@id/button_execute"
+            android:onClick="erasePressed"
+            android:text="Erase" />
+
+        <Button
+            android:id="@+id/button_abort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_toRightOf="@id/button_erase"
+            android:onClick="abortPressed"
+            android:text="Abort" />
+
+        <TextView
+            android:id="@+id/lbl_status"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/button_load"
+            android:layout_marginLeft="10dp"
+            android:text="Status:" />
+
+        <TextView
+            android:id="@+id/txt_status"
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:layout_below="@id/lbl_status"
+            android:layout_margin="10dp"
+            android:background="#FFFFFF"
+            android:maxLines="40"
+            android:scrollbars="vertical"
+            android:text=""
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/lbl_programs"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_status"
+            android:layout_marginLeft="10dp"
+            android:text="Programs:" />
+
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lbl_programs"
+            android:layout_margin="10dp"
+            android:background="#FFFFFF" />
+    </RelativeLayout>
+
+    <orbotix.view.connection.SpheroConnectionView
+        android:id="@+id/sphero_connection_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#FFF" />
+
+</FrameLayout>

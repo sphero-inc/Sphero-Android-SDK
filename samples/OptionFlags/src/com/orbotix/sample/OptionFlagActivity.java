@@ -1,21 +1,20 @@
 package com.orbotix.sample;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.TextView;
-import orbotix.robot.app.StartupActivity;
 import orbotix.robot.base.*;
+import orbotix.view.connection.SpheroConnectionView;
+import orbotix.view.connection.SpheroConnectionView.OnRobotConnectionEventListener;
 
 public class OptionFlagActivity extends Activity
 {
     /**
-     * ID for starting the StartupActivity
+     * Sphero Connection View
      */
-    private final static int sStartupActivity = 0;
+    private SpheroConnectionView mSpheroConnectionView;
 
     /**
      * Robot to from which we are streaming
@@ -29,35 +28,33 @@ public class OptionFlagActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        // Show the StartupActivity to connect to Sphero
-        startActivityForResult(new Intent(this, StartupActivity.class), sStartupActivity);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(resultCode == RESULT_OK){
-
-            if(requestCode == sStartupActivity){
-
-                //Get the Robot from the StartupActivity
-                String id = data.getStringExtra(StartupActivity.EXTRA_ROBOT_ID);
-                mRobot = RobotProvider.getDefaultProvider().findRobot(id);
-
-                // Set the response listener that will process get option flags responses
+		mSpheroConnectionView = (SpheroConnectionView)findViewById(R.id.sphero_connection_view);
+		mSpheroConnectionView.setOnRobotConnectionEventListener(new OnRobotConnectionEventListener() {
+			@Override
+			public void onRobotConnectionFailed(Robot arg0) {}
+			@Override
+			public void onNonePaired() {}
+			
+			@Override
+			public void onRobotConnected(Robot arg0) {
+				mRobot = arg0;
+				mSpheroConnectionView.setVisibility(View.GONE);
+				
+				 // Set the response listener that will process get option flags responses
                 DeviceMessenger.getInstance().addResponseListener(mRobot, mResponseListener);
 
                 // Get the current option flags
                 GetOptionFlagsCommand.sendCommand(mRobot);
-            }
-        }
+			}
+		});
     }
 
     @Override
     protected void onStop() {
         super.onStop();
 
+		// Shutdown Sphero connection view
+		mSpheroConnectionView.shutdown();
         if(mRobot != null){
             // Disconnect properly
             RobotProvider.getDefaultProvider().disconnectControlledRobots();

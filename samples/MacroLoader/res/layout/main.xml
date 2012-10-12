@@ -1,57 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#ff888888" >
 
-    
-        <Button
-        android:id="@+id/button1"
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="150dp"
-        android:text="Small Dance" 
-        android:onClick="smalldanceClicked"/>
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#ff888888" >
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
-        android:text="Strobe" android:layout_centerHorizontal="true"
-        android:onClick="strobeClicked"/>
+        <LinearLayout
+            android:id="@+id/firstrow_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            android:weightSum="2" >
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button2"
-        android:layout_alignRight="@+id/button2"
-        android:layout_below="@+id/button2"
-        android:layout_marginTop="100dp"
-        android:text="Stop" 
-        android:onClick="stopClicked"/>
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="smallDanceClicked"
+                android:text="Small Dance" />
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="300dp"
-        android:text="Large Dance" 
-        android:onClick="largedanceClicked"/>
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="strobeClicked"
+                android:text="Strobe" />
+            
+        </LinearLayout>
 
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:text="Command symbol" android:layout_marginTop="250dp"
-        android:onClick="commandClicked"/>
+        <LinearLayout
+            android:id="@+id/secondrow_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/firstrow_layout"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            android:weightSum="2" >
 
-    
-    
-</RelativeLayout>
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="commandClicked"
+                android:text="Command symbol" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="largeDanceClicked"
+                android:text="Large Dance" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/thirdrow_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/secondrow_layout"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            android:weightSum="2" >
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="stopClicked"
+                android:text="Stop" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <orbotix.view.connection.SpheroConnectionView
+        android:id="@+id/sphero_connection_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#FFF" />
+
+</FrameLayout>

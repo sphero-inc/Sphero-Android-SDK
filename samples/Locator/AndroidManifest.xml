@@ -17,7 +17,5 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="orbotix.robot.app.StartupActivity"/>
-
     </application>
 </manifest> 

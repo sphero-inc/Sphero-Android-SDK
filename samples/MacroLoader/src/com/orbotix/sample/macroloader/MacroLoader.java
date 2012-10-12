@@ -3,26 +3,20 @@ package com.orbotix.sample.macroloader;
 import java.io.IOException;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-//import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
-//import android.widget.ImageButton;
 import orbotix.macro.MacroObject;
 import orbotix.macro.MacroObject.MacroObjectMode;
-import orbotix.macro.RGB;
-import orbotix.macro.Roll;
-import orbotix.macro.RollSD1;
-import orbotix.robot.app.StartupActivity;
 import orbotix.robot.base.AbortMacroCommand;
+import orbotix.robot.base.FrontLEDOutputCommand;
 import orbotix.robot.base.RGBLEDOutputCommand;
 import orbotix.robot.base.Robot;
-import orbotix.robot.base.RollCommand;
-//import orbotix.robot.base.RobotControl;
 import orbotix.robot.base.RobotProvider;
+import orbotix.robot.base.RollCommand;
 import orbotix.robot.base.StabilizationCommand;
-//import com.orbotix.sample.helloworld.FileManager;
+import orbotix.view.connection.SpheroConnectionView;
+import orbotix.view.connection.SpheroConnectionView.OnRobotConnectionEventListener;
 import com.orbotix.sample.macroloader.R;
 
 /**
@@ -30,188 +24,179 @@ import com.orbotix.sample.macroloader.R;
  */
 public class MacroLoader extends Activity
 {
-    /**
-     * ID for launching the StartupActivity for result to connect to the robot
-     */
-    private final static int STARTUP_ACTIVITY = 0;
+	/**
+	 * Sphero Connection View
+	 */
+	private SpheroConnectionView mSpheroConnectionView;
 
-    /**
-     * The Sphero Robot
-     */
-    private Robot mRobot;
-    
-    /** Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-   
-        
-    }
-        
-        //Normal Macro
-        //Smaller macros can be used with Normal Marco
+	/**
+	 * The Sphero Robot
+	 */
+	private Robot mRobot;
 
-    	
-    	//Change Colors:
-    	//Chunky Macro are large macros files 
+	/** Called when the activity is first created. */
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
+		
+		// Grab Connection View
+		mSpheroConnectionView = (SpheroConnectionView)findViewById(R.id.sphero_connection_view);
+		// Listen to Robot Connection Events
+		mSpheroConnectionView.setOnRobotConnectionEventListener(new OnRobotConnectionEventListener() {
+			@Override
+			public void onRobotConnectionFailed(Robot arg0) {}
+			@Override
+			public void onNonePaired() {}
 
-    	
+			@Override
+			public void onRobotConnected(Robot arg0) {
+				// Set the robot
+				mRobot = arg0;
+				// Hide the connection view to only connect to one robot
+				mSpheroConnectionView.setVisibility(View.GONE);
+			}
+		});
 
-
-
-    //Shape Macros:
-    //Chunky Macro are large macros files 
-    public void commandClicked(View v) {
-        //Aborts Previous Macro Command
-    	AbortMacroCommand.sendCommand(mRobot);
-        StabilizationCommand.sendCommand(mRobot, true);
-        RGBLEDOutputCommand.sendCommand(mRobot, 255, 255, 255);
-        //Checks if Robot is Null
-    	if(mRobot != null){
-        	FileManager files= new FileManager();
-            MacroObject macro= null;
-            try {
-           	 //opens the Macro Binary dance1
-				 macro = files.getMacro(v.getContext(), "symboll.sphero");//Fade
-				 //Sets the macro size
-				 macro.setMode(MacroObjectMode.Chunky);
-                 //Set Robot
-				 macro.setRobot(mRobot);
-				 //Send Macro to Sphero
-                 macro.playMacro(); 
+	}
+	
+	/**
+	 * Called when the large dance button is clicked
+	 * @param v
+	 */
+	public void largeDanceClicked(View v) {
+		returnSpheroToStableState();
+		//Checks if Robot is Null
+		if(mRobot != null){
+			FileManager files= new FileManager();
+			MacroObject macro= null;
+			try {
+				//opens the Macro Binary dance1
+				macro = files.getMacro(v.getContext(), "bigdance.sphero"); //Shape
+				//Sets the macro size
+				macro.setMode(MacroObjectMode.Chunky);
+				//Set Robot
+				macro.setRobot(mRobot);
+				//Send Macro to Sphero
+				macro.playMacro(); 
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
-        }	
-    }	
-    	
-    public void smalldanceClicked(View v) {
-    	//Aborts Previous Macro Command
-        AbortMacroCommand.sendCommand(mRobot);
-        StabilizationCommand.sendCommand(mRobot, true);
-        RGBLEDOutputCommand.sendCommand(mRobot, 255, 255, 255);
-        
-        //Checks if Robot is Null
-    	if(mRobot != null){
-        	FileManager files= new FileManager();
-            MacroObject macro= null;
-            try {
-            	 //opens the Macro Binary dance1
-				 macro = files.getMacro(v.getContext(), "dance1.sphero"); //Small Dance
-				 //Sets the macro size
-				 macro.setMode(MacroObjectMode.Normal);
-                 //Set Robot
-				 macro.setRobot(mRobot);
-				 //Send Macro to Sphero
-                 macro.playMacro(); 
+		}
+	}
+	
+	/**
+	 * Called when the command button is clicked
+	 * @param v
+	 */
+	public void commandClicked(View v) {
+		returnSpheroToStableState();
+		//Checks if Robot is Null
+		if(mRobot != null){
+			FileManager files= new FileManager();
+			MacroObject macro= null;
+			try {
+				//opens the Macro Binary dance1
+				macro = files.getMacro(v.getContext(), "symboll.sphero");//Fade
+				//Sets the macro size
+				macro.setMode(MacroObjectMode.Normal);
+				//Set Robot
+				macro.setRobot(mRobot);
+				//Send Macro to Sphero
+				macro.playMacro(); 
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
-        }
-    }
-        
-    public void strobeClicked(View v) {
-        //Aborts Previous Macro Command
-    	AbortMacroCommand.sendCommand(mRobot);
-        StabilizationCommand.sendCommand(mRobot, true);
-        RGBLEDOutputCommand.sendCommand(mRobot, 255, 255, 255);
-        //Checks if Robot is Null
-    	if(mRobot != null){
-        	FileManager files= new FileManager();
-            MacroObject macro= null;
-            try {
-           	 //opens the Macro Binary dance1
-				 macro = files.getMacro(v.getContext(), "strobelight.sphero");// Large Dance
-				 //Sets the macro size
-				 macro.setMode(MacroObjectMode.Chunky);
-                 
-                 //Set Robot
-				 macro.setRobot(mRobot);
-				 //Send Macro to Sphero
-                 macro.playMacro(); 
+		}
+	}
+	
+	/**
+	 * Called when the strobe button is clicked
+	 * @param v
+	 */
+	public void strobeClicked(View v) {
+		returnSpheroToStableState();
+		//Checks if Robot is Null
+		if(mRobot != null){
+			FileManager files= new FileManager();
+			MacroObject macro= null;
+			try {
+				//opens the Macro Binary dance1
+				macro = files.getMacro(v.getContext(), "strobelight.sphero");// Strobe light
+				//Sets the macro size
+				macro.setMode(MacroObjectMode.Normal);
+				//Set Robot
+				macro.setRobot(mRobot);
+				//Send Macro to Sphero
+				macro.playMacro(); 
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
-    	}
-    }
-    
-	//Large Dance
-	//Chunky Macro are large macros files 
-    public void largedanceClicked(View v) {
-        //Aborts Previous Macro Command
-    	AbortMacroCommand.sendCommand(mRobot);
-        StabilizationCommand.sendCommand(mRobot, true);
-        RGBLEDOutputCommand.sendCommand(mRobot, 255, 255, 255);
-        //Checks if Robot is Null
-    	if(mRobot != null){
-        	FileManager files= new FileManager();
-            MacroObject macro= null;
-            try {
-           	 //opens the Macro Binary dance1
-				 macro = files.getMacro(v.getContext(), "bigdance.sphero"); //Shape
-				 //Sets the macro size
-				 macro.setMode(MacroObjectMode.Chunky);
-                 //Set Robot
-				 macro.setRobot(mRobot);
-				 //Send Macro to Sphero
-                 macro.playMacro(); 
+		}
+	}
+	
+	/**
+	 * Called when the smalle dance button is clicked
+	 */
+	public void smallDanceClicked(View v) {
+		returnSpheroToStableState();
+		//Checks if Robot is Null
+		if(mRobot != null){
+			FileManager files= new FileManager();
+			MacroObject macro= null;
+			try {
+				//opens the Macro Binary dance1
+				macro = files.getMacro(v.getContext(), "dance1.sphero"); //Small Dance
+				//Sets the macro size
+				macro.setMode(MacroObjectMode.Normal);
+				//Set Robot
+				macro.setRobot(mRobot);
+				//Send Macro to Sphero
+				macro.playMacro(); 
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
-    	}
-    	}
-    
-    	//Abort Macro Commands:
-    public void stopClicked(View v) {
-        AbortMacroCommand.sendCommand(mRobot);//abort command
-        StabilizationCommand.sendCommand(mRobot, true); //turn on stabilization
-        RGBLEDOutputCommand.sendCommand(mRobot, 255, 255, 255);//make Sphero White
-    }
-    
-    
-    @Override
-    protected void onStart() {
-    	super.onStart();
+		}
+	}
 
-    	//Launch the StartupActivity to connect to the robot
-        Intent i = new Intent(this, StartupActivity.class);
-        startActivityForResult(i, STARTUP_ACTIVITY);
-    }
+	/**
+	 * Called when the stop button is clicked
+	 * @param v
+	 */
+	public void stopClicked(View v) { 
+		returnSpheroToStableState();
+	}
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        
-        if(requestCode == STARTUP_ACTIVITY && resultCode == RESULT_OK){
+	/**
+	 * Puts Spheros back into their default state
+	 */
+	private void returnSpheroToStableState() {
+		AbortMacroCommand.sendCommand(mRobot); // abort command
+		StabilizationCommand.sendCommand(mRobot, true); // turn on stabilization
+		RGBLEDOutputCommand.sendCommand(mRobot, 255, 255, 255); // make Sphero White
+		FrontLEDOutputCommand.sendCommand(mRobot, 0.0f);  // Turn off tail light
+		RollCommand.sendStop(mRobot);  // Stop rolling
+	}
 
-            //Get the connected Robot
-            final String robot_id = data.getStringExtra(StartupActivity.EXTRA_ROBOT_ID);
-            if(robot_id != null && !robot_id.equals("")){
-                mRobot = RobotProvider.getDefaultProvider().findRobot(robot_id);
-            }
-            
-        }
-    }
+	@Override
+	protected void onStop() {
+		super.onStop();
 
-    @Override
-    protected void onStop() {
-        super.onStop();
+		mRobot = null;
 
-        mRobot = null;
-
-        //Disconnect Robot
-        RobotProvider.getDefaultProvider().removeAllControls();
-    }
-
-    }
+		// Shutdown Sphero connection view
+		mSpheroConnectionView.shutdown();
+		//Disconnect Robot
+		RobotProvider.getDefaultProvider().removeAllControls();
+	}
+}
 
