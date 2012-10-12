@@ -42,55 +42,71 @@ When creating a new project it is important to take special notice to the Androi
 
 ### Setting the dependency to RobotLibrary.jar.  
    
-  Set the dependency in the project's properties in the Properties->Java Build Path-> Libraries dialog.  This will allow your project access to all the public method names in RobotLibrary.jar. 
+Eclipse should automatically add RobotLibrary.jar to the Android Dependencies folder.  But, if it doesn not, set the dependency in the project's properties in the Properties->Java Build Path-> Libraries dialog.  This will allow your project access to all the public method names in RobotLibrary.jar. 
  
- ![QSG-jar-depend.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/image003.png)
-    
-### Adding the RobotUILibrary source library into the workspace.  
-
- Import the source library into your workspace by using Import->General->"Existing projects    
-into Workspace". You can have the importer copy the source into your workspace folder or you can place it into the workspace folder before importing. Once it is imported, you need to set the project dependent on RobotLibrary.jar, which is  added using the Properties->Java Build ->Libraries dialog. You will need to add RobotUILibrary as library project to your application project from the projects Properties dialog.
-    
-  ![QSG-library-project.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/image004.png)
-    
-  RobotUILibrary is distributed as source, so you can customize the look of the resources to fit in with your applications.  
+ ![QSG-jar-depend.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/image003.png) 
 
 ## Using the Sphero Android SDK
      
 ### Add code to connect to a sphero.  
     
- The RobotUILibrary includes an Activity called  StartupActivity which will 
- handle connectioning to a Sphero. When the activity exits, your are ready to 
+ The RobotLibrary includes a view called `SpheroConnectionView` which will 
+ handle connecting to a Sphero. When the view fires a `onRobotConnected` event and your are ready to 
  send commands.  
     
-  - To run the StartupActivity, add the following code to the main activity's onStart() method,  
+  - To use the `SpheroConnectionView`, add the following code to your Acitivity's xml layout file
+ 
+        <FrameLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#ff888888" >
 
-        Intent i = new Intent(this, StartupActivity.class);  
-        startActivityForResult(i, STARTUP_ACTIVITY);  
+            <orbotix.view.connection.SpheroConnectionView
+                android:id="@+id/sphero_connection_view"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#FFF" />
+                
+        </FrameLayout>
        
-   This will launch the StartupActivity using the intent, and sets an activity results 
-   identifier. The ``STARTUP_ACTIVITY`` constant is returned in the ``onActivityResult()`` method 
-   after the StartupActivity finishes as shown in the code below.  
-   
-       private final static int STARTUP_ACTIVITY = 0;
-
-       protected void onActivityResult(int requestCode, int resultCode, Intent data){
-           super.onActivityResult(requestCode, resultCode, data);
-           if(requestCode == STARTUP_ACTIVITY && resultCode == RESULT_OK){
-               //Get the connected Robot
-               final String robot_id = data.getStringExtra(StartupActivity.EXTRA_ROBOT_ID);  // 1
-               if(robot_id != null && !robot_id.equals("")){
-                   mRobot = RobotProvider.getDefaultProvider().findRobot(robot_id);          // 2
-               }
-               //Start blinking
-               blink(false);                                                                 // 3
-           }
-        }
+  - This will show the `SpheroConnectionView` when the Activity starts.  It is important to put the view last in a frame layout, so when you hide the rest of your layout will be visible.  Also, you must register for the `OnRobotConnectionEventListener`.  This will fire events to let you know the user's interaction with the `SpheroConnectionView` and you can do what you please.  The code is as follows
     
-   1.	This line gets an identifier for the robot that was connected returned from the activity.  
-   2. 	This line gets a Robot object for the robot identifier which is used to identifier the connected
-      Sphero in other API calls. (The API supports connection to multiple Spheros.)  
-   3. 	This line calls a method that will be used to blink Sphero's LED.  
+   
+	    final SpheroConnectionView mSpheroConnectionView = (SpheroConnectionView)findViewById(R.id.sphero_connection_view);
+	    
+        // Set the connection event listener 
+        mSpheroConnectionView.setOnRobotConnectionEventListener(new OnRobotConnectionEventListener() {
+        	// If the user clicked a Sphero and it failed to connect, this event will be fired
+			@Override
+			public void onRobotConnectionFailed(Robot robot) {}
+			// If there are no Spheros paired to this device, this event will be fired
+			@Override
+			public void onNonePaired() {}
+			// The user clicked a Sphero and it successfully paired.
+			@Override
+			public void onRobotConnected(Robot robot) {
+				mRobot = robot;
+				// Skip this next step if you want the user to be able to connect multiple Spheros
+				mSpheroConnectionView.setVisibility(View.GONE);
+			}
+		});
+	
+  - These events are useful feedback from the user.  For example, you could use the `onNonePaired()` event to show a popup message that no Sphero's are conencted, and direct the user to a www.gosphero.com to buy one. 
+	
+  - Finally, you must disconnect the Sphero, and you must make sure to shutdown the connection view in your Acitivity's `onStop()` method.  Disconnecting Sphero, puts it back into the default stable state.  And, shutting down the connection view is needed, because if the user has bluetooth disabled, and chooses not to enable it with the pop-up presented, the view needs to be told to stop searching for the user enabling it.
+  
+	  	@Override
+		protected void onStop() {
+			super.onStop();
+			
+			// Shutdown Sphero connection view
+			mSpheroConnectionView.shutdown();
+			
+			// Disconnect from the robot.
+			RobotProvider.getDefaultProvider().removeAllControls();
+		}
+	
 
 ### Add code to blink the RGB LED.
 
@@ -131,21 +147,10 @@ methods that will post messages to the DeviceMessenger singleton. Here is the co
 
 ### Modify the AndroidManifest.xml file.
 
-Before running the application, you need to add an activity entry for the StartupActivity to the 
-AndroidManifest.xml file. For convenience, you can copy this from the RobotUILibrary project's AndroidManifest.xml 
-file. Add the following,
-
-		<activity android:name="orbotix.robot.app.StartupActivity"
-			android:theme="@android:style/Theme.Translucent"
-			android:launchMode="singleTop"/>
-
-- You will also need to add permissions to use bluetooth, 
+Before running the application, you will need to add permissions to use bluetooth, 
 
 		    <uses-permission android:name="android.permission.BLUETOOTH" />
 		    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-
-- Add `android:launchMode="singleTask"` to the main activity.
-
 
 ### Run on a device.
 
@@ -202,3 +207,8 @@ to the main activity.
 ## Where is Sphero going?
 
 If you have successfully completed the quick start guide then Sphero should have moved after running the modified code.  What is interesting to note here is that Sphero just went in a *random* direction.  The direction was not random at all, Sphero believe it or not has a *front* and a *back*.  It is necessary for the application to determine what direction forward is for the user from the point of view of the ball.  We call this step `Calibration` and it is **required** to properly drive Sphero in a predictable direction.  To learn more about calibration and using the `BackLED` to set Sphero's orientation please check out the `UISampler` Sample project.
+
+## Questions
+
+For questions, please visit our developer's forum at [http://forum.gosphero.com/](http://forum.gosphero.com/)
+

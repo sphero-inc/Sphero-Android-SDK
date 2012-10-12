@@ -30,7 +30,10 @@ public class HelloWorldActivity extends Activity
         setContentView(R.layout.main);
 
         // Tell the Robot Provider to find all the paired robots
-        RobotProvider.getDefaultProvider().findRobots();
+        // Only do this if the bluetooth adapter is enabled
+        if( RobotProvider.getDefaultProvider().isAdapterEnabled() ) {
+        	RobotProvider.getDefaultProvider().findRobots();
+        }
         // Obtain the list of paired Spheros
         ArrayList<Robot> robots = RobotProvider.getDefaultProvider().getRobots();
         // Connect to first available robot (only works if 1 or more robots are paired)
@@ -41,7 +44,6 @@ public class HelloWorldActivity extends Activity
         
         // Set the Listener for when the robot has successfully connected
         RobotProvider.getDefaultProvider().setOnRobotConnectedListener( new OnRobotConnectedListener() {
-			
 			@Override
 			public void onRobotConnected(Robot robot) {
 				// Remember the connected robot reference

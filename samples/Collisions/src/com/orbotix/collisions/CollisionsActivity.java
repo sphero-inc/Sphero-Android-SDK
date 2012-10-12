@@ -125,7 +125,7 @@ public class CollisionsActivity extends Activity {
 		// Disconnect from the robot.
 		RobotProvider.getDefaultProvider().removeAllControls();
 	}
-
+	
 	private final AsyncDataListener mCollisionListener = new AsyncDataListener() {
 
 		public void onDataReceived(DeviceAsyncData asyncData) {

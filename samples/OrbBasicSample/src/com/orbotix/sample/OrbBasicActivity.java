@@ -100,10 +100,11 @@ public class OrbBasicActivity extends ListActivity
                     byte[] program = new byte[in_s.available()];
                     in_s.read(program);
 
-                    // load program and wait for completion
+                    // Create the OrbBasic Program object
                     mOrbBasicProgram = new OrbBasicProgram(program);
                     mOrbBasicProgram.setRobot(mRobot);
 
+                    // Set the listener for the OrbBasic Program Events
                     mOrbBasicProgram.setOrbBasicProgramEventListener(new OrbBasicProgram.OrbBasicProgramEventListener() {
                         @Override
                         public void onEraseCompleted(boolean success) {
@@ -159,7 +160,7 @@ public class OrbBasicActivity extends ListActivity
             }
         }
     };
-
+    
     /**
      * Append Button Pressed
      */

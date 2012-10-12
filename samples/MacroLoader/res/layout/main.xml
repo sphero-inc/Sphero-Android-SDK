@@ -9,54 +9,71 @@
         android:layout_height="fill_parent"
         android:background="#ff888888" >
 
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="400dp"
+        <LinearLayout
+            android:id="@+id/firstrow_layout"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="150dp"
-            android:onClick="smalldanceClicked"
-            android:text="Small Dance" />
+            android:orientation="horizontal"
+            android:weightSum="2" >
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="400dp"
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="smallDanceClicked"
+                android:text="Small Dance" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="strobeClicked"
+                android:text="Strobe" />
+            
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/secondrow_layout"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/firstrow_layout"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="200dp"
-            android:onClick="strobeClicked"
-            android:text="Strobe" />
+            android:orientation="horizontal"
+            android:weightSum="2" >
 
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/button2"
-            android:layout_alignRight="@+id/button2"
-            android:layout_below="@+id/button2"
-            android:layout_marginTop="100dp"
-            android:onClick="stopClicked"
-            android:text="Stop" />
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="commandClicked"
+                android:text="Command symbol" />
 
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="400dp"
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="largeDanceClicked"
+                android:text="Large Dance" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/thirdrow_layout"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/secondrow_layout"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="300dp"
-            android:onClick="largedanceClicked"
-            android:text="Large Dance" />
+            android:orientation="horizontal"
+            android:weightSum="2" >
 
-        <Button
-            android:id="@+id/button5"
-            android:layout_width="400dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="250dp"
-            android:onClick="commandClicked"
-            android:text="Command symbol" />
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="stopClicked"
+                android:text="Stop" />
+        </LinearLayout>
     </RelativeLayout>
 
     <orbotix.view.connection.SpheroConnectionView
