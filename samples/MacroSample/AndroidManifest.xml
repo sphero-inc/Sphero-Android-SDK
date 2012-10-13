@@ -18,9 +18,5 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="orbotix.robot.app.StartupActivity"
-                  android:launchMode="singleTop"
-                  android:theme="@android:style/Theme.Translucent"
-                  />
     </application>
 </manifest> 

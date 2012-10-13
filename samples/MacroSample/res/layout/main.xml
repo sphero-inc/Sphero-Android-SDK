@@ -1,123 +1,219 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#ff888888"
-    >
-    
-    
-    <SeekBar
-        android:id="@+id/speedBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="32dp" />
+    android:background="#ff888888" >
 
-    <SeekBar
-        android:id="@+id/loopBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="100dp" android:keepScreenOn="false"
-        />
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#ff888888" >
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="Stop" android:layout_centerHorizontal="true"
-        android:onClick="stopClicked"/>
+        <TextView
+            android:id="@+id/text_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="Speed"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <SeekBar
-        android:id="@+id/delayBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="175dp" />
+        <TextView
+            android:id="@+id/speedlabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="0"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="320dp"
-        android:text="Fade Colors" android:layout_centerHorizontal="true"
-        android:onClick="fadeClicked"/>
+        <SeekBar
+            android:id="@+id/speedBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_speed" />
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:text="Shapes" android:layout_marginTop="270dp" android:layout_centerHorizontal="true"
-        android:onClick="shapeClicked"/>
+        <TextView
+            android:id="@+id/text_loop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/speedBar"
+            android:text="Loop"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:text="Speed"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        <TextView
+            android:id="@+id/looplabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/speedBar"
+            android:text="0"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:text="Loop"
-        android:textAppearance="?android:attr/textAppearanceLarge" android:layout_marginTop="75dp"/>
+        <SeekBar
+            android:id="@+id/loopBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/looplabel"
+            android:keepScreenOn="false" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:text="Delay"
-        android:textAppearance="?android:attr/textAppearanceLarge" android:layout_marginTop="150dp"/>
+        <TextView
+            android:id="@+id/text_delay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/loopBar"
+            android:text="Delay"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <TextView
-        android:id="@+id/speedlabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:text="0"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        <TextView
+            android:id="@+id/delaylabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/loopBar"
+            android:text="0"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <TextView
-        android:id="@+id/looplabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:text="0"
-        android:textAppearance="?android:attr/textAppearanceLarge" android:layout_marginTop="75dp"/>
+        <SeekBar
+            android:id="@+id/delayBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/delaylabel" />
 
-    <TextView
-        android:id="@+id/delaylabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView3"
-        android:layout_alignBottom="@+id/textView3"
-        android:layout_alignParentRight="true"
-        android:text="0"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        <!-- Macro Buttons -->
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:text="Square" android:layout_centerHorizontal="true"
-        android:onClick="squareClicked"/>
+        <LinearLayout
+            android:id="@+id/firstrow_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/delayBar"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            android:weightSum="2" >
 
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:text="Figure 8" android:layout_marginTop="370dp" android:layout_centerHorizontal="true"
-        android:onClick="figureeightClicked"/>
-    
-</RelativeLayout>
+            <Button
+                android:id="@+id/square_macro"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="squareMacroClicked"
+                android:text="Square" />
 
+            <Button
+                android:id="@+id/shapes_macro"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="shapesMacroClicked"
+                android:text="Shapes" />
+            
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/secondrow_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/firstrow_layout"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            android:weightSum="2" >
+
+            <Button
+                android:id="@+id/fade_macro"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="fadeMacroClicked"
+                android:text="Fade Colors" />
+
+            <Button
+                android:id="@+id/figure8_macro"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="figure8MacroClicked"
+                android:text="Figure 8" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/thirdrow_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/secondrow_layout"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            android:weightSum="2" >
+
+            <Button
+                android:id="@+id/flip_macro"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="flipMacroClicked"
+                android:text="Flip" />
+
+            <Button
+                android:id="@+id/vibrate_macro"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="vibrateMacroClicked"
+                android:text="Vibrate" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fourthrow_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/thirdrow_layout"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            android:weightSum="2" >
+
+            <Button
+                android:id="@+id/spin_macro"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="spinMacroClicked"
+                android:text="Spin" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/stop_macro"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:onClick="stopMacroClicked"
+            android:text="Stop Macro" />
+    </RelativeLayout>
+
+    <!-- Connection Views -->
+
+    <RelativeLayout
+        android:id="@+id/connection_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#ff888888" >
+
+        <orbotix.view.connection.SpheroConnectionView
+            android:id="@+id/sphero_connection_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#FFF" />
+
+        <Button
+            android:id="@+id/done_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="Done" />
+        
+    </RelativeLayout>
+
+</FrameLayout>

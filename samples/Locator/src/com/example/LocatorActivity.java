@@ -1,30 +1,21 @@
 package com.example;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.MotionEvent;
+import android.os.Handler;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import orbotix.robot.app.StartupActivity;
 import orbotix.robot.base.*;
-import orbotix.robot.sensor.AccelerometerData;
-import orbotix.robot.sensor.AttitudeData;
 import orbotix.robot.sensor.DeviceSensorsData;
 import orbotix.robot.sensor.LocatorData;
-import orbotix.robot.widgets.calibration.CalibrationView;
-
+import orbotix.view.connection.SpheroConnectionView;
+import orbotix.view.connection.SpheroConnectionView.OnRobotConnectionEventListener;
 import java.util.List;
 
 public class LocatorActivity extends Activity
-{
-    /**
-     * ID for starting the StartupActivity
-     */
-    private final static int sStartupActivity = 0;
-    
+{   
     /**
      * Data Streaming Packet Counts
      */
@@ -36,6 +27,13 @@ public class LocatorActivity extends Activity
      * Robot to from which we are streaming
      */
     private Robot mRobot = null;
+    
+    /**
+     * The Sphero Connection View
+     */
+    private SpheroConnectionView mSpheroConnectionView;
+    
+    private Handler mHandler = new Handler();
 
     /**
      * AsyncDataListener that will be assigned to the DeviceMessager, listen for streaming data, and then do the
@@ -79,44 +77,38 @@ public class LocatorActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        findViewById(R.id.back_layout).requestFocus();
 
-        // Show the StartupActivity to connect to Sphero
-        startActivityForResult(new Intent(this, StartupActivity.class), sStartupActivity);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(resultCode == RESULT_OK){
-
-            if(requestCode == sStartupActivity){
-
-                //Get the Robot from the StartupActivity
-                String id = data.getStringExtra(StartupActivity.EXTRA_ROBOT_ID);
-                mRobot = RobotProvider.getDefaultProvider().findRobot(id);
-
-                // Start streaming Locator values
-                requestDataStreaming();
-                
-                //Set the AsyncDataListener that will process each response.
-                DeviceMessenger.getInstance().addAsyncDataListener(mRobot, mDataListener);
-
-                // Let Calibration View know which robot we are connected to
-                CalibrationView calibrationView = (CalibrationView)findViewById(R.id.calibration_widget);
-                calibrationView.setRobot(mRobot);
-            }
-        }
-    }
-
-    /**
-     * Calibrate Sphero when a two finger event occurs
-     */
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        CalibrationView calibrationView = (CalibrationView)findViewById(R.id.calibration_widget);
-        // Notify Calibration widget of a touch event
-        calibrationView.interpretMotionEvent(event);
-        return super.dispatchTouchEvent(event);
+        mSpheroConnectionView = (SpheroConnectionView)findViewById(R.id.sphero_connection_view);
+        // Set the connection event listener 
+        mSpheroConnectionView.setOnRobotConnectionEventListener(new OnRobotConnectionEventListener() {
+        	// If the user clicked a Sphero and it failed to connect, this event will be fired
+			@Override
+			public void onRobotConnectionFailed(Robot robot) {}
+			// If there are no Spheros paired to this device, this event will be fired
+			@Override
+			public void onNonePaired() {}
+			// The user clicked a Sphero and it successfully paired.
+			@Override
+			public void onRobotConnected(Robot robot) {
+				mRobot = robot;
+				// Skip this next step if you want the user to be able to connect multiple Spheros
+				mSpheroConnectionView.setVisibility(View.GONE);
+				
+				// This delay post is to give the connection time to be created
+				mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Start streaming Locator values
+                        requestDataStreaming();
+                        
+                        //Set the AsyncDataListener that will process each response.
+                        DeviceMessenger.getInstance().addAsyncDataListener(mRobot, mDataListener); 
+                    }
+                }, 1000);
+			}
+		});
+       
     }
 
     @Override
@@ -126,6 +118,8 @@ public class LocatorActivity extends Activity
         if(mRobot != null){
             // Make sure the ball doesn't roll across the world
             RollCommand.sendStop(mRobot);
+    		// Shutdown Sphero connection view
+    		mSpheroConnectionView.shutdown();
             // Disconnect properly
             RobotProvider.getDefaultProvider().disconnectControlledRobots();
         }
@@ -140,11 +134,11 @@ public class LocatorActivity extends Activity
         final long mask = SetDataStreamingCommand.DATA_STREAMING_MASK_LOCATOR_ALL;
 
         //Specify a divisor. The frequency of responses that will be sent is 400hz divided by this divisor.
-        final int divisor = 50;
+        final int divisor = 1;
 
         //Specify the number of frames that will be in each response. You can use a higher number to "save up" responses
         //and send them at once with a lower frequency, but more packets per response.
-        final int packet_frames = 1;
+        final int packet_frames = 20;
 
         // Reset finite packet counter
         mPacketCounter = 0;
@@ -195,7 +189,7 @@ public class LocatorActivity extends Activity
 
         ConfigureLocatorCommand.sendCommand(mRobot, flag, newX, newY, newYaw);
     }
-
+    
     public void upPressed(View v) {
         RollCommand.sendCommand(mRobot, 0, 0.6f);
     }

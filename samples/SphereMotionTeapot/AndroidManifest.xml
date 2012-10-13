@@ -19,9 +19,5 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="orbotix.robot.app.StartupActivity"
-                  android:screenOrientation="portrait"
-                  android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
-                  android:launchMode="singleTop"/>
     </application>
 </manifest> 

@@ -1,13 +1,11 @@
 package com.orbotix.sample.buttondrive;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import orbotix.robot.app.StartupActivity;
-import orbotix.robot.base.Robot;
-import orbotix.robot.base.RobotProvider;
-import orbotix.robot.base.RollCommand;
+import orbotix.robot.base.*;
+import orbotix.view.connection.SpheroConnectionView;
+import orbotix.view.connection.SpheroConnectionView.OnRobotConnectionEventListener;
 
 /**
  * Activity for controlling the Sphero with five control buttons.
@@ -15,15 +13,15 @@ import orbotix.robot.base.RollCommand;
 public class ButtonDriveActivity extends Activity
 {
     /**
-     * ID for starting the StartupActivity for result
-     */
-    private final static int STARTUP_ACTIVITY = 0;
-
-    /**
      * Robot to control
      */
     private Robot mRobot;
 
+    /**
+     * The Sphero Connection View
+     */
+    private SpheroConnectionView mSpheroConnectionView;
+    
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -31,43 +29,23 @@ public class ButtonDriveActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-    }
-
-    /**
-     * Connect to the robot when the Activity starts
-     */
-    @Override
-    protected void onStart() {
-        super.onStart();
-        
-        if(mRobot == null){
-
-            //Connect to the Robot
-            Intent i = new Intent(this, StartupActivity.class);
-            startActivityForResult(i, STARTUP_ACTIVITY);
-        }
-    }
-
-    /**
-     * Get the robot id from the StartupActivity result, and use the RobotProvider singleton to 
-     * get an instance of the connected robot
-     * @param requestCode The request code from the returned Activity
-     * @param resultCode The result code from the returned Activity
-     * @param data The Intent containing the result data tuple. The robot id is under the key 
-     *             in StartupActivity.EXTRA_ROBOT_ID
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        
-        if(requestCode == STARTUP_ACTIVITY && resultCode == RESULT_OK){
-            
-            final String robot_id = data.getStringExtra(StartupActivity.EXTRA_ROBOT_ID);
-            
-            if(robot_id != null && !robot_id.equals("")){
-                mRobot = RobotProvider.getDefaultProvider().findRobot(robot_id);
-            }
-        }
+        mSpheroConnectionView = (SpheroConnectionView)findViewById(R.id.sphero_connection_view);
+        // Set the connection event listener 
+        mSpheroConnectionView.setOnRobotConnectionEventListener(new OnRobotConnectionEventListener() {
+        	// If the user clicked a Sphero and it failed to connect, this event will be fired
+			@Override
+			public void onRobotConnectionFailed(Robot robot) {}
+			// If there are no Spheros paired to this device, this event will be fired
+			@Override
+			public void onNonePaired() {}
+			// The user clicked a Sphero and it successfully paired.
+			@Override
+			public void onRobotConnected(Robot robot) {
+				mRobot = robot;
+				// Skip this next step if you want the user to be able to connect multiple Spheros
+				mSpheroConnectionView.setVisibility(View.GONE);
+			}
+		});
     }
 
     /**
@@ -111,7 +89,7 @@ public class ButtonDriveActivity extends Activity
         
         //Set speed. 60% of full speed
         final float speed = 0.6f;
-        
+
         //Roll robot
         RollCommand.sendCommand(mRobot, heading, speed);
     }
@@ -124,6 +102,7 @@ public class ButtonDriveActivity extends Activity
         super.onStop();
 
         //disconnect robot
+        mSpheroConnectionView.shutdown();
         RobotProvider.getDefaultProvider().disconnectControlledRobots();
     }
 }

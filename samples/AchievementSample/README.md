@@ -190,3 +190,7 @@ This example shows how achievements with complex threshold conditions can be tra
 ### Notifying the user of earned achievements
 
 You can listen for the AchievementManager.AchievementEarnedIntent so you can notify the player when the user has earned an achievement.  A JSON string containing the achievement meta data can be found as a string extra attached to the intent under the key “achievementJSON”.  Currently RobotLibrary on Android doesn’t provide a UI to notify users they earned an achievement. 
+
+## Questions
+
+For questions, please visit our developer's forum at [http://forum.gosphero.com/](http://forum.gosphero.com/)

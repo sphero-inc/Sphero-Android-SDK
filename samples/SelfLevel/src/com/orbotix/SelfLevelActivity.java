@@ -1,21 +1,21 @@
 package com.orbotix;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import orbotix.robot.app.StartupActivity;
 import orbotix.robot.base.*;
+import orbotix.view.connection.SpheroConnectionView;
+import orbotix.view.connection.SpheroConnectionView.OnRobotConnectionEventListener;
 
 public class SelfLevelActivity extends Activity
 {
     /**
-     * ID for starting the StartupActivity
+     * Sphero Connection View
      */
-    private final static int sStartupActivity = 0;
+    private SpheroConnectionView mSpheroConnectionView;
 
     /**
      * Robot to from which we are streaming
@@ -29,35 +29,36 @@ public class SelfLevelActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        // Show the StartupActivity to connect to Sphero
-        startActivityForResult(new Intent(this, StartupActivity.class), sStartupActivity);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(resultCode == RESULT_OK){
-
-            if(requestCode == sStartupActivity){
-
-                //Get the Robot from the StartupActivity
-                String id = data.getStringExtra(StartupActivity.EXTRA_ROBOT_ID);
-                mRobot = RobotProvider.getDefaultProvider().findRobot(id);
-
+		// Find Sphero Connection View from layout file
+		mSpheroConnectionView = (SpheroConnectionView)findViewById(R.id.sphero_connection_view);
+		// This event listener will notify you when these events occur, it is up to you what you want to do during them
+		mSpheroConnectionView.setOnRobotConnectionEventListener(new OnRobotConnectionEventListener() {
+			@Override
+			public void onRobotConnectionFailed(Robot arg0) {}
+			@Override
+			public void onNonePaired() {}
+			
+			@Override
+			public void onRobotConnected(Robot arg0) {
+				// Set the robot
+				mRobot = arg0;
+				// Hide the connection view. Comment this code if you want to connect to multiple robots
+				mSpheroConnectionView.setVisibility(View.GONE);
                 // Set the AsyncDataListener that will process self level complete async responses
                 DeviceMessenger.getInstance().addAsyncDataListener(mRobot, mDataListener);
-            }
-        }
+			}
+		});
     }
 
     @Override
     protected void onStop() {
         super.onStop();
 
+		// Shutdown Sphero connection view
+		mSpheroConnectionView.shutdown();
         if(mRobot != null){
             // Disconnect properly
-            RobotProvider.getDefaultProvider().disconnectControlledRobots();
+            RobotProvider.getDefaultProvider().removeAllControls();
         }
     }
 

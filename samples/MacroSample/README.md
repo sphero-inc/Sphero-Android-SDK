@@ -1,238 +1,100 @@
 ![logo](http://update.orbotix.com/developer/sphero-small.png)
 
-# MacrosJava
+# Macro Sample
 
-This sample code demonstrates how to write macros in Android Java.
+This sample demonstartes how to connect to multiple balls with the `SpheroConnectionView` and also how to programatically create macros and run them on multiple Spheros.
 
+## Connecting to Multiple Spheros
 
-To create a macro,  
+Instead of having a member variable that holds a single Robot object, you now have a member variable that is an ArrayList that holds mutliple Robot objects.
 
-        RKMacroObject *macro = [RKMacroObject new];        
+	/** The Sphero Robots */
+	private ArrayList<Robot> mRobots = new ArrayList<Robot>();
+	
+In previous samples, we have hidden the `SpheroConnectionView` after the first Robot connected.  However, in this sample, we will continue to add Robots to the ArrayList until the user clicks the done button.  The program code for this is below:
 
-This call is implemented to create an object obtaining macro commands. 
+		// Set the done button to make the connection view go away
+		mDoneButton = (Button)findViewById(R.id.done_button);
+		mDoneButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mSpheroConnectionView.setVisibility(View.GONE);
+				mDoneButton.setVisibility(View.GONE);
+				findViewById(R.id.connection_layout).setVisibility(View.GONE);
+			}
+		});
 
-To add new commands to the object:
+		// Find Sphero Connection View from layout file
+		mSpheroConnectionView = (SpheroConnectionView)findViewById(R.id.sphero_connection_view);
+		
+		// This event listener will notify you when these events occur, it is up to you what you 		want to do during them
+		mSpheroConnectionView.setOnRobotConnectionEventListener(new OnRobotConnectionEventListener() 		{
+			@Override
+			public void onRobotConnectionFailed(Robot arg0) {}
+			@Override
+			public void onNonePaired() {}
 
-        [macro addCommand: ...];
+			@Override
+			public void onRobotConnected(Robot arg0) {
+				// Add the robot
+				mRobots.add(arg0);
+			}
+		});	
+	
+## Creating Macros
 
-And to finally play the macro:
+There are 5 main steps to running a macro on a Sphero.
+	
+1. To create a macro 
 
-		[macro playMacro]; 
+		MacroObject macro = new MacroObject();      
 
-Simple Square, no repeat.
+2. Add commands to the object
 
-	//Set up Shape Square
-    	Button macrobutton2 = (Button) findViewById(R.id.button1);  
-    	macrobutton2.setOnClickListener(new View.OnClickListener() { 
-    		
-    	    public void onClick(View v) {  
-    	       //Send Abort Macro
-    	    	//Mention Bad states and changing to default
-    	    	AbortMacroCommand.sendCommand(mRobot);
-    	        StabilizationCommand.sendCommand(mRobot, true);
-    	        RGBLEDOutputCommand.sendCommand(mRobot, 255, 255, 255);
-    	        //Stop Command
-    	    	
-    	    	if(mRobot != null){
-                    MacroObject macro= null;
-         
-                    	//Create a new macro object to send to Sphero
-                        MacroObject squareMacro = new MacroObject();
-                        //Change Color
-                        squareMacro.addCommand(new RGB(0, 255, 0, 255));
-                        //Sphero drives forward in the 0 angle
-                        squareMacro.addCommand(new Roll(speedValue, 0, delayValue));
-                        //Have Sphero to come to stop to make sharp turn
-                        squareMacro.addCommand(new Roll(0.0f,0,255));
-                        //Change Color
-                        squareMacro.addCommand(new RGB(0, 0, 255, 255));
-                        //Sphero drives forward in the 90 angle
-                        squareMacro.addCommand(new Roll(speedValue, 90, delayValue));
-                        //Have Sphero to come to stop to make sharp turn
-                        squareMacro.addCommand(new Roll(0.0f,90,255));
-                        //Change Color
-                        squareMacro.addCommand(new RGB(255, 255, 0, 255));
-                        //Sphero drives forward in the 180 angle
-                        squareMacro.addCommand(new Roll(speedValue, 180, delayValue));
-                        //Have Sphero to come to stop to make sharp turn
-                        squareMacro.addCommand(new Roll(0.0f,180,255));
-                        //Change Color
-                        squareMacro.addCommand(new RGB(255, 0, 0, 255));
-                        //Sphero drives forward in the 270 angle
-                        squareMacro.addCommand(new Roll(speedValue, 270, delayValue));
-                        //Have Sphero to come to stop to make sharp turn
-                        squareMacro.addCommand(new Roll(0.0f,270,255));
-                        //Change Color
-                        squareMacro.addCommand(new RGB(255, 255, 255, 255));        
-                        squareMacro.addCommand(new Roll(0.0f,0,255));
-                        squareMacro.setMode(MacroObject.MacroObjectMode.Normal);
-                        squareMacro.setRobot(mRobot);
-                        squareMacro.playMacro();
+		macro.addCommand(…);
+		
+3. Set the Macro transmission mode.  Almost always use Normal, unless your Macro is longer than 254 bytes, in which case, use Chunky
 
-                }
-    	    }  
-    	});
+		macro.setMode(MacroObject.MacroObjectMode.Normal);
 
-Roll Commands: Give a speed to travel, a direction in an 360 degree path, and a delay for the period of time of the action.
+4. Set the Robot to transmit the macro to
 
+		macro.setRobot(mRobot);
 
-</br>
+5. Lastly, play the macro
 
-Colors Fade during action (Circle)
-</br>
+		macro.playMacro();
+		
+## Running Macros on Multiple Spheros
 
-Slew(Fade) is a parallel command
-</br>
+To run the macros on multiple Spheros, simply wrap the macro command creation and play inside a for each statement that runs the macro on each Sphero.
 
-When Slew action is performed, either have it run 
-parallel to a roll command or a delay.
-</br>
+		if(mRobots.size() > 0){
+			for( Robot mRobot : mRobots ) {
+				// Macro Code
+			}
+		}
 
-If the user was to include a blink color it would then end the slew abruptly.
+## Return Sphero to Default State
 
-        //ColorFade with Loop
-        Button macrobutton1 = (Button) findViewById(R.id.button1);  
-    	macrobutton1.setOnClickListener(new View.OnClickListener() { 
-    		
-    	    public void onClick(View v) {  
-                //Abort Macro
-    	        AbortMacroCommand.sendCommand(mRobot);
-    	        StabilizationCommand.sendCommand(mRobot, true);
-    	        RGBLEDOutputCommand.sendCommand(mRobot, 255, 255, 255);
-    	        
-    	    	if(mRobot != null){
-                    MacroObject macro= null;
-        
-                    	//Create a new macro object to send to Sphero
-                        MacroObject fadeMacro = new MacroObject();
-                        fadeMacro.addCommand(new LoopStart(loopValue));
-                        fadeMacro.addCommand(new RGB(0, 255, 255, delayValue));
-                        fadeMacro.addCommand(new RGB(255, 0, 255, delayValue));
-                        fadeMacro.addCommand(new RGB(255, 255, 0, delayValue));
-                        fadeMacro.addCommand(new LoopEnd());
-                        fadeMacro.setMode(MacroObject.MacroObjectMode.Normal);
-                        fadeMacro.setRobot(mRobot);
-                        fadeMacro.playMacro();
+When you want to end a macro, or play another macro, use the abort command and then set sphere in the default state.
 
-                }
-    	    }  
-    	});
-
-</br>
-
-Macro Shape
-</br>
-
-Changes the Shape depending on the number of loops you 
-include
-</br>
-
-Example: 4 loops makes a square
-360 degrees / (4)= 90 degree turns     
-
-	//Set up Shape 
-     	Button macrobutton3 = (Button) findViewById(R.id.button1);  
-     	macrobutton2.setOnClickListener(new View.OnClickListener() { 
-     		
-     	    public void onClick(View v) {  
-     	       
-     	    	AbortMacroCommand.sendCommand(mRobot);
-     	        StabilizationCommand.sendCommand(mRobot, true);
-     	        RGBLEDOutputCommand.sendCommand(mRobot, 255, 255, 255);
-     	    	
-     	    	if(mRobot != null){
-                     MacroObject macro= null;
-         
-                     	//Create a new macro object to send to Sphero
-                        MacroObject shapeMacro = new MacroObject();
-                        //Sets loop from slider value
-                        shapeMacro.addCommand(new LoopStart(loopValue));
-                        //Change Color
-                        shapeMacro.addCommand(new RGB(0, 0, 255, 255));
-                        for (int i=0; i< loopValue; ++i){
-                        
-                        shapeMacro.addCommand(new Calibrate(i*(360 / loopValue), 255));
-                        //Set new calibrated heading to Zero 
-                        shapeMacro.addCommand(new Calibrate(0, 255));
-                        //Change Color
-                        shapeMacro.addCommand(new RGB(0, 255, 0, 255));
-                        //Come to Stop
-                       shapeMacro.addCommand(new Roll(speedValue,i*(360 / loopValue),delayValue));
-                       shapeMacro.addCommand(new Roll(0.0f,0,255));  
-                        }
-                        
-                       //Loop End
-                       shapeMacro.addCommand(new LoopEnd());
-                       //Set Macro size
-                       shapeMacro.setMode(MacroObject.MacroObjectMode.Normal);
-                       shapeMacro.setRobot(mRobot);
-                       //Send Macro
-                       shapeMacro.playMacro();
-
-                 }
-     	    }  
-     	});
-
-</br>
-Figure 8 repeat
-</br>
-RotateOverTime is a parallel command.
-</br>
-When a rotation action is performed, either have it run parallel to a color command or a delay.
-</br>
-If the user was to include a drive command it would then end the rotation abruptly.
+	/**
+	 * Puts Spheros back into their default state
+	 */
+	private void returnSpheroToStableState() {
+		if(mRobots.size() > 0){
+			for( Robot mRobot : mRobots ) {
+				AbortMacroCommand.sendCommand(mRobot);
+				StabilizationCommand.sendCommand(mRobot, true);
+				RGBLEDOutputCommand.sendCommand(mRobot, 255, 255, 255);
+				FrontLEDOutputCommand.sendCommand(mRobot, 0.0f);
+			}
+		}
+	}
 
 
-	//Set up Shape Figure8
-     	Button macrobutton4 = (Button) findViewById(R.id.button1);  
-     	macrobutton2.setOnClickListener(new View.OnClickListener() { 
-     		
-     	    public void onClick(View v) {  
-     	       
-     	    	AbortMacroCommand.sendCommand(mRobot);
-     	        StabilizationCommand.sendCommand(mRobot, true);
-     	        RGBLEDOutputCommand.sendCommand(mRobot, 255, 255, 255);
-     	    	
-     	    	if(mRobot != null){
-                     MacroObject macro= null;
-         
-                     	//Create a new macro object to send to Sphero
-                        MacroObject figureMacro = new MacroObject();
-                        //Tell Robot to look forward and to start driving
-                        figureMacro.addCommand(new Roll(speedValue, 0, 1000));
-                        //Start loop without slowing down
-                        figureMacro.addCommand(new LoopStart(loopValue));
-                        ///Tell Robot to perform 1st turn in the positive direction.
-                        figureMacro.addCommand(new RotateOverTime(360, delayValue));
-                        //Add delay to allow the rotateovertime command to perform.
-                        figureMacro.addCommand(new Delay(delayValue));
-                        //Rotate to perform the 2nd turn in the negative direction
-                        figureMacro.addCommand(new RotateOverTime(-360, delayValue));
-                        //Add delay to allow the rotateovertime command to perform.
-                        figureMacro.addCommand(new Delay(delayValue));
-                        //End Loop
-                        figureMacro.addCommand(new LoopEnd());
-                        //Come to Stop
-                        figureMacro.addCommand(new Roll(0.0f,0,255));
-                        figureMacro.setMode(MacroObject.MacroObjectMode.Normal);
-                       figureMacro.setRobot(mRobot);
-                       figureMacro.playMacro();
+## Questions
 
-                 }
-     	    }  
-     	});
-     	
-     
-Stop All Macros:
-</br>
-When you want to end a macro, or play another macro, use the abort command and then set sphere in the wanted state.
+For questions, please visit our developer's forum at [http://forum.gosphero.com/](http://forum.gosphero.com/)
 
-    	Button stopbutton = (Button) findViewById(R.id.button1);  
-    	stopbutton.setOnClickListener(new View.OnClickListener() { 
-    		
-    	    public void onClick(View v) {  
-    	        AbortMacroCommand.sendCommand(mRobot);
-    	        StabilizationCommand.sendCommand(mRobot, true);
-    	        RGBLEDOutputCommand.sendCommand(mRobot, 255, 255, 255);
-    	    }  
-    	});

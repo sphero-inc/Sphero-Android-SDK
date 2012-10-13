@@ -1,4 +1,10 @@
+![logo](http://update.orbotix.com/developer/sphero-small.png)
+
 # ButtonDrive
+
+You can see from the diagram how Sphero's roll commands correspond to its heading in space.
+
+![android.jpg](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/heading.png)
 
 ![Screen Shot](https://github.com/orbotix/Sphero-Android-SDK/raw/master/samples/ButtonDrive/README.png)
 
@@ -9,3 +15,6 @@ takes a heading from 0° to 360°, and a relative speed from 0.0 to 1.0. So, to 
 
 The ball is stopped with the `RKRollCommand.sendStop()`.
 
+## Questions
+
+For questions, please visit our developer's forum at [http://forum.gosphero.com/](http://forum.gosphero.com/)
