@@ -2,15 +2,17 @@ package orbotix.uisample;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import orbotix.robot.app.StartupActivity;
 import orbotix.robot.base.RGBLEDOutputCommand;
 import orbotix.robot.base.Robot;
 import orbotix.robot.base.RobotProvider;
 import orbotix.robot.widgets.ControllerActivity;
-import orbotix.robot.widgets.calibration.CalibrationView;
 import orbotix.robot.widgets.joystick.JoystickView;
 import orbotix.robot.app.ColorPickerActivity;
+import orbotix.view.calibration.CalibrationButtonView;
+import orbotix.view.calibration.CalibrationView;
 
 public class UiSampleActivity extends ControllerActivity
 {
@@ -29,6 +31,9 @@ public class UiSampleActivity extends ControllerActivity
      */
     private Robot mRobot;
     
+    private CalibrationButtonView mCalibrationButtonView;
+    private CalibrationView mCalibrationTwoFingerView;
+    
     //Colors
     private int mRed   = 0xff;
     private int mGreen = 0xff;
@@ -44,9 +49,12 @@ public class UiSampleActivity extends ControllerActivity
         //Add the JoystickView as a Controller
         addController((JoystickView)findViewById(R.id.joystick));
 
-        //Add the CalibrationView as a Controller
-        addController((CalibrationView)findViewById(R.id.calibration));
-
+        // Add the two finger calibration method
+        mCalibrationTwoFingerView = (CalibrationView)findViewById(R.id.calibration_two_finger);
+        
+        // Initialize calibrate button view
+        mCalibrationButtonView = (CalibrationButtonView)findViewById(R.id.calibration);
+        mCalibrationButtonView.setCalibrationButton((View)findViewById(R.id.calibration_button));
     }
 
     /**
@@ -74,6 +82,11 @@ public class UiSampleActivity extends ControllerActivity
 
                 //Set connected Robot to the Controllers
                 setRobot(mRobot);
+                
+                // Make sure you let the calibration view know the robot it should control
+                mCalibrationButtonView.setRobot(mRobot);
+                mCalibrationTwoFingerView.setRobot(mRobot);
+                mCalibrationButtonView.setRadius(200);
                 
             }else if(requestCode == COLOR_PICKER_ACTIVITY){
                 
@@ -114,5 +127,12 @@ public class UiSampleActivity extends ControllerActivity
         i.putExtra(ColorPickerActivity.EXTRA_COLOR_BLUE, mBlue);
 
         startActivityForResult(i, COLOR_PICKER_ACTIVITY);
+    }
+    
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+    	mCalibrationButtonView.interpretMotionEvent(event);
+    	mCalibrationTwoFingerView.interpretMotionEvent(event);
+    	return super.dispatchTouchEvent(event);
     }
 }
