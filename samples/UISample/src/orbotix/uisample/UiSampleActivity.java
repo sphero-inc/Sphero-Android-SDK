@@ -12,6 +12,7 @@ import orbotix.robot.widgets.ControllerActivity;
 import orbotix.robot.widgets.joystick.JoystickView;
 import orbotix.robot.app.ColorPickerActivity;
 import orbotix.view.calibration.CalibrationButtonView;
+import orbotix.view.calibration.CalibrationButtonView.CalibrationCircleLocation;
 import orbotix.view.calibration.CalibrationView;
 
 public class UiSampleActivity extends ControllerActivity
@@ -31,7 +32,11 @@ public class UiSampleActivity extends ControllerActivity
      */
     private Robot mRobot;
     
-    private CalibrationButtonView mCalibrationButtonView;
+    private CalibrationButtonView mCalibrationButtonViewAbove;
+    private CalibrationButtonView mCalibrationButtonViewBelow;
+    private CalibrationButtonView mCalibrationButtonViewRight;
+    private CalibrationButtonView mCalibrationButtonViewLeft;
+    
     private CalibrationView mCalibrationTwoFingerView;
     
     //Colors
@@ -52,9 +57,27 @@ public class UiSampleActivity extends ControllerActivity
         // Add the two finger calibration method
         mCalibrationTwoFingerView = (CalibrationView)findViewById(R.id.calibration_two_finger);
         
-        // Initialize calibrate button view
-        mCalibrationButtonView = (CalibrationButtonView)findViewById(R.id.calibration);
-        mCalibrationButtonView.setCalibrationButton((View)findViewById(R.id.calibration_button));
+        // Initialize calibrate button view where the calibration circle shows above button
+        // This is the default behavior
+        mCalibrationButtonViewAbove = (CalibrationButtonView)findViewById(R.id.calibration_above);
+        mCalibrationButtonViewAbove.setCalibrationButton((View)findViewById(R.id.calibration_button_above));
+        // You can also change the size of the calibration views
+        mCalibrationButtonViewAbove.setRadius(300);
+        
+        // Initialize calibrate button view where the calibration circle shows below button
+        mCalibrationButtonViewBelow = (CalibrationButtonView)findViewById(R.id.calibration_below);
+        mCalibrationButtonViewBelow.setCalibrationButton((View)findViewById(R.id.calibration_button_below));
+        mCalibrationButtonViewBelow.setCalibrationCircleLocation(CalibrationCircleLocation.BELOW);
+        
+        // Initialize calibrate button view where the calibration circle shows to the right of the button
+        mCalibrationButtonViewRight = (CalibrationButtonView)findViewById(R.id.calibration_right);
+        mCalibrationButtonViewRight.setCalibrationButton((View)findViewById(R.id.calibration_button_right));
+        mCalibrationButtonViewRight.setCalibrationCircleLocation(CalibrationCircleLocation.RIGHT);
+        
+        // Initialize calibrate button view where the calibration circle shows to the left of the button
+        mCalibrationButtonViewLeft = (CalibrationButtonView)findViewById(R.id.calibration_left);
+        mCalibrationButtonViewLeft.setCalibrationButton((View)findViewById(R.id.calibration_button_left));
+        mCalibrationButtonViewLeft.setCalibrationCircleLocation(CalibrationCircleLocation.LEFT);
     }
 
     /**
@@ -83,10 +106,12 @@ public class UiSampleActivity extends ControllerActivity
                 //Set connected Robot to the Controllers
                 setRobot(mRobot);
                 
-                // Make sure you let the calibration view know the robot it should control
-                mCalibrationButtonView.setRobot(mRobot);
+                // Make sure you let the calibration views know the robot it should control
+                mCalibrationButtonViewAbove.setRobot(mRobot);
+                mCalibrationButtonViewBelow.setRobot(mRobot);
+                mCalibrationButtonViewRight.setRobot(mRobot);
+                mCalibrationButtonViewLeft.setRobot(mRobot);
                 mCalibrationTwoFingerView.setRobot(mRobot);
-                mCalibrationButtonView.setRadius(200);
                 
             }else if(requestCode == COLOR_PICKER_ACTIVITY){
                 
@@ -131,7 +156,10 @@ public class UiSampleActivity extends ControllerActivity
     
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-    	mCalibrationButtonView.interpretMotionEvent(event);
+    	mCalibrationButtonViewBelow.interpretMotionEvent(event);
+    	mCalibrationButtonViewAbove.interpretMotionEvent(event);
+    	mCalibrationButtonViewRight.interpretMotionEvent(event);
+    	mCalibrationButtonViewLeft.interpretMotionEvent(event);
     	mCalibrationTwoFingerView.interpretMotionEvent(event);
     	return super.dispatchTouchEvent(event);
     }
