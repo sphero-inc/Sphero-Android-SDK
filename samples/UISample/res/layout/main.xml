@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
     To use the JoystickView's extra attributes, be sure to include a namespace for your project. Note the:
 
@@ -7,39 +6,80 @@
 
     This creates a new namespace, "app", which allows the use of the JoystickView's "puck_radius" attribute.
 -->
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res/orbotix.uisample"
-
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#ff888888"
-    >
+    android:background="#ff888888" >
 
     <Button
         android:id="@+id/color_button"
         style="@style/ControlButton"
-        android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:text="Color"
+        android:layout_alignParentTop="true"
         android:onClick="onColorClick"
-        />
+        android:text="Color" />
+
+    <Button
+        android:id="@+id/calibration_button_above"
+        style="@style/ControlButton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="O" />
+
+    <Button
+        android:id="@+id/calibration_button_right"
+        style="@style/ControlButton"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:text="O" />
+
+    <Button
+        android:id="@+id/calibration_button_left"
+        style="@style/ControlButton"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:text="O" />
+
+    <Button
+        android:id="@+id/calibration_button_below"
+        style="@style/ControlButton"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="O" />
 
     <orbotix.robot.widgets.joystick.JoystickView
         android:id="@+id/joystick"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        app:puck_radius="40dp"
+        android:layout_centerVertical="true"
         app:edge_overlap="20dp"
-        />
+        app:puck_radius="30dp" />
 
-    <orbotix.robot.widgets.calibration.CalibrationView
-        android:id="@+id/calibration"
+    <orbotix.view.calibration.CalibrationButtonView
+        android:id="@+id/calibration_above"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        />
+        android:layout_height="fill_parent" />
+
+    <orbotix.view.calibration.CalibrationButtonView
+        android:id="@+id/calibration_below"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+    <orbotix.view.calibration.CalibrationButtonView
+        android:id="@+id/calibration_left"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+    <orbotix.view.calibration.CalibrationButtonView
+        android:id="@+id/calibration_right"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+    <orbotix.view.calibration.CalibrationView
+        android:id="@+id/calibration_two_finger"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
 
 </RelativeLayout>
-
