@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 import orbotix.robot.base.*;
 import orbotix.view.connection.SpheroConnectionView;
 import orbotix.view.connection.SpheroConnectionView.OnRobotConnectionEventListener;
@@ -46,6 +47,12 @@ public class OptionFlagActivity extends Activity
                 // Get the current option flags
                 GetOptionFlagsCommand.sendCommand(mRobot);
 			}
+			
+			@Override
+			public void onBluetoothNotEnabled() {
+				// See ButtonDrive Sample on how to show BT settings screen, for now just notify user
+				Toast.makeText(OptionFlagActivity.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
+			}
 		});
     }
 
@@ -53,8 +60,6 @@ public class OptionFlagActivity extends Activity
     protected void onStop() {
         super.onStop();
 
-		// Shutdown Sphero connection view
-		mSpheroConnectionView.shutdown();
         if(mRobot != null){
             // Disconnect properly
             RobotProvider.getDefaultProvider().disconnectControlledRobots();

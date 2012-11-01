@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import orbotix.robot.base.*;
 import orbotix.view.connection.SpheroConnectionView;
 import orbotix.view.connection.SpheroConnectionView.OnRobotConnectionEventListener;
@@ -46,6 +47,12 @@ public class SelfLevelActivity extends Activity
 				mSpheroConnectionView.setVisibility(View.GONE);
                 // Set the AsyncDataListener that will process self level complete async responses
                 DeviceMessenger.getInstance().addAsyncDataListener(mRobot, mDataListener);
+			}
+			
+			@Override
+			public void onBluetoothNotEnabled() {
+				// See ButtonDrive Sample on how to show BT settings screen, for now just notify user
+				Toast.makeText(SelfLevelActivity.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
 			}
 		});
     }

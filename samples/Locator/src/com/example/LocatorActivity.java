@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import orbotix.robot.base.*;
 import orbotix.robot.sensor.DeviceSensorsData;
 import orbotix.robot.sensor.LocatorData;
@@ -107,6 +108,12 @@ public class LocatorActivity extends Activity
                     }
                 }, 1000);
 			}
+			
+			@Override
+			public void onBluetoothNotEnabled() {
+				// See ButtonDrive Sample on how to show BT settings screen, for now just notify user
+				Toast.makeText(LocatorActivity.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
+			}
 		});
        
     }
@@ -118,8 +125,6 @@ public class LocatorActivity extends Activity
         if(mRobot != null){
             // Make sure the ball doesn't roll across the world
             RollCommand.sendStop(mRobot);
-    		// Shutdown Sphero connection view
-    		mSpheroConnectionView.shutdown();
             // Disconnect properly
             RobotProvider.getDefaultProvider().disconnectControlledRobots();
         }

@@ -1,8 +1,10 @@
 package com.orbotix.sample.buttondrive;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 import orbotix.robot.base.*;
 import orbotix.view.connection.SpheroConnectionView;
 import orbotix.view.connection.SpheroConnectionView.OnRobotConnectionEventListener;
@@ -21,6 +23,7 @@ public class ButtonDriveActivity extends Activity
      * The Sphero Connection View
      */
     private SpheroConnectionView mSpheroConnectionView;
+    private static final int  BLUETOOTH_SETTINGS_REQUEST = 11;
     
     /** Called when the activity is first created. */
     @Override
@@ -45,9 +48,47 @@ public class ButtonDriveActivity extends Activity
 				// Skip this next step if you want the user to be able to connect multiple Spheros
 				mSpheroConnectionView.setVisibility(View.GONE);
 			}
+			@Override
+			public void onBluetoothNotEnabled() {
+	            // Bluetooth isn't enabled, so we show activity to enable bluetooth in settings
+	            Intent i = RobotProvider.getDefaultProvider().getAdapterIntent();
+	            startActivityForResult(i, BLUETOOTH_SETTINGS_REQUEST);
+			}
 		});
+        // Only one Sphero can be attempting to connect at a time
+        mSpheroConnectionView.setSingleSpheroMode(true);
+        // Refresh list of Spheros
+        mSpheroConnectionView.showSpheros();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case BLUETOOTH_SETTINGS_REQUEST:
+                if( resultCode == RESULT_OK ) {
+                    // User enabled bluetooth, so refresh Sphero list
+                	mSpheroConnectionView.showSpheros();
+                }
+                else {
+                    // User clicked "NO" on bluetooth enable settings screen
+                    Toast.makeText(ButtonDriveActivity.this, 
+                    		"Enable Bluetooth to Connect to Sphero", Toast.LENGTH_LONG).show();
+                }
+                break;
+        }
+    }
+    
+    /**
+     * Disconnect from the robot when the Activity stops
+     */
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Disconnect robot
+        RobotProvider.getDefaultProvider().removeAllControls();
+    }
+    
     /**
      * When the user clicks "STOP", stop the Robot.
      * @param v The View that had been clicked
@@ -55,7 +96,7 @@ public class ButtonDriveActivity extends Activity
     public void onStopClick(View v){
 
         if(mRobot != null){
-            //Stop robot
+            // Stop robot
             RollCommand.sendCommand(mRobot, 0f, 0f);
         }
     }
@@ -66,7 +107,7 @@ public class ButtonDriveActivity extends Activity
      */
     public void onControlClick(View v){
         
-        //Find the heading, based on which button was clicked
+        // Find the heading, based on which button was clicked
         final float heading;
         switch (v.getId()){
             
@@ -87,22 +128,10 @@ public class ButtonDriveActivity extends Activity
                 break;
         }
         
-        //Set speed. 60% of full speed
+        // Set speed. 60% of full speed
         final float speed = 0.6f;
 
-        //Roll robot
+        // Roll robot
         RollCommand.sendCommand(mRobot, heading, speed);
-    }
-
-    /**
-     * Disconnect from the robot when the Activity stops
-     */
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        //disconnect robot
-        mSpheroConnectionView.shutdown();
-        RobotProvider.getDefaultProvider().disconnectControlledRobots();
     }
 }

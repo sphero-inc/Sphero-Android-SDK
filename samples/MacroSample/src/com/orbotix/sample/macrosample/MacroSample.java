@@ -29,6 +29,7 @@ import orbotix.view.connection.SpheroConnectionView.OnRobotConnectionEventListen
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
 import com.orbotix.sample.macrosample.R;
@@ -140,6 +141,12 @@ public class MacroSample extends Activity
 			public void onRobotConnected(Robot arg0) {
 				// Add the robot
 				mRobots.add(arg0);
+			}
+			
+			@Override
+			public void onBluetoothNotEnabled() {
+				// See ButtonDrive Sample on how to show BT settings screen, for now just notify user
+				Toast.makeText(MacroSample.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
 			}
 		});
 	}

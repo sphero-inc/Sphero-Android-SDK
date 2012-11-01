@@ -7,6 +7,7 @@ import android.os.SystemClock;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 import orbotix.robot.base.CollisionDetectedAsyncData;
 import orbotix.robot.base.CollisionDetectedAsyncData.CollisionPower;
 import orbotix.robot.base.ConfigureCollisionDetectionCommand;
@@ -106,6 +107,12 @@ public class CollisionsActivity extends Activity {
                     }
                 }, 1000);
 			}
+			
+			@Override
+			public void onBluetoothNotEnabled() {
+				// See ButtonDrive Sample on how to show BT settings screen, for now just notify user
+				Toast.makeText(CollisionsActivity.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
+			}
 		});
 	}
 
@@ -118,9 +125,6 @@ public class CollisionsActivity extends Activity {
 		
 		// Remove async data listener
 		DeviceMessenger.getInstance().removeAsyncDataListener(mRobot, mCollisionListener);
-		
-		// Shutdown Sphero connection view
-		mSpheroConnectionView.shutdown();
 		
 		// Disconnect from the robot.
 		RobotProvider.getDefaultProvider().removeAllControls();
