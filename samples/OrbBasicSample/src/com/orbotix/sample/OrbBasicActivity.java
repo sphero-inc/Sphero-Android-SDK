@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 import orbotix.robot.base.*;
 import orbotix.view.connection.SpheroConnectionView;
 import orbotix.view.connection.SpheroConnectionView.OnRobotConnectionEventListener;
@@ -64,6 +65,11 @@ public class OrbBasicActivity extends ListActivity
 
 				// Set the AsyncDataListener that will process print and error messages
 				DeviceMessenger.getInstance().addAsyncDataListener(mRobot, mDataListener);
+			}
+			@Override
+			public void onBluetoothNotEnabled() {
+				// See ButtonDrive Sample on how to show BT settings screen, for now just notify user
+				Toast.makeText(OrbBasicActivity.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
 			}
 		});
 	}

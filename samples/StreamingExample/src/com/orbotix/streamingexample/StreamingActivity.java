@@ -4,13 +4,13 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.Toast;
 import orbotix.robot.base.*;
 import orbotix.robot.sensor.AccelerometerData;
 import orbotix.robot.sensor.AttitudeData;
 import orbotix.robot.sensor.DeviceSensorsData;
 import orbotix.view.connection.SpheroConnectionView;
 import orbotix.view.connection.SpheroConnectionView.OnRobotConnectionEventListener;
-
 import java.util.List;
 
 public class StreamingActivity extends Activity
@@ -122,6 +122,12 @@ public class StreamingActivity extends Activity
                         requestDataStreaming();
                     }
                 }, 1000);
+			}
+			
+			@Override
+			public void onBluetoothNotEnabled() {
+				// See ButtonDrive Sample on how to show BT settings screen, for now just notify user
+				Toast.makeText(StreamingActivity.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
 			}
 		});
     }

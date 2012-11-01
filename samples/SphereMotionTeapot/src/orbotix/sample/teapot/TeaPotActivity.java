@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 import orbotix.robot.base.*;
 import orbotix.robot.sensor.DeviceSensorsData;
 import orbotix.view.connection.SpheroConnectionView;
@@ -103,6 +104,12 @@ public class TeaPotActivity extends Activity {
                         requestDataStreaming();
                     }
                 }, 1000);
+			}
+			
+			@Override
+			public void onBluetoothNotEnabled() {
+				// See ButtonDrive Sample on how to show BT settings screen, for now just notify user
+				Toast.makeText(TeaPotActivity.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
 			}
 		});
     }

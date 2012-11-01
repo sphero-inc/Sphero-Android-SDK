@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 import orbotix.macro.MacroObject;
 import orbotix.macro.MacroObject.MacroObjectMode;
 import orbotix.robot.base.AbortMacroCommand;
@@ -17,6 +18,7 @@ import orbotix.robot.base.RollCommand;
 import orbotix.robot.base.StabilizationCommand;
 import orbotix.view.connection.SpheroConnectionView;
 import orbotix.view.connection.SpheroConnectionView.OnRobotConnectionEventListener;
+
 import com.orbotix.sample.macroloader.R;
 
 /**
@@ -56,6 +58,12 @@ public class MacroLoader extends Activity
 				mRobot = arg0;
 				// Hide the connection view to only connect to one robot
 				mSpheroConnectionView.setVisibility(View.GONE);
+			}
+			
+			@Override
+			public void onBluetoothNotEnabled() {
+				// See ButtonDrive Sample on how to show BT settings screen, for now just notify user
+				Toast.makeText(MacroLoader.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
 			}
 		});
 
@@ -193,8 +201,6 @@ public class MacroLoader extends Activity
 
 		mRobot = null;
 
-		// Shutdown Sphero connection view
-		mSpheroConnectionView.shutdown();
 		//Disconnect Robot
 		RobotProvider.getDefaultProvider().removeAllControls();
 	}
