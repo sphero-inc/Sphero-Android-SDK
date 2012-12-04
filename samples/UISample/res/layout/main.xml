@@ -27,27 +27,6 @@
         android:layout_centerHorizontal="true"
         android:text="O" />
 
-    <Button
-        android:id="@+id/calibration_button_right"
-        style="@style/ControlButton"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:text="O" />
-
-    <Button
-        android:id="@+id/calibration_button_left"
-        style="@style/ControlButton"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:text="O" />
-
-    <Button
-        android:id="@+id/calibration_button_below"
-        style="@style/ControlButton"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="O" />
-
     <orbotix.robot.widgets.joystick.JoystickView
         android:id="@+id/joystick"
         android:layout_width="250dp"
@@ -59,21 +38,6 @@
 
     <orbotix.view.calibration.CalibrationButtonView
         android:id="@+id/calibration_above"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
-
-    <orbotix.view.calibration.CalibrationButtonView
-        android:id="@+id/calibration_below"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
-
-    <orbotix.view.calibration.CalibrationButtonView
-        android:id="@+id/calibration_left"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
-
-    <orbotix.view.calibration.CalibrationButtonView
-        android:id="@+id/calibration_right"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
 
