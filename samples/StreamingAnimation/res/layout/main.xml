@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <RelativeLayout
+        android:id="@+id/relative_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+      <Button
+          android:id="@+id/button_calibrate"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentTop="true"
+          android:layout_alignParentRight="true"
+          android:text="@string/calibrate"
+          android:onClick="calibrateClicked"/>  
+        
+      <TextView
+          android:id="@+id/roll"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentTop="true"
+          android:layout_alignParentLeft="true"
+          android:text="@string/roll"
+          android:textColor="#FFF"/>  
+
+      <TextView
+          android:id="@+id/pitch"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/roll"
+          android:text="@string/pitch"
+          android:textColor="#FFF"/>  
+          
+      <TextView
+          android:id="@+id/yaw"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/pitch"
+          android:text="@string/yaw"
+          android:textColor="#FFF"/>  
+      
+      <ImageView
+          android:id="@+id/image_sphero"
+          android:layout_width="fill_parent"
+          android:layout_height="fill_parent"
+          android:src="@drawable/sphero_ball"
+          android:scaleType="matrix"/>
+
+    </RelativeLayout>
+
+    <orbotix.view.connection.SpheroConnectionView
+        android:id="@+id/sphero_connection_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#FFF" />
+
+</FrameLayout>
