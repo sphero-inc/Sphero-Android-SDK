@@ -303,7 +303,7 @@ public class StartupActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
         		WindowManager.LayoutParams.FLAG_FULLSCREEN);
         flurryEnabled = getIntent().getBooleanExtra(EXTRA_FLURRY_ENABLED, false);
-        returnOnNonePaired = getIntent().getBooleanExtra(EXTRA_RETURN_ON_NONE_PAIRED, false);
+        returnOnNonePaired = getIntent().getBooleanExtra(EXTRA_RETURN_ON_NONE_PAIRED, true);
 
 		setContentView(R.layout.startup);
         preferences = getSharedPreferences(STARTUP_PREFERENCES, Context.MODE_PRIVATE);
