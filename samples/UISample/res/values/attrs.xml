@@ -1,30 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<declare-styleable name="ToggleView">
-		<attr name="position1Background" format="reference" />
-		<attr name="position2Background" format="reference" />
-	    <attr name="toggleButton" format="reference" />
-	    <attr name="orientation"> 
-	    	<enum name="horizontal" value="1" />
-	    	<enum name="vertical" value="2" />
-	    </attr>
-	    <attr name="initialPosition">
-	    	<enum name="position1" value="1" />
-	    	<enum name="position2" value="2" />
-	    </attr>
-	</declare-styleable>
 
+    <declare-styleable name="ToggleView">
+        <attr name="position1Background" format="reference" />
+        <attr name="position2Background" format="reference" />
+        <attr name="toggleButton" format="reference" />
+        <attr name="orientation">
+            <enum name="horizontal" value="1" />
+            <enum name="vertical" value="2" />
+        </attr>
+        <attr name="initialPosition">
+            <enum name="position1" value="1" />
+            <enum name="position2" value="2" />
+        </attr>
+    </declare-styleable>
+    
     <declare-styleable name="JoystickView">
-
         <attr name="puck_radius" format="dimension" />
         <attr name="alpha" format="float" />
         <attr name="edge_overlap" format="dimension" />
-
     </declare-styleable>
     
     <declare-styleable name="CalibrateImageButton">
         <attr name="foreground_color" format="color" />
         <attr name="background_color" format="color" />
+        <attr name="widget_orientation">
+            <enum name="above" value="1" />
+            <enum name="left" value="2" />
+            <enum name="right" value="3" />
+            <enum name="below" value="4" />
+        </attr>
     </declare-styleable>
 
 </resources>

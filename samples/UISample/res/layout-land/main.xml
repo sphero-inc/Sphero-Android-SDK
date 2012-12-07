@@ -29,6 +29,7 @@
         android:layout_marginBottom="20dp"
         android:background="#00000000"
         android:scaleType="centerInside"
+        app:widget_orientation="right"
         app:background_color="#FF1990FF"
         app:foreground_color="#FFFFFFFF" />
 

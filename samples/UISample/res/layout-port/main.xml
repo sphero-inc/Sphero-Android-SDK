@@ -37,6 +37,7 @@
         android:layout_centerHorizontal="true"
         android:scaleType="centerInside"
         android:background="#00000000"
+        app:widget_orientation="above"
         app:foreground_color="#FFFFFFFF"
         app:background_color="#FF1990FF"
         />
