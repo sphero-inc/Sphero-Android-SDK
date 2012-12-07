@@ -5,10 +5,14 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import orbotix.robot.app.StartupActivity;
+import orbotix.robot.base.ConfigureLocatorCommand;
 import orbotix.robot.base.RGBLEDOutputCommand;
 import orbotix.robot.base.Robot;
 import orbotix.robot.base.RobotProvider;
+import orbotix.robot.base.SleepCommand;
 import orbotix.robot.widgets.ControllerActivity;
+import orbotix.robot.widgets.NoSpheroConnectedView;
+import orbotix.robot.widgets.SlideToSleepView;
 import orbotix.robot.widgets.joystick.JoystickView;
 import orbotix.robot.app.ColorPickerActivity;
 import orbotix.view.calibration.CalibrationButtonView;
@@ -32,12 +36,20 @@ public class UiSampleActivity extends ControllerActivity
      */
     private Robot mRobot;
     
+    /**
+     * One-Touch Calibration Button
+     */
     private CalibrationButtonView mCalibrationButtonViewAbove;
-    private CalibrationButtonView mCalibrationButtonViewBelow;
-    private CalibrationButtonView mCalibrationButtonViewRight;
-    private CalibrationButtonView mCalibrationButtonViewLeft;
     
+    /**
+     * Two finger calibration widget
+     */
     private CalibrationView mCalibrationTwoFingerView;
+    
+    /**
+     * Slide to sleep view
+     */
+    private SlideToSleepView mSlideToSleepView;
     
     //Colors
     private int mRed   = 0xff;
@@ -57,27 +69,24 @@ public class UiSampleActivity extends ControllerActivity
         // Add the two finger calibration method
         mCalibrationTwoFingerView = (CalibrationView)findViewById(R.id.calibration_two_finger);
         
+        // Set up sleep view
+        mSlideToSleepView = (SlideToSleepView)findViewById(R.id.slide_to_sleep_view);
+        mSlideToSleepView.hide();
+        // Send ball to sleep after completed widget movement
+        mSlideToSleepView.setOnSleepListener(new SlideToSleepView.OnSleepListener() {
+			@Override
+			public void onSleep() {
+				SleepCommand.sendCommand(mRobot, 0, 0);
+			}
+		});
+        
         // Initialize calibrate button view where the calibration circle shows above button
         // This is the default behavior
         mCalibrationButtonViewAbove = (CalibrationButtonView)findViewById(R.id.calibration_above);
         mCalibrationButtonViewAbove.setCalibrationButton((View)findViewById(R.id.calibration_button_above));
         // You can also change the size of the calibration views
         mCalibrationButtonViewAbove.setRadius(300);
-        
-        // Initialize calibrate button view where the calibration circle shows below button
-        mCalibrationButtonViewBelow = (CalibrationButtonView)findViewById(R.id.calibration_below);
-        mCalibrationButtonViewBelow.setCalibrationButton((View)findViewById(R.id.calibration_button_below));
-        mCalibrationButtonViewBelow.setCalibrationCircleLocation(CalibrationCircleLocation.BELOW);
-        
-        // Initialize calibrate button view where the calibration circle shows to the right of the button
-        mCalibrationButtonViewRight = (CalibrationButtonView)findViewById(R.id.calibration_right);
-        mCalibrationButtonViewRight.setCalibrationButton((View)findViewById(R.id.calibration_button_right));
-        mCalibrationButtonViewRight.setCalibrationCircleLocation(CalibrationCircleLocation.RIGHT);
-        
-        // Initialize calibrate button view where the calibration circle shows to the left of the button
-        mCalibrationButtonViewLeft = (CalibrationButtonView)findViewById(R.id.calibration_left);
-        mCalibrationButtonViewLeft.setCalibrationButton((View)findViewById(R.id.calibration_button_left));
-        mCalibrationButtonViewLeft.setCalibrationCircleLocation(CalibrationCircleLocation.LEFT);
+        mCalibrationButtonViewAbove.setCalibrationCircleLocation(CalibrationCircleLocation.ABOVE);
     }
 
     /**
@@ -108,10 +117,12 @@ public class UiSampleActivity extends ControllerActivity
                 
                 // Make sure you let the calibration views know the robot it should control
                 mCalibrationButtonViewAbove.setRobot(mRobot);
-                mCalibrationButtonViewBelow.setRobot(mRobot);
-                mCalibrationButtonViewRight.setRobot(mRobot);
-                mCalibrationButtonViewLeft.setRobot(mRobot);
                 mCalibrationTwoFingerView.setRobot(mRobot);
+                
+                ConfigureLocatorCommand.sendCommand(mRobot, 0, 0, 0, 0);
+                
+                // Make connect sphero pop-up invisible if it was previously up
+                ((NoSpheroConnectedView)UiSampleActivity.this.findViewById(R.id.no_sphero_connected_view)).setVisibility(View.GONE);
                 
             }else if(requestCode == COLOR_PICKER_ACTIVITY){
                 
@@ -125,6 +136,12 @@ public class UiSampleActivity extends ControllerActivity
                     RGBLEDOutputCommand.sendCommand(mRobot, mRed, mGreen, mBlue);
                 }
             }
+        }
+        else {
+        	if(requestCode == STARTUP_ACTIVITY){   
+        		// Failed to return any robot, so we bring up the no robot connected view
+        		((NoSpheroConnectedView)UiSampleActivity.this.findViewById(R.id.no_sphero_connected_view)).setVisibility(View.VISIBLE);
+        	}
         }
     }
 
@@ -154,13 +171,20 @@ public class UiSampleActivity extends ControllerActivity
         startActivityForResult(i, COLOR_PICKER_ACTIVITY);
     }
     
+    /**
+     * When the user clicks the "Sleep" button, show the SlideToSleepView shows
+     * @param v The Button clicked
+     */
+    public void onSleepClick(View v){
+    	mSlideToSleepView.show();
+    }
+    
+    
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-    	mCalibrationButtonViewBelow.interpretMotionEvent(event);
     	mCalibrationButtonViewAbove.interpretMotionEvent(event);
-    	mCalibrationButtonViewRight.interpretMotionEvent(event);
-    	mCalibrationButtonViewLeft.interpretMotionEvent(event);
     	mCalibrationTwoFingerView.interpretMotionEvent(event);
+    	mSlideToSleepView.interpretMotionEvent(event);
     	return super.dispatchTouchEvent(event);
     }
 }

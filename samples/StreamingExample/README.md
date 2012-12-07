@@ -11,7 +11,7 @@
 
 An accelerometer measures the force of gravity in 3-dimensions (x,y,z).  A few uses are for determing shake gestures and collisions. 
 
-![android.jpg](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/acceleromter.png)
+![android.jpg](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/accelerometer.png)
 
 On Sphero, you have access to the raw and filtered accelerometer data.  You should always stream the filtered data, unless you have use for the raw data.  The filtered accelerometer data is in units of g.  So, 1 G = a value of 9.81 m/s^2. 
 ## Gyroscope
@@ -20,7 +20,21 @@ A gyroscope is a device for measuring or maintaining orientation, based on the p
 
 ![android.jpg](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/gyroscope.png)## IMU
 The IMU uses the accelerometer and gyroscope on Sphero to determine values for Roll, Pitch, and Yaw.  These values (in degrees) can be used to determine the orientation of Sphero.
-![android.jpg](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/IMU.png)## Requesting Data Streaming
+![android.jpg](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/IMU.png)## Back EMF
+
+Back electromotive force (abbreviated Back EMF) is the voltage, or electromotive force, that pushes against the current which induces it.  Before we created the Locator, this could be used to determine how fast Sphero was traveling. It can still be used to determing what is going on with the motors.
+
+## Quaternions
+
+		Note: You need firmware 1.20 or above on Sphero, or these values will always be 0
+
+Quaternions are a number system that extends the complex numbers.  They are used to represent orientation in 3D-space.  Typically, these are four numbers, all ranging from 0-1.  For data transmission reasons, we give you 4 numbers from 0-10000.  Hence, the units on these return numbers are (1/10000th) of a Q.  
+
+## Locator Data
+
+		Note: You need firmware 1.20 or above on Sphero, or these values will always be 0
+		
+The locator returns values for the x,y position of Sphero on the floor, and the current velocity vector of Sphero.  Please see the locator sample documentation for more information.## Requesting Data Streaming
 In the Set Data Streaming command, we recommend a value of 20 <= divisor <= 50 and packetFrames=1 for most purposes.  Since the maximum sensor sampling rate is ~420 Hz, if we take divisor=20 and packetFrames=1 we get approx. 420/20 = ~21 packets/second each containing one set of requested data values.  For iOS devices divisor=20 works well.  For many Android devices divisor = 10 or less is possible (42+ samples/second).
     private void requestDataStreaming() {
 

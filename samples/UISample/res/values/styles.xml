@@ -198,7 +198,6 @@
 		<item name="@android:windowExitAnimation">@anim/disappear</item>
 	</style>
 
-
 	<style name="Animations.PopUpMenu.Appear">
 		<item name="@android:windowEnterAnimation">@anim/appear</item>
 		<item name="@android:windowExitAnimation">@anim/disappear</item>
