@@ -95,7 +95,7 @@ public class TeaPotActivity extends Activity {
                     @Override
                     public void run() {
                         // turn rear light on
-                        FrontLEDOutputCommand.sendCommand(mRobot, 1.0f);
+                        BackLEDOutputCommand.sendCommand(mRobot, 1.0f);
                         // turn stabilization off
                         StabilizationCommand.sendCommand(mRobot, false);
                         // register the async data listener
@@ -112,6 +112,7 @@ public class TeaPotActivity extends Activity {
 				Toast.makeText(TeaPotActivity.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
 			}
 		});
+		mSpheroConnectionView.showSpheros();
     }
 
     @Override
@@ -122,7 +123,7 @@ public class TeaPotActivity extends Activity {
         StabilizationCommand.sendCommand(mRobot, true);
 
         // turn rear light off
-        FrontLEDOutputCommand.sendCommand(mRobot, 0.0f);
+        BackLEDOutputCommand.sendCommand(mRobot, 0.0f);
 
         // stop the streaming data when we leave
         SetDataStreamingCommand.sendCommand(mRobot, 0, 0,
@@ -131,11 +132,8 @@ public class TeaPotActivity extends Activity {
         // unregister the async data listener to prevent a memory leak.
         DeviceMessenger.getInstance().removeAsyncDataListener(mRobot, mDataListener);
 
-		// Shutdown Sphero connection view
-		mSpheroConnectionView.shutdown();
-
-        // disconnect from the ball
-        RobotProvider.getDefaultProvider().removeAllControls();
+        // Disconnect properly
+        RobotProvider.getDefaultProvider().disconnectControlledRobots();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.orbotix.sample;
+package com.orbotix.sample.orbbasic;
 
 import android.app.ListActivity;
 import android.content.res.Resources;
@@ -68,10 +68,11 @@ public class OrbBasicActivity extends ListActivity
 			}
 			@Override
 			public void onBluetoothNotEnabled() {
-				// See ButtonDrive Sample on how to show BT settings screen, for now just notify user
+				// See UISample Sample on how to show BT settings screen, for now just notify user
 				Toast.makeText(OrbBasicActivity.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
 			}
 		});
+		mSpheroConnectionView.showSpheros();
 	}
 
     /**
@@ -136,14 +137,12 @@ public class OrbBasicActivity extends ListActivity
     protected void onStop() {
         super.onStop();
 
-		// Shutdown Sphero connection view
-		mSpheroConnectionView.shutdown();
         if(mRobot != null){
             // Make sure the ball doesn't roll across the world
             RollCommand.sendStop(mRobot);
-            // Disconnect properly
-            RobotProvider.getDefaultProvider().disconnectControlledRobots();
         }
+        // Disconnect properly
+        RobotProvider.getDefaultProvider().disconnectControlledRobots();
     }
 
     /**

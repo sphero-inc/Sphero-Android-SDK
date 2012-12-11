@@ -1,4 +1,4 @@
-package com.example;
+package com.orbotix.sample.locator;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -111,11 +111,11 @@ public class LocatorActivity extends Activity
 			
 			@Override
 			public void onBluetoothNotEnabled() {
-				// See ButtonDrive Sample on how to show BT settings screen, for now just notify user
+				// See UISample Sample on how to show BT settings screen, for now just notify user
 				Toast.makeText(LocatorActivity.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
 			}
 		});
-       
+        mSpheroConnectionView.showSpheros();
     }
 
     @Override
@@ -125,9 +125,9 @@ public class LocatorActivity extends Activity
         if(mRobot != null){
             // Make sure the ball doesn't roll across the world
             RollCommand.sendStop(mRobot);
-            // Disconnect properly
-            RobotProvider.getDefaultProvider().disconnectControlledRobots();
         }
+        //Disconnect Robots on stop
+        RobotProvider.getDefaultProvider().disconnectControlledRobots();
     }
 
     private void requestDataStreaming(){

@@ -57,15 +57,14 @@ public class HelloWorldActivity extends Activity
         RobotProvider.getDefaultProvider().setOnRobotDisconnectedListener(new OnRobotDisconnectedListener() {
 			@Override
 			public void onRobotDisconnected(Robot robot) {
-				Toast.makeText(HelloWorldActivity.this, "Sphero Disconnected", Toast.LENGTH_SHORT);
+				Toast.makeText(HelloWorldActivity.this, "Sphero Disconnected", Toast.LENGTH_SHORT).show();
 			}
 		});
     } 
 
     @Override
     protected void onStop() {
-        super.onStop();
-        mRobot = null;        
+        super.onStop();      
         //Disconnect Robot
         RobotProvider.getDefaultProvider().disconnectControlledRobots();
     }

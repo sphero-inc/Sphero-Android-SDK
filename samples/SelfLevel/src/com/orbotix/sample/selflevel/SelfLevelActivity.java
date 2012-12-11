@@ -1,4 +1,4 @@
-package com.orbotix;
+package com.orbotix.sample.selflevel;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -51,22 +51,19 @@ public class SelfLevelActivity extends Activity
 			
 			@Override
 			public void onBluetoothNotEnabled() {
-				// See ButtonDrive Sample on how to show BT settings screen, for now just notify user
+				// See UISample Sample on how to show BT settings screen, for now just notify user
 				Toast.makeText(SelfLevelActivity.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
 			}
 		});
+		mSpheroConnectionView.showSpheros();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
 
-		// Shutdown Sphero connection view
-		mSpheroConnectionView.shutdown();
-        if(mRobot != null){
-            // Disconnect properly
-            RobotProvider.getDefaultProvider().removeAllControls();
-        }
+        // Disconnect properly
+        RobotProvider.getDefaultProvider().disconnectControlledRobots();
     }
 
     /**
