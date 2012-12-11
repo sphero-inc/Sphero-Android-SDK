@@ -10,6 +10,7 @@ import android.widget.Toast;
 import orbotix.macro.MacroObject;
 import orbotix.macro.MacroObject.MacroObjectMode;
 import orbotix.robot.base.AbortMacroCommand;
+import orbotix.robot.base.BackLEDOutputCommand;
 import orbotix.robot.base.FrontLEDOutputCommand;
 import orbotix.robot.base.RGBLEDOutputCommand;
 import orbotix.robot.base.Robot;
@@ -62,7 +63,7 @@ public class MacroLoader extends Activity
 			
 			@Override
 			public void onBluetoothNotEnabled() {
-				// See ButtonDrive Sample on how to show BT settings screen, for now just notify user
+				// See UISample Sample on how to show BT settings screen, for now just notify user
 				Toast.makeText(MacroLoader.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
 			}
 		});
@@ -191,7 +192,7 @@ public class MacroLoader extends Activity
 		AbortMacroCommand.sendCommand(mRobot); // abort command
 		StabilizationCommand.sendCommand(mRobot, true); // turn on stabilization
 		RGBLEDOutputCommand.sendCommand(mRobot, 255, 255, 255); // make Sphero White
-		FrontLEDOutputCommand.sendCommand(mRobot, 0.0f);  // Turn off tail light
+		BackLEDOutputCommand.sendCommand(mRobot, 0.0f);  // Turn off tail light
 		RollCommand.sendStop(mRobot);  // Stop rolling
 	}
 
@@ -201,8 +202,8 @@ public class MacroLoader extends Activity
 
 		mRobot = null;
 
-		//Disconnect Robot
-		RobotProvider.getDefaultProvider().removeAllControls();
+        //Disconnect Robots on stop
+        RobotProvider.getDefaultProvider().disconnectControlledRobots();
 	}
 }
 

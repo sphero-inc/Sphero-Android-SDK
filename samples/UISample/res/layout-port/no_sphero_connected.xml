@@ -124,7 +124,7 @@
             android:textColor="#FFF" />
 
         <Button
-            android:id="@+id/button_settings"
+            android:id="@+id/button_settings_or_connect"
             android:layout_width="150dp"
             android:layout_height="40dp"
             android:layout_alignParentBottom="true"
@@ -132,7 +132,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/no_sphero_button_up"
-            android:text="Settings"
+            android:text="Connect"
             android:textColor="#FFF" />
     </RelativeLayout>
 

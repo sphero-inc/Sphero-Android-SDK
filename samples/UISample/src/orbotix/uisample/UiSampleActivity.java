@@ -2,29 +2,35 @@ package orbotix.uisample;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Contacts.Intents.UI;
 import android.view.MotionEvent;
 import android.view.View;
-import orbotix.robot.app.StartupActivity;
-import orbotix.robot.base.ConfigureLocatorCommand;
+import android.widget.Toast;
 import orbotix.robot.base.RGBLEDOutputCommand;
 import orbotix.robot.base.Robot;
 import orbotix.robot.base.RobotProvider;
 import orbotix.robot.base.SleepCommand;
+import orbotix.robot.base.RobotProvider.OnRobotDisconnectedListener;
 import orbotix.robot.widgets.ControllerActivity;
 import orbotix.robot.widgets.NoSpheroConnectedView;
+import orbotix.robot.widgets.NoSpheroConnectedView.OnConnectButtonClickListener;
 import orbotix.robot.widgets.SlideToSleepView;
 import orbotix.robot.widgets.joystick.JoystickView;
 import orbotix.robot.app.ColorPickerActivity;
 import orbotix.view.calibration.CalibrationButtonView;
 import orbotix.view.calibration.CalibrationButtonView.CalibrationCircleLocation;
 import orbotix.view.calibration.CalibrationView;
+import orbotix.view.connection.SpheroConnectionView;
+import orbotix.view.connection.SpheroConnectionView.OnRobotConnectionEventListener;
 
 public class UiSampleActivity extends ControllerActivity
 {
     /**
      * ID to start the StartupActivity for result to connect the Robot
      */
-    private final static int STARTUP_ACTIVITY      = 0;
+    private final static int STARTUP_ACTIVITY            = 0;
+	private static final int  BLUETOOTH_ENABLE_REQUEST = 11;
+	private static final int  BLUETOOTH_SETTINGS_REQUEST = 12;
 
     /**
      * ID to start the ColorPickerActivity for result to select a color
@@ -50,6 +56,16 @@ public class UiSampleActivity extends ControllerActivity
      * Slide to sleep view
      */
     private SlideToSleepView mSlideToSleepView;
+    
+    /**
+     * No Sphero Connected Pop-Up View
+     */
+    private NoSpheroConnectedView mNoSpheroConnectedView;
+    
+    /**
+     * Sphero Connection View
+     */
+    private SpheroConnectionView mSpheroConnectionView;
     
     //Colors
     private int mRed   = 0xff;
@@ -87,31 +103,47 @@ public class UiSampleActivity extends ControllerActivity
         // You can also change the size of the calibration views
         mCalibrationButtonViewAbove.setRadius(300);
         mCalibrationButtonViewAbove.setCalibrationCircleLocation(CalibrationCircleLocation.ABOVE);
-    }
-
-    /**
-     * On start, start the StartupActivity to connect to the Robot
-     */
-    @Override
-    protected void onStart() {
-        super.onStart();
         
-        //Start StartupActivity to connect to Robot
-        Intent i = new Intent(this, StartupActivity.class);
-        startActivityForResult(i, STARTUP_ACTIVITY);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
         
-        if(resultCode == RESULT_OK){
-            if(requestCode == STARTUP_ACTIVITY){
+        // Grab the No Sphero Connected View
+        mNoSpheroConnectedView = (NoSpheroConnectedView)findViewById(R.id.no_sphero_connected_view);
+        mNoSpheroConnectedView.setOnConnectButtonClickListener(new OnConnectButtonClickListener() {
 
-                //Get the connected Robot
-                final String robot_id = data.getStringExtra(StartupActivity.EXTRA_ROBOT_ID);
-                mRobot = RobotProvider.getDefaultProvider().findRobot(robot_id);
+			@Override
+			public void onConnectClick() {
+				mSpheroConnectionView.setVisibility(View.VISIBLE);
+				mSpheroConnectionView.showSpheros();
+			}
 
+			@Override
+			public void onSettingsClick() {
+				// Open the Bluetooth Settings Intent
+				Intent settingsIntent = new Intent(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS);
+				UiSampleActivity.this.startActivityForResult(settingsIntent, BLUETOOTH_SETTINGS_REQUEST);
+			}
+		});
+        
+        // Setup on robot disconnect to show no sphero connected view
+        // Register to be notified when Sphero disconnects (out of range, battery dead, sleep, etc.)
+        RobotProvider.getDefaultProvider().setOnRobotDisconnectedListener(new OnRobotDisconnectedListener() {
+			@Override
+			public void onRobotDisconnected(Robot robot) {
+				mNoSpheroConnectedView.setVisibility(View.VISIBLE);
+			}
+		});
+        
+        
+        // Set up the Sphero Connection View
+        mSpheroConnectionView = (SpheroConnectionView)findViewById(R.id.sphero_connection_view);
+        mSpheroConnectionView.setOnRobotConnectionEventListener(new OnRobotConnectionEventListener() {
+			
+			@Override
+			public void onRobotConnectionFailed(Robot arg0) {}
+			
+			@Override
+			public void onRobotConnected(Robot arg0) {
+				// Set Robot
+				mRobot = arg0;
                 //Set connected Robot to the Controllers
                 setRobot(mRobot);
                 
@@ -119,13 +151,36 @@ public class UiSampleActivity extends ControllerActivity
                 mCalibrationButtonViewAbove.setRobot(mRobot);
                 mCalibrationTwoFingerView.setRobot(mRobot);
                 
-                ConfigureLocatorCommand.sendCommand(mRobot, 0, 0, 0, 0);
-                
                 // Make connect sphero pop-up invisible if it was previously up
-                ((NoSpheroConnectedView)UiSampleActivity.this.findViewById(R.id.no_sphero_connected_view)).setVisibility(View.GONE);
-                
-            }else if(requestCode == COLOR_PICKER_ACTIVITY){
-                
+                mNoSpheroConnectedView.setVisibility(View.GONE);
+                mNoSpheroConnectedView.switchToConnectButton();
+                // Hide Connection View since we only want to connect to one robot
+                mSpheroConnectionView.setVisibility(View.GONE);
+			}
+			
+			@Override
+			public void onNonePaired() {
+				mSpheroConnectionView.setVisibility(View.GONE);
+				mNoSpheroConnectedView.switchToSettingsButton();
+				mNoSpheroConnectedView.setVisibility(View.VISIBLE);
+			}
+			
+			@Override
+			public void onBluetoothNotEnabled() {
+				// Bluetooth isn't enabled, so we show activity to enable bluetooth in settings
+	            Intent i = RobotProvider.getDefaultProvider().getAdapterIntent();
+	            startActivityForResult(i, BLUETOOTH_ENABLE_REQUEST);
+			}
+		});
+        mSpheroConnectionView.showSpheros();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK){
+            if(requestCode == COLOR_PICKER_ACTIVITY){
                 if(mRobot != null){
                     //Get the colors
                     mRed   = data.getIntExtra(ColorPickerActivity.EXTRA_COLOR_RED, 0xff);
@@ -136,11 +191,27 @@ public class UiSampleActivity extends ControllerActivity
                     RGBLEDOutputCommand.sendCommand(mRobot, mRed, mGreen, mBlue);
                 }
             }
+            else if( requestCode == BLUETOOTH_ENABLE_REQUEST ) {
+            	// User enabled bluetooth, so refresh Sphero list
+            	mSpheroConnectionView.setVisibility(View.VISIBLE);
+            	mSpheroConnectionView.showSpheros();
+            }
         }
         else {
         	if(requestCode == STARTUP_ACTIVITY){   
         		// Failed to return any robot, so we bring up the no robot connected view
-        		((NoSpheroConnectedView)UiSampleActivity.this.findViewById(R.id.no_sphero_connected_view)).setVisibility(View.VISIBLE);
+        		mNoSpheroConnectedView.setVisibility(View.VISIBLE);
+        	}
+        	else if( requestCode == BLUETOOTH_ENABLE_REQUEST ) {
+        		
+        		// User clicked "NO" on bluetooth enable settings screen
+                Toast.makeText(UiSampleActivity.this, 
+                		"Enable Bluetooth to Connect to Sphero", Toast.LENGTH_LONG).show();
+        	}
+        	else if( requestCode == BLUETOOTH_SETTINGS_REQUEST ) {
+        		// User enabled bluetooth, so refresh Sphero list
+            	mSpheroConnectionView.setVisibility(View.VISIBLE);
+            	mSpheroConnectionView.showSpheros();
         	}
         }
     }
@@ -150,9 +221,7 @@ public class UiSampleActivity extends ControllerActivity
         super.onStop();
 
         //Disconnect Robots on stop
-        if(mRobot != null){
-            RobotProvider.getDefaultProvider().disconnectControlledRobots();
-        }
+        RobotProvider.getDefaultProvider().disconnectControlledRobots();
     }
 
     /**

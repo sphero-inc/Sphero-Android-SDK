@@ -1,5 +1,9 @@
 package orbotix.robot.widgets;
 
+import orbotix.robot.base.Robot;
+import orbotix.robot.base.RobotProvider;
+import orbotix.robot.base.RobotProvider.OnNoRobotsPairedListener;
+import orbotix.robot.base.RobotProvider.OnRobotFoundListener;
 import orbotix.uisample.R;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +20,16 @@ public class NoSpheroConnectedView extends RelativeLayout {
 	 * Custom URL to for developer referral program 
 	 */
 	private String mCustomURL = "http://store.gosphero.com";
+	
+	/**
+	 * Connection or Setting Button
+	 */
+	private Button mConnectOrSettingsButton;
+	
+	/**
+	 * Notify the Activity of a click
+	 */
+	private OnConnectButtonClickListener mOnConnectButtonClickListener;
 	
 	public NoSpheroConnectedView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -48,14 +62,22 @@ public class NoSpheroConnectedView extends RelativeLayout {
 		});
 		
 		// Set up button to open browser url
-		Button settingsButotn = (Button)this.findViewById(R.id.button_settings);
-		settingsButotn.setOnClickListener(new OnClickListener() {
+		mConnectOrSettingsButton = (Button)this.findViewById(R.id.button_settings_or_connect);
+		mConnectOrSettingsButton.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				// Open the Bluetooth Settings Intent
-				Intent settingsIntent = new Intent(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS);
-				context.startActivity(settingsIntent);
+				// Notify Activity the Connect Button was clicked
+				if( mConnectOrSettingsButton.getText().equals("Connect") ) {
+					if( mOnConnectButtonClickListener != null ) {
+						mOnConnectButtonClickListener.onConnectClick();
+					}
+				}
+				else {
+					if( mOnConnectButtonClickListener != null ) {
+						mOnConnectButtonClickListener.onSettingsClick();
+					}
+				}
 			}
 		});
 	}
@@ -75,4 +97,34 @@ public class NoSpheroConnectedView extends RelativeLayout {
 	public String getCustomURL() {
 		return mCustomURL;
 	}
+	
+	/**
+	 * Switch to Settings button
+	 */
+	public void switchToSettingsButton() {
+		mConnectOrSettingsButton.setText("Settings");
+	}
+	
+	/**
+	 * Switch to Settings button
+	 */
+	public void switchToConnectButton() {
+		mConnectOrSettingsButton.setText("Connect");
+	}
+	
+	/**
+	 * Set the click listener
+	 * @param listener
+	 */
+	public void setOnConnectButtonClickListener(OnConnectButtonClickListener listener) {
+		mOnConnectButtonClickListener = listener;
+	}
+	
+    /**
+     * A listener to be run when the connect button is clicked, so the activity can connect
+     */
+    public interface OnConnectButtonClickListener {
+        public void onConnectClick();
+        public void onSettingsClick();
+    }
 }

@@ -110,7 +110,7 @@ public class CollisionsActivity extends Activity {
 			
 			@Override
 			public void onBluetoothNotEnabled() {
-				// See ButtonDrive Sample on how to show BT settings screen, for now just notify user
+				// See UISample Sample on how to show BT settings screen, for now just notify user
 				Toast.makeText(CollisionsActivity.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
 			}
 		});
@@ -126,8 +126,8 @@ public class CollisionsActivity extends Activity {
 		// Remove async data listener
 		DeviceMessenger.getInstance().removeAsyncDataListener(mRobot, mCollisionListener);
 		
-		// Disconnect from the robot.
-		RobotProvider.getDefaultProvider().removeAllControls();
+        //Disconnect Robots on stop
+        RobotProvider.getDefaultProvider().disconnectControlledRobots();
 	}
 	
 	private final AsyncDataListener mCollisionListener = new AsyncDataListener() {

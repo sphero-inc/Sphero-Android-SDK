@@ -1,7 +1,6 @@
 package com.orbotix.sample.buttondrive;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -23,7 +22,6 @@ public class ButtonDriveActivity extends Activity
      * The Sphero Connection View
      */
     private SpheroConnectionView mSpheroConnectionView;
-    private static final int  BLUETOOTH_SETTINGS_REQUEST = 11;
     
     /** Called when the activity is first created. */
     @Override
@@ -50,33 +48,14 @@ public class ButtonDriveActivity extends Activity
 			}
 			@Override
 			public void onBluetoothNotEnabled() {
-	            // Bluetooth isn't enabled, so we show activity to enable bluetooth in settings
-	            Intent i = RobotProvider.getDefaultProvider().getAdapterIntent();
-	            startActivityForResult(i, BLUETOOTH_SETTINGS_REQUEST);
+				// See UISample Sample on how to show BT settings screen, for now just notify user
+				Toast.makeText(ButtonDriveActivity.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
 			}
 		});
         // Only one Sphero can be attempting to connect at a time
         mSpheroConnectionView.setSingleSpheroMode(true);
         // Refresh list of Spheros
         mSpheroConnectionView.showSpheros();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case BLUETOOTH_SETTINGS_REQUEST:
-                if( resultCode == RESULT_OK ) {
-                    // User enabled bluetooth, so refresh Sphero list
-                	mSpheroConnectionView.showSpheros();
-                }
-                else {
-                    // User clicked "NO" on bluetooth enable settings screen
-                    Toast.makeText(ButtonDriveActivity.this, 
-                    		"Enable Bluetooth to Connect to Sphero", Toast.LENGTH_LONG).show();
-                }
-                break;
-        }
     }
     
     /**

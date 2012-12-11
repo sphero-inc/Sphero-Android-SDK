@@ -102,7 +102,7 @@ public class StreamingAnimationActivity extends Activity
                     @Override
                     public void run() {
                         // turn rear light on
-                        FrontLEDOutputCommand.sendCommand(mRobot, 1.0f);
+                        BackLEDOutputCommand.sendCommand(mRobot, 1.0f);
                         // turn stabilization off
                         StabilizationCommand.sendCommand(mRobot, false);
                         // register the async data listener
@@ -132,14 +132,13 @@ public class StreamingAnimationActivity extends Activity
     protected void onStop() {
         super.onStop();
 
-		// Shutdown Sphero connection view
+		// Do last commands
         if(mRobot != null){
-
             StabilizationCommand.sendCommand(mRobot, true);
-            FrontLEDOutputCommand.sendCommand(mRobot, 0f);
-
-            RobotProvider.getDefaultProvider().removeAllControls();
+            BackLEDOutputCommand.sendCommand(mRobot, 0f);
         }
+        // Disconnect properly
+        RobotProvider.getDefaultProvider().disconnectControlledRobots();
     }
 
     private void requestDataStreaming() {
@@ -221,7 +220,7 @@ public class StreamingAnimationActivity extends Activity
     	// Make the current orientation of Sphero 0,0,0 (roll,pitch,yaw)
     	// This is how you can get the user to point the blue tail light towards them
     	// And have Sphero right side up
-    	CalibrateCommand.sendCommand(mRobot, 0);
+    	SetHeadingCommand.sendCommand(mRobot, 0);
     }
     
     /**
