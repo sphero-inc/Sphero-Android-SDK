@@ -14,7 +14,7 @@ This Guide walks you through the basics of creating mobile apps for Android that
 
 ### Before we begin - Installing Eclipse
 
-    Notice: The Sphero Android SDK works with Android 2.2+
+    Notice: The Sphero Android SDK works with Android 2.2+ and Java Compiler Level 6.0(1.6)+
 
 Before you begin to develop applications that interface with Sphero on Android, you will need to install the Android developer tools. We often use Eclipse but there are many other well written Android IDEs out there and these same basic steps are most often still applicable. 
 
@@ -24,21 +24,63 @@ Before you begin to develop applications that interface with Sphero on Android, 
 
  - Download the latest version of the [Sphero Android SDK](https://github.com/orbotix/Sphero-Android-SDK/zipball/master)
      * *You can always keep up to date by watching our [GitHub Repository](https://github.com/orbotix/Sphero-Android-SDK)*
+     
+## Available Samples  
 
-### Create a new Android project in Eclipse.  
+The Sphero Android SDK has over 15 different sample projects.  Starting with one of these is the best way to get going programming Sphero, and doing so is very simple.
 
-When creating a new project it is important to take special notice to the Android API Level and the Java compliance level. The Sphero SDK currently supports: 
+1.  **HelloWorld** - This sample code demonstrates how to connect to a Sphero and blink it's RGB LED blue.
+2.  **ButtonDrive** - This code sample demonstrates driving a Sphero by sending roll commands at 0°, 90°, 180°, and 270°
+3.  **Collisions** - This sample demonstrates how to set up Sphero collision detection, which is a firmware feature that generates a collision async message when an impact is detected.
+4.  **AcheivementSample** - This guide will walk you through the basics of adding achievements to the SpheroWorld back end and adding their tracking to an application.
+5.  **Locator** - This sample demonstrates how to use the Sphero Locator, which is a firmware feature that provides real-time position and velocity information about the robot.
+6.  **MacroSample** - This sample demonstartes how to connect to multiple balls and also how to programatically create macros and run them on multiple Spheros.
+7.  **MacroLoader** - This sample shows how to load macros created in MacroLab to run on the ball.
+8.  **MultiplayerLobby** - Shows how to connect two phones over a wifi network.  For multiplayer games.  Soon to be deprecated over better services like http://playphone.com/.  
+9.  **OptionFlags** - This sample demonstrates how to control option flags, which are settings that stay with Sphero even after it goes through power cycles.
+10. **orbBasicSample** - This sample demonstartes how to load and execute OrbBasic programs on Sphero.
+11. **SelfLevel** - This sample code demonstrates how to connect to a Sphero and perform the self level command.
+12. **StreamingExample** - Sphero supports asynchronous data streaming of certain control system and sensor parameters. This is great for using Sphero as a controller, or for retreiving data about its environment.  This sample shows you how.
+13. **StreamingAnimation** - This smaple demonstrates how to use Sphero and data streaming to move and rotate a 2D object on screen.
+14. **SpheroMotionTeapot** - This sample demonstrates how to use Sphero and data streaming to control the rotation of 3D object on screen.
+15. **UISample** - This is a great resource for application development.  It contains a pre-made drive joystick, a calibration widget, a color changing widget, and a sleep widget.  
+16. **TwoPhonesOneBall** - Demonstrates how to use two devices that are connected over wifi to control one Sphero.
+     
+## Importing a Sphero Sample Project
+
+To import a sample into Eclipse, right-click in the project explorer, or click the File menu and select "**Import…**" 
+
+   ![QSG-libs.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/image004.png)
+   
+Select the Existing Project into Workspace option.  Then you want to browse to the folder that holds the HelloWorld Sample.  It will be in the directory where you downloaded our SDK to.
+
+   ![QSG-libs.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/image005.png)
+   
+At this point there should be no "red X's" or "red exclamation points" next to your sample project.  However, if there is, they are usually one of the 3 following problems. However, if the project loads fine, you are now ready to run it on a physical Android device.  The emulator will not work. And you can go ahead and look at all our samples.  If you have problems read the following fixes. 
+
+1. Right click the project, and go to Properties.  Under the **Android** tab on the left, the check box next to Android 2.2 (or above) should be checked.  If you don't see any Android options, you need to download the Eclipse ADT plugin.
+	
+![QSG-libs.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/image006.png)
+
+2. Right click the project, and go to Properties.  Under the **Java Compiler** tab on the left, the compiler level should be 1.6 or above. 
+
+3. After you do these fixes, and problems still persits, try a "Project -> Clean" in the file menu.  60% of the time, this works all the time.
+
+## Create a new Android project in Eclipse with Sphero or Integrating Sphero into an Existing Project  
+
+If creating a new project it is important to take special notice to the Android API Level and the Java compliance level. The Sphero SDK currently supports: 
     
  - Andriod API level 8 (Android 2.2) or greater. 
- - Java language compliance level 6.0(1.6) .
+ - Java language compliance level 6.0(1.6) or greater.
     
-### Integrating the Sphero Libraries 
+### Integrating the Sphero Libraries into your Project
 
  You can start a new Sphero project using the libraries in the library folder or start a project using one of the sample projects from the samples folder. This quick start guide describes how to start a new project. 
  
  To start, create a new Android project in your Eclipse workspace. Then, place the libs folder from the SDK's library folder into your Android project's folder.  
    
    ![QSG-libs.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/image002.png)
+   
 
 ### Setting the dependency to RobotLibrary.jar.  
    

@@ -72,6 +72,7 @@ public class MacroSample extends Activity
 		// Set up SeekBar with range from 0 to 10
 		SeekBar robotspeedBar = (SeekBar)findViewById(R.id.speedBar);
 		robotspeedBar.setMax(10);
+		robotspeedBar.setProgress(5);
 		robotspeedBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			public void onStopTrackingTouch(SeekBar robotspeedBar) {}
 			public void onStartTrackingTouch(SeekBar robotspeedBar) {}
@@ -88,6 +89,7 @@ public class MacroSample extends Activity
 		// Set up SeekBar with range from 0 to 100000
 		SeekBar robotdelayBar = (SeekBar)findViewById(R.id.delayBar);
 		robotdelayBar.setMax(10000);
+		robotspeedBar.setProgress(5000);
 		robotdelayBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
 			public void onStopTrackingTouch(SeekBar robotdelayBar) {}
@@ -104,6 +106,7 @@ public class MacroSample extends Activity
 		// Set up SeekBar with range from 0 to 10
 		SeekBar robotloopBar = (SeekBar)findViewById(R.id.loopBar);
 		robotloopBar.setMax(10);
+		robotspeedBar.setProgress(5);
 		robotloopBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
 			public void onStopTrackingTouch(SeekBar robotloopBar) {}
