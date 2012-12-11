@@ -1,4 +1,4 @@
-package com.orbotix;
+package com.orbotix.sample.selflevel;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -55,6 +55,7 @@ public class SelfLevelActivity extends Activity
 				Toast.makeText(SelfLevelActivity.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
 			}
 		});
+		mSpheroConnectionView.showSpheros();
     }
 
     @Override

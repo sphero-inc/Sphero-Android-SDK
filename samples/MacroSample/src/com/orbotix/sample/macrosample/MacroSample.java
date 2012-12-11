@@ -43,9 +43,9 @@ public class MacroSample extends Activity
 	/**
 	 * Slider values
 	 */
-	private int speedValue = 0;
-	private int delayValue = 0;
-	private int loopValue = 0;
+	private int speedValue = 5;
+	private int delayValue = 5000;
+	private int loopValue = 5;
 
 	/**
 	 * The Sphero Robots
@@ -73,7 +73,6 @@ public class MacroSample extends Activity
 		// Set up SeekBar with range from 0 to 10
 		SeekBar robotspeedBar = (SeekBar)findViewById(R.id.speedBar);
 		robotspeedBar.setMax(10);
-		robotspeedBar.setProgress(5);
 		robotspeedBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			public void onStopTrackingTouch(SeekBar robotspeedBar) {}
 			public void onStartTrackingTouch(SeekBar robotspeedBar) {}
@@ -85,12 +84,11 @@ public class MacroSample extends Activity
 				speedValue = progress;
 			}
 		});
-
+		robotspeedBar.setProgress(5);
 
 		// Set up SeekBar with range from 0 to 100000
 		SeekBar robotdelayBar = (SeekBar)findViewById(R.id.delayBar);
 		robotdelayBar.setMax(10000);
-		robotspeedBar.setProgress(5000);
 		robotdelayBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
 			public void onStopTrackingTouch(SeekBar robotdelayBar) {}
@@ -100,14 +98,14 @@ public class MacroSample extends Activity
 					boolean fromUser) {
 				// pass delayBar's value to delayValue
 				delayValue = progress;
-				robotdelaylabel.setText(progress + "ms");
+				robotdelaylabel.setText(progress + " ms");
 			}
 		});
+		robotdelayBar.setProgress(5000);
 
 		// Set up SeekBar with range from 0 to 10
 		SeekBar robotloopBar = (SeekBar)findViewById(R.id.loopBar);
 		robotloopBar.setMax(10);
-		robotspeedBar.setProgress(5);
 		robotloopBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
 			public void onStopTrackingTouch(SeekBar robotloopBar) {}
@@ -120,6 +118,7 @@ public class MacroSample extends Activity
 				loopValue = progress;
 			}
 		});
+		robotloopBar.setProgress(5);
 
 		// Set the done button to make the connection view go away
 		mDoneButton = (Button)findViewById(R.id.done_button);
@@ -153,6 +152,7 @@ public class MacroSample extends Activity
 				Toast.makeText(MacroSample.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
 			}
 		});
+		mSpheroConnectionView.showSpheros();
 	}
 
 	/**

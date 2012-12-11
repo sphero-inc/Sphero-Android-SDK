@@ -1,4 +1,4 @@
-package com.example;
+package com.orbotix.sample.locator;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -115,7 +115,7 @@ public class LocatorActivity extends Activity
 				Toast.makeText(LocatorActivity.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
 			}
 		});
-       
+        mSpheroConnectionView.showSpheros();
     }
 
     @Override

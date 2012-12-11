@@ -112,6 +112,7 @@ public class TeaPotActivity extends Activity {
 				Toast.makeText(TeaPotActivity.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
 			}
 		});
+		mSpheroConnectionView.showSpheros();
     }
 
     @Override

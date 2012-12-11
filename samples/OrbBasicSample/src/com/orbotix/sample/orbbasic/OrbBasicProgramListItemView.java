@@ -1,4 +1,4 @@
-package com.orbotix.sample;
+package com.orbotix.sample.orbbasic;
 
 import android.content.Context;
 import android.util.AttributeSet;

@@ -67,7 +67,7 @@ public class MacroLoader extends Activity
 				Toast.makeText(MacroLoader.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
 			}
 		});
-
+		mSpheroConnectionView.showSpheros();
 	}
 	
 	/**

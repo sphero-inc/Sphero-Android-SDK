@@ -130,6 +130,7 @@ public class StreamingActivity extends Activity
 				Toast.makeText(StreamingActivity.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
 			}
 		});
+		mSpheroConnectionView.showSpheros();
     }
 
     @Override

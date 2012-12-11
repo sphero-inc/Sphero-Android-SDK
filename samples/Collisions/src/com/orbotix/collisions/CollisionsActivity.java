@@ -114,6 +114,7 @@ public class CollisionsActivity extends Activity {
 				Toast.makeText(CollisionsActivity.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
 			}
 		});
+        mSpheroConnectionView.showSpheros();
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package com.orbotix.sample;
+package com.orbotix.sample.optionflags;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -54,6 +54,7 @@ public class OptionFlagActivity extends Activity
 				Toast.makeText(OptionFlagActivity.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
 			}
 		});
+		mSpheroConnectionView.showSpheros();
     }
 
     @Override

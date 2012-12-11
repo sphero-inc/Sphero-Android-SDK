@@ -1,4 +1,4 @@
-package com.orbotix.sample;
+package com.orbotix.sample.orbbasic;
 
 import android.app.ListActivity;
 import android.content.res.Resources;
@@ -72,6 +72,7 @@ public class OrbBasicActivity extends ListActivity
 				Toast.makeText(OrbBasicActivity.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
 			}
 		});
+		mSpheroConnectionView.showSpheros();
 	}
 
     /**
