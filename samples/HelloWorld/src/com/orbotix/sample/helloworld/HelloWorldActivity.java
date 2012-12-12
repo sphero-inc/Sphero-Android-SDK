@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Toast;
+import orbotix.robot.base.DeviceMessenger;
 import orbotix.robot.base.RGBLEDOutputCommand;
 import orbotix.robot.base.Robot;
 import orbotix.robot.base.RobotProvider;
@@ -28,7 +29,15 @@ public class HelloWorldActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+    } 
 
+    /**
+     * Called when the user comes back to this app
+     */
+    @Override 
+    protected void onResume() {
+    	super.onResume();
+    	
         // Tell the Robot Provider to find all the paired robots
         // Only do this if the bluetooth adapter is enabled
         if( RobotProvider.getDefaultProvider().isAdapterEnabled() ) {
@@ -57,17 +66,20 @@ public class HelloWorldActivity extends Activity
         RobotProvider.getDefaultProvider().setOnRobotDisconnectedListener(new OnRobotDisconnectedListener() {
 			@Override
 			public void onRobotDisconnected(Robot robot) {
-				Toast.makeText(HelloWorldActivity.this, "Sphero Disconnected", Toast.LENGTH_SHORT);
+				Toast.makeText(HelloWorldActivity.this, "Sphero Disconnected", Toast.LENGTH_SHORT).show();
 			}
 		});
-    } 
-
+    }
+    
+    /**
+     * Called when the user presses the back or home button
+     */
     @Override
-    protected void onStop() {
-        super.onStop();
-        mRobot = null;        
-        //Disconnect Robot
-        RobotProvider.getDefaultProvider().disconnectControlledRobots();
+    protected void onPause() {
+    	super.onPause();
+    	// Disconnect Robot properly
+    	RobotProvider.getDefaultProvider().disconnectControlledRobots();
+    	mRobot = null;
     }
 
     /**

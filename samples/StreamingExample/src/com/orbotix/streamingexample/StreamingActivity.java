@@ -4,13 +4,13 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.Toast;
 import orbotix.robot.base.*;
 import orbotix.robot.sensor.AccelerometerData;
 import orbotix.robot.sensor.AttitudeData;
 import orbotix.robot.sensor.DeviceSensorsData;
 import orbotix.view.connection.SpheroConnectionView;
 import orbotix.view.connection.SpheroConnectionView.OnRobotConnectionEventListener;
-
 import java.util.List;
 
 public class StreamingActivity extends Activity
@@ -113,7 +113,7 @@ public class StreamingActivity extends Activity
                     @Override
                     public void run() {
                         // turn rear light on
-                        FrontLEDOutputCommand.sendCommand(mRobot, 1.0f);
+                        BackLEDOutputCommand.sendCommand(mRobot, 1.0f);
                         // turn stabilization off
                         StabilizationCommand.sendCommand(mRobot, false);
                         // register the async data listener
@@ -123,22 +123,35 @@ public class StreamingActivity extends Activity
                     }
                 }, 1000);
 			}
+			
+			@Override
+			public void onBluetoothNotEnabled() {
+				// See ButtonDrive Sample on how to show BT settings screen, for now just notify user
+				Toast.makeText(StreamingActivity.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
+			}
 		});
     }
 
+    /**
+     * Called when the user comes back to this app
+     */
     @Override
-    protected void onStop() {
-        super.onStop();
-
-		// Shutdown Sphero connection view
-		mSpheroConnectionView.shutdown();
-        if(mRobot != null){
-
-            StabilizationCommand.sendCommand(mRobot, true);
-            FrontLEDOutputCommand.sendCommand(mRobot, 0f);
-
-            RobotProvider.getDefaultProvider().removeAllControls();
-        }
+    protected void onResume() {
+    	super.onResume();
+        // Refresh list of Spheros
+        mSpheroConnectionView.showSpheros();
+    }
+    
+    /**
+     * Called when the user presses the back or home button
+     */
+    @Override
+    protected void onPause() {
+    	super.onPause();
+        // register the async data listener
+        DeviceMessenger.getInstance().removeAsyncDataListener(mRobot, mDataListener);
+    	// Disconnect Robot properly
+    	RobotProvider.getDefaultProvider().disconnectControlledRobots();
     }
 
     private void requestDataStreaming() {

@@ -75,10 +75,10 @@ public class SlideToSleepView extends View implements Controller {
     /**
      * Sets the {@link SlideToSleepView.OnSleepListener} for this view to be called when the view is slid to the score position.
      *
-     * @param listener the listener to be notified when this view is slid to the score position.
+     * @param onSleepListener the listener to be notified when this view is slid to the score position.
      */
-    public void setOnSleepListener(OnSleepListener listener) {
-        mListener = listener;
+    public void setOnSleepListener(OnSleepListener onSleepListener) {
+        mListener = onSleepListener;
     }
 
     @Override
@@ -234,6 +234,9 @@ public class SlideToSleepView extends View implements Controller {
                 if (touchInsideObject(point, mBallPosition, mSliderBall)) {
                     dragging = true;
                 }
+                else {
+                	this.hide();
+                }
                 return true;
             case MotionEvent.ACTION_MOVE:
                 if (dragging) {
@@ -291,5 +294,4 @@ public class SlideToSleepView extends View implements Controller {
         }
         return false;
     }
-
 }

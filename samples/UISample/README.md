@@ -134,6 +134,40 @@ You can set the colors of the CalibrationView's different pieces to anything you
 
 Now, to actually get it to control a Sphero, use the `setRobot(Robot)` method of the CalibrationView when the robot is available. (most likely in you `onActivityResult(int, int, Intent)` method when you return from the StartupActivity).
 
+### One-Touch Calibration Button
+
+We first created the two finger touch calibration widget, thinking it would be the easiest way to calibrate Sphero.  After some testing in the field, we discovered it isn't a very intuitive approach.  However, we keep it around, because most Sphero users are used to it already.
+
+We created a new calibration widget button where you press and hold a button and then the widget will pop-up and you can calibrate Sphero by moving one finger.  To add one of these in xml, you must add the view, and a button that brings up the view. 
+
+1) The view
+
+    <orbotix.view.calibration.CalibrationButtonView
+        android:id="@+id/calibration_above"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+        
+2) The button
+
+    <Button
+        android:id="@+id/calibration_button_above"
+        style="@style/ControlButton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="O" />
+        
+Then, in code you can add the button to the CalibrationButtonView.
+
+        // Initialize calibrate button view where the calibration circle shows above button
+        // This is the default behavior
+        mCalibrationButtonViewAbove = (CalibrationButtonView)findViewById(R.id.calibration_above);
+        mCalibrationButtonViewAbove.setCalibrationButton((View)findViewById(R.id.calibration_button_above));
+        // You can also change the size of the calibration views
+        mCalibrationButtonViewAbove.setRadius(300);
+        mCalibrationButtonViewAbove.setCalibrationCircleLocation(CalibrationCircleLocation.ABOVE);
+        
+Here you can control the size of the calibration widget circle, and you can also control where the the circle pops-up relative to the button.
+
 ## Joystick View
 
 The joystick view is just one of the ways a user can control Sphero. One of the benefits of a joystick over a two lever RC style control is ability to give direction to Sphero relative to the user's orientation. So, if the user remains stationary and facing the same direction, pushing the joystick puck away always makes Sphero travel in the same direction.

@@ -17,7 +17,7 @@ import orbotix.macro.RotateOverTime;
 import orbotix.macro.RGB;
 import orbotix.macro.Stabilization;
 import orbotix.robot.base.AbortMacroCommand;
-import orbotix.robot.base.FrontLEDOutputCommand;
+import orbotix.robot.base.BackLEDOutputCommand;
 import orbotix.robot.base.RGBLEDOutputCommand;
 import orbotix.robot.base.Robot;
 import orbotix.robot.base.RobotProvider;
@@ -29,6 +29,7 @@ import orbotix.view.connection.SpheroConnectionView.OnRobotConnectionEventListen
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
 import com.orbotix.sample.macrosample.R;
@@ -41,9 +42,9 @@ public class MacroSample extends Activity
 	/**
 	 * Slider values
 	 */
-	private int speedValue = 0;
-	private int delayValue = 0;
-	private int loopValue = 0;
+	private int speedValue = 5;
+	private int delayValue = 5000;
+	private int loopValue = 5;
 
 	/**
 	 * The Sphero Robots
@@ -82,7 +83,7 @@ public class MacroSample extends Activity
 				speedValue = progress;
 			}
 		});
-
+		robotspeedBar.setProgress(5);
 
 		// Set up SeekBar with range from 0 to 100000
 		SeekBar robotdelayBar = (SeekBar)findViewById(R.id.delayBar);
@@ -96,9 +97,10 @@ public class MacroSample extends Activity
 					boolean fromUser) {
 				// pass delayBar's value to delayValue
 				delayValue = progress;
-				robotdelaylabel.setText(progress + "ms");
+				robotdelaylabel.setText(progress + " ms");
 			}
 		});
+		robotdelayBar.setProgress(5000);
 
 		// Set up SeekBar with range from 0 to 10
 		SeekBar robotloopBar = (SeekBar)findViewById(R.id.loopBar);
@@ -115,6 +117,7 @@ public class MacroSample extends Activity
 				loopValue = progress;
 			}
 		});
+		robotloopBar.setProgress(5);
 
 		// Set the done button to make the connection view go away
 		mDoneButton = (Button)findViewById(R.id.done_button);
@@ -141,8 +144,38 @@ public class MacroSample extends Activity
 				// Add the robot
 				mRobots.add(arg0);
 			}
+			
+			@Override
+			public void onBluetoothNotEnabled() {
+				// See UISample Sample on how to show BT settings screen, for now just notify user
+				Toast.makeText(MacroSample.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
+			}
 		});
 	}
+	
+    /**
+     * Called when the user comes back to this app
+     */
+    @Override
+    protected void onResume() {
+    	super.onResume();
+        // Refresh list of Spheros
+        mSpheroConnectionView.showSpheros();
+    	mSpheroConnectionView.setVisibility(View.VISIBLE);
+		mDoneButton.setVisibility(View.VISIBLE);
+		findViewById(R.id.connection_layout).setVisibility(View.VISIBLE);
+    }
+    
+    /**
+     * Called when the user presses the back or home button
+     */
+    @Override
+    protected void onPause() {
+    	super.onPause();
+    	// Disconnect Robot properly
+    	RobotProvider.getDefaultProvider().disconnectControlledRobots();
+    	mRobots.clear();
+    }
 
 	/**
 	 * Called when the square button is clicked
@@ -410,21 +443,9 @@ public class MacroSample extends Activity
 				AbortMacroCommand.sendCommand(mRobot); // abort command
 				StabilizationCommand.sendCommand(mRobot, true); // turn on stabilization
 				RGBLEDOutputCommand.sendCommand(mRobot, 255, 255, 255); // make Sphero White
-				FrontLEDOutputCommand.sendCommand(mRobot, 0.0f);  // Turn off tail light
+				BackLEDOutputCommand.sendCommand(mRobot, 0.0f);  // Turn off tail light
 				RollCommand.sendStop(mRobot);  // Stop rolling
 			}
 		}
 	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-		
-		mRobots.clear();
-		// Shutdown Sphero connection view
-		mSpheroConnectionView.shutdown();
-		//Disconnect Robots
-		RobotProvider.getDefaultProvider().disconnectControlledRobots();
-	}
-
 }

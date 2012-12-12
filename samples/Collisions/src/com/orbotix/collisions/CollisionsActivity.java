@@ -7,6 +7,7 @@ import android.os.SystemClock;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 import orbotix.robot.base.CollisionDetectedAsyncData;
 import orbotix.robot.base.CollisionDetectedAsyncData.CollisionPower;
 import orbotix.robot.base.ConfigureCollisionDetectionCommand;
@@ -106,25 +107,36 @@ public class CollisionsActivity extends Activity {
                     }
                 }, 1000);
 			}
+			
+			@Override
+			public void onBluetoothNotEnabled() {
+				// See UISample Sample on how to show BT settings screen, for now just notify user
+				Toast.makeText(CollisionsActivity.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
+			}
 		});
 	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-
-		// Assume that collision detection is configured and disable it.
-		ConfigureCollisionDetectionCommand.sendCommand(mRobot, ConfigureCollisionDetectionCommand.DISABLE_DETECTION_METHOD, 0, 0, 0, 0, 0);
-		
+	
+    /**
+     * Called when the user comes back to this app
+     */
+    @Override
+    protected void onResume() {
+    	super.onResume();
+        // Refresh list of Spheros
+        mSpheroConnectionView.showSpheros();
+    }
+    
+    /**
+     * Called when the user presses the back or home button
+     */
+    @Override
+    protected void onPause() {
+    	super.onPause();
 		// Remove async data listener
 		DeviceMessenger.getInstance().removeAsyncDataListener(mRobot, mCollisionListener);
-		
-		// Shutdown Sphero connection view
-		mSpheroConnectionView.shutdown();
-		
-		// Disconnect from the robot.
-		RobotProvider.getDefaultProvider().removeAllControls();
-	}
+    	// Disconnect Robot properly
+    	RobotProvider.getDefaultProvider().disconnectControlledRobots();
+    }
 	
 	private final AsyncDataListener mCollisionListener = new AsyncDataListener() {
 

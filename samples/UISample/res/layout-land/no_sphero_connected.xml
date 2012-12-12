@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    To use the JoystickView's extra attributes, be sure to include a namespace for your project. Note the:
+
+        xmlns:app="http://schemas.android.com/apk/res/orbotix.uisample"
+
+    This creates a new namespace, "app", which allows the use of the JoystickView's "puck_radius" attribute.
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#99000000" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_rect" >
+
+        <TextView
+            android:id="@+id/text_not_connected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="NO SPHERO CONNECTED"
+            android:textColor="#000"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/text_how_to_pair"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_not_connected"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:text="Click Settings button to pair Sphero."
+            android:textColor="#FF1E90FF"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="#FFF"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="#FFF"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/text_tips"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="TIPS:"
+                    android:textColor="#000"
+                    android:textSize="20sp" />
+
+                <ImageView
+                    android:id="@+id/image_connect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/no_sphero_connect" />
+
+                <TextView
+                    android:id="@+id/text_how_to_connect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sphero Bluetooth name will contain the initials of the 3 colors it is blinking.  Sphero may show as &apos;Misc&apos; until paired."
+                    android:textColor="#000"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#FFF"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/text_tips"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="TIPS:"
+                    android:textColor="#00000000"
+                    android:textSize="20sp" />
+
+                <ImageView
+                    android:id="@+id/image_shake"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/no_sphero_shake" />
+
+                <TextView
+                    android:id="@+id/text_how_to_shake"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="If Sphero is not blinking, it may be asleep.  Double-shake to wake it up!"
+                    android:textColor="#000"
+                    android:textSize="20sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button_get_a_sphero"
+            android:layout_width="175dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/no_sphero_button_up"
+            android:text="Get A Sphero"
+            android:textColor="#FFF" />
+
+        <Button
+            android:id="@+id/button_settings_or_connect"
+            android:layout_width="175dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/no_sphero_button_up"
+            android:text="Connect"
+            android:textColor="#FFF" />
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -3,6 +3,7 @@ package com.orbotix.sample.buttondrive;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 import orbotix.robot.base.*;
 import orbotix.view.connection.SpheroConnectionView;
 import orbotix.view.connection.SpheroConnectionView.OnRobotConnectionEventListener;
@@ -45,9 +46,34 @@ public class ButtonDriveActivity extends Activity
 				// Skip this next step if you want the user to be able to connect multiple Spheros
 				mSpheroConnectionView.setVisibility(View.GONE);
 			}
+			@Override
+			public void onBluetoothNotEnabled() {
+				// See UISample Sample on how to show BT settings screen, for now just notify user
+				Toast.makeText(ButtonDriveActivity.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
+			}
 		});
     }
-
+    
+    /**
+     * Called when the user comes back to this app
+     */
+    @Override
+    protected void onResume() {
+    	super.onResume();
+        // Refresh list of Spheros
+        mSpheroConnectionView.showSpheros();
+    }
+    
+    /**
+     * Called when the user presses the back or home button
+     */
+    @Override
+    protected void onPause() {
+    	super.onPause();
+    	// Disconnect Robot properly
+    	RobotProvider.getDefaultProvider().disconnectControlledRobots();
+    }
+    
     /**
      * When the user clicks "STOP", stop the Robot.
      * @param v The View that had been clicked
@@ -55,7 +81,7 @@ public class ButtonDriveActivity extends Activity
     public void onStopClick(View v){
 
         if(mRobot != null){
-            //Stop robot
+            // Stop robot
             RollCommand.sendCommand(mRobot, 0f, 0f);
         }
     }
@@ -66,7 +92,7 @@ public class ButtonDriveActivity extends Activity
      */
     public void onControlClick(View v){
         
-        //Find the heading, based on which button was clicked
+        // Find the heading, based on which button was clicked
         final float heading;
         switch (v.getId()){
             
@@ -87,22 +113,10 @@ public class ButtonDriveActivity extends Activity
                 break;
         }
         
-        //Set speed. 60% of full speed
+        // Set speed. 60% of full speed
         final float speed = 0.6f;
 
-        //Roll robot
+        // Roll robot
         RollCommand.sendCommand(mRobot, heading, speed);
-    }
-
-    /**
-     * Disconnect from the robot when the Activity stops
-     */
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        //disconnect robot
-        mSpheroConnectionView.shutdown();
-        RobotProvider.getDefaultProvider().disconnectControlledRobots();
     }
 }

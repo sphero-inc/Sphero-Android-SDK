@@ -6,9 +6,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 import orbotix.macro.MacroObject;
 import orbotix.macro.MacroObject.MacroObjectMode;
 import orbotix.robot.base.AbortMacroCommand;
+import orbotix.robot.base.BackLEDOutputCommand;
+import orbotix.robot.base.DeviceMessenger;
 import orbotix.robot.base.FrontLEDOutputCommand;
 import orbotix.robot.base.RGBLEDOutputCommand;
 import orbotix.robot.base.Robot;
@@ -17,6 +20,7 @@ import orbotix.robot.base.RollCommand;
 import orbotix.robot.base.StabilizationCommand;
 import orbotix.view.connection.SpheroConnectionView;
 import orbotix.view.connection.SpheroConnectionView.OnRobotConnectionEventListener;
+
 import com.orbotix.sample.macroloader.R;
 
 /**
@@ -57,9 +61,35 @@ public class MacroLoader extends Activity
 				// Hide the connection view to only connect to one robot
 				mSpheroConnectionView.setVisibility(View.GONE);
 			}
+			
+			@Override
+			public void onBluetoothNotEnabled() {
+				// See UISample Sample on how to show BT settings screen, for now just notify user
+				Toast.makeText(MacroLoader.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
+			}
 		});
-
 	}
+	
+    /**
+     * Called when the user comes back to this app
+     */
+    @Override
+    protected void onResume() {
+    	super.onResume();
+        // Refresh list of Spheros
+        mSpheroConnectionView.showSpheros();
+    }
+    
+    /**
+     * Called when the user presses the back or home button
+     */
+    @Override
+    protected void onPause() {
+    	super.onPause();
+    	// Disconnect Robot properly
+    	RobotProvider.getDefaultProvider().disconnectControlledRobots();
+    	mRobot = null;
+    }
 	
 	/**
 	 * Called when the large dance button is clicked
@@ -183,20 +213,8 @@ public class MacroLoader extends Activity
 		AbortMacroCommand.sendCommand(mRobot); // abort command
 		StabilizationCommand.sendCommand(mRobot, true); // turn on stabilization
 		RGBLEDOutputCommand.sendCommand(mRobot, 255, 255, 255); // make Sphero White
-		FrontLEDOutputCommand.sendCommand(mRobot, 0.0f);  // Turn off tail light
+		BackLEDOutputCommand.sendCommand(mRobot, 0.0f);  // Turn off tail light
 		RollCommand.sendStop(mRobot);  // Stop rolling
-	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-
-		mRobot = null;
-
-		// Shutdown Sphero connection view
-		mSpheroConnectionView.shutdown();
-		//Disconnect Robot
-		RobotProvider.getDefaultProvider().removeAllControls();
 	}
 }
 
