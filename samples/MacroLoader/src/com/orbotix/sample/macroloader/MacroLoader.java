@@ -11,6 +11,7 @@ import orbotix.macro.MacroObject;
 import orbotix.macro.MacroObject.MacroObjectMode;
 import orbotix.robot.base.AbortMacroCommand;
 import orbotix.robot.base.BackLEDOutputCommand;
+import orbotix.robot.base.DeviceMessenger;
 import orbotix.robot.base.FrontLEDOutputCommand;
 import orbotix.robot.base.RGBLEDOutputCommand;
 import orbotix.robot.base.Robot;
@@ -67,8 +68,28 @@ public class MacroLoader extends Activity
 				Toast.makeText(MacroLoader.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
 			}
 		});
-		mSpheroConnectionView.showSpheros();
 	}
+	
+    /**
+     * Called when the user comes back to this app
+     */
+    @Override
+    protected void onResume() {
+    	super.onResume();
+        // Refresh list of Spheros
+        mSpheroConnectionView.showSpheros();
+    }
+    
+    /**
+     * Called when the user presses the back or home button
+     */
+    @Override
+    protected void onPause() {
+    	super.onPause();
+    	// Disconnect Robot properly
+    	RobotProvider.getDefaultProvider().disconnectControlledRobots();
+    	mRobot = null;
+    }
 	
 	/**
 	 * Called when the large dance button is clicked
@@ -194,16 +215,6 @@ public class MacroLoader extends Activity
 		RGBLEDOutputCommand.sendCommand(mRobot, 255, 255, 255); // make Sphero White
 		BackLEDOutputCommand.sendCommand(mRobot, 0.0f);  // Turn off tail light
 		RollCommand.sendStop(mRobot);  // Stop rolling
-	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-
-		mRobot = null;
-
-        //Disconnect Robots on stop
-        RobotProvider.getDefaultProvider().disconnectControlledRobots();
 	}
 }
 

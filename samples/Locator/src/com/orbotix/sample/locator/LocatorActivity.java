@@ -115,19 +115,28 @@ public class LocatorActivity extends Activity
 				Toast.makeText(LocatorActivity.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
 			}
 		});
-        mSpheroConnectionView.showSpheros();
     }
 
+    /**
+     * Called when the user comes back to this app
+     */
     @Override
-    protected void onStop() {
-        super.onStop();
-
-        if(mRobot != null){
-            // Make sure the ball doesn't roll across the world
-            RollCommand.sendStop(mRobot);
-        }
-        //Disconnect Robots on stop
-        RobotProvider.getDefaultProvider().disconnectControlledRobots();
+    protected void onResume() {
+    	super.onResume();
+        // Refresh list of Spheros
+        mSpheroConnectionView.showSpheros();
+    }
+    
+    /**
+     * Called when the user presses the back or home button
+     */
+    @Override
+    protected void onPause() {
+    	super.onPause();
+    	//Set the AsyncDataListener that will process each response.
+        DeviceMessenger.getInstance().removeAsyncDataListener(mRobot, mDataListener); 
+    	// Disconnect Robot properly
+    	RobotProvider.getDefaultProvider().disconnectControlledRobots();
     }
 
     private void requestDataStreaming(){

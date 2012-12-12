@@ -6,6 +6,7 @@ import android.provider.Contacts.Intents.UI;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
+import orbotix.robot.base.DeviceMessenger;
 import orbotix.robot.base.RGBLEDOutputCommand;
 import orbotix.robot.base.Robot;
 import orbotix.robot.base.RobotProvider;
@@ -174,6 +175,26 @@ public class UiSampleActivity extends ControllerActivity
 		});
         mSpheroConnectionView.showSpheros();
     }
+    
+    /**
+     * Called when the user comes back to this app
+     */
+    @Override
+    protected void onResume() {
+    	super.onResume();
+        // Refresh list of Spheros
+        mSpheroConnectionView.showSpheros();
+    }
+    
+    /**
+     * Called when the user presses the back or home button
+     */
+    @Override
+    protected void onPause() {
+    	super.onPause();
+    	// Disconnect Robot properly
+    	RobotProvider.getDefaultProvider().disconnectControlledRobots();
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -214,14 +235,6 @@ public class UiSampleActivity extends ControllerActivity
             	mSpheroConnectionView.showSpheros();
         	}
         }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        //Disconnect Robots on stop
-        RobotProvider.getDefaultProvider().disconnectControlledRobots();
     }
 
     /**
