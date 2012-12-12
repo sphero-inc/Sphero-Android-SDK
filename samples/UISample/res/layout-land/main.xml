@@ -19,19 +19,27 @@
         android:layout_alignParentTop="true"
         android:onClick="onColorClick"
         android:text="Color" />
+    
+    <Button
+        android:id="@+id/sleep_button"
+        style="@style/ControlButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:onClick="onSleepClick"
+        android:text="Sleep" />
 
     <orbotix.robot.widgets.CalibrateImageButton
         android:id="@+id/calibration_button_above"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_marginBottom="20dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:background="#00000000"
         android:scaleType="centerInside"
-        app:widget_orientation="right"
-        app:background_color="#FF1990FF"
-        app:foreground_color="#FFFFFFFF" />
+        android:background="#00000000"
+        app:widget_orientation="above"
+        app:foreground_color="#FFFFFFFF"
+        app:background_color="#FF1990FF"/>
 
     <orbotix.robot.widgets.SlideToSleepView
         android:id="@+id/slide_to_sleep_view"

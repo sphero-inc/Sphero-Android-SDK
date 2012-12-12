@@ -2,22 +2,20 @@ package orbotix.uisample;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Contacts.Intents.UI;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
-import orbotix.robot.base.DeviceMessenger;
+import orbotix.robot.app.ColorPickerActivity;
 import orbotix.robot.base.RGBLEDOutputCommand;
 import orbotix.robot.base.Robot;
 import orbotix.robot.base.RobotProvider;
-import orbotix.robot.base.SleepCommand;
 import orbotix.robot.base.RobotProvider.OnRobotDisconnectedListener;
+import orbotix.robot.base.SleepCommand;
 import orbotix.robot.widgets.ControllerActivity;
 import orbotix.robot.widgets.NoSpheroConnectedView;
 import orbotix.robot.widgets.NoSpheroConnectedView.OnConnectButtonClickListener;
 import orbotix.robot.widgets.SlideToSleepView;
 import orbotix.robot.widgets.joystick.JoystickView;
-import orbotix.robot.app.ColorPickerActivity;
 import orbotix.view.calibration.CalibrationButtonView;
 import orbotix.view.calibration.CalibrationButtonView.CalibrationCircleLocation;
 import orbotix.view.calibration.CalibrationView;
@@ -173,7 +171,6 @@ public class UiSampleActivity extends ControllerActivity
 	            startActivityForResult(i, BLUETOOTH_ENABLE_REQUEST);
 			}
 		});
-        mSpheroConnectionView.showSpheros();
     }
     
     /**
