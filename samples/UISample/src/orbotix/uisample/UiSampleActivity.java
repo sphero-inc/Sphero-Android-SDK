@@ -35,6 +35,7 @@ public class UiSampleActivity extends ControllerActivity
      * ID to start the ColorPickerActivity for result to select a color
      */
     private final static int COLOR_PICKER_ACTIVITY = 1;
+    private boolean mColorPickerShowing = false;
 
     /**
      * The Robot to control
@@ -179,6 +180,10 @@ public class UiSampleActivity extends ControllerActivity
     @Override
     protected void onResume() {
     	super.onResume();
+    	if( mColorPickerShowing ) {
+    		mColorPickerShowing = false;
+    		return;
+    	}
         // Refresh list of Spheros
         mSpheroConnectionView.showSpheros();
     }
@@ -189,6 +194,7 @@ public class UiSampleActivity extends ControllerActivity
     @Override
     protected void onPause() {
     	super.onPause();
+    	if( mColorPickerShowing ) return;
     	// Disconnect Robot properly
     	RobotProvider.getDefaultProvider().disconnectControlledRobots();
     }
@@ -240,6 +246,7 @@ public class UiSampleActivity extends ControllerActivity
      */
     public void onColorClick(View v){
 
+    	mColorPickerShowing = true;
         Intent i = new Intent(this, ColorPickerActivity.class);
 
         //Tell the ColorPickerActivity which color to have the cursor on.
