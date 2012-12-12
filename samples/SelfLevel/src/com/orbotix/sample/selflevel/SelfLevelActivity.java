@@ -55,15 +55,28 @@ public class SelfLevelActivity extends Activity
 				Toast.makeText(SelfLevelActivity.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
 			}
 		});
-		mSpheroConnectionView.showSpheros();
     }
 
+    /**
+     * Called when the user comes back to this app
+     */
     @Override
-    protected void onStop() {
-        super.onStop();
-
-        // Disconnect properly
-        RobotProvider.getDefaultProvider().disconnectControlledRobots();
+    protected void onResume() {
+    	super.onResume();
+        // Refresh list of Spheros
+        mSpheroConnectionView.showSpheros();
+    }
+    
+    /**
+     * Called when the user presses the back or home button
+     */
+    @Override
+    protected void onPause() {
+    	super.onPause();
+    	// Remove the AsyncDataListener that will process self level complete async responses
+        DeviceMessenger.getInstance().removeAsyncDataListener(mRobot, mDataListener);
+    	// Disconnect Robot properly
+    	RobotProvider.getDefaultProvider().disconnectControlledRobots();
     }
 
     /**

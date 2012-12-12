@@ -18,7 +18,6 @@ import orbotix.macro.RGB;
 import orbotix.macro.Stabilization;
 import orbotix.robot.base.AbortMacroCommand;
 import orbotix.robot.base.BackLEDOutputCommand;
-import orbotix.robot.base.FrontLEDOutputCommand;
 import orbotix.robot.base.RGBLEDOutputCommand;
 import orbotix.robot.base.Robot;
 import orbotix.robot.base.RobotProvider;
@@ -152,8 +151,31 @@ public class MacroSample extends Activity
 				Toast.makeText(MacroSample.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
 			}
 		});
-		mSpheroConnectionView.showSpheros();
 	}
+	
+    /**
+     * Called when the user comes back to this app
+     */
+    @Override
+    protected void onResume() {
+    	super.onResume();
+        // Refresh list of Spheros
+        mSpheroConnectionView.showSpheros();
+    	mSpheroConnectionView.setVisibility(View.VISIBLE);
+		mDoneButton.setVisibility(View.VISIBLE);
+		findViewById(R.id.connection_layout).setVisibility(View.VISIBLE);
+    }
+    
+    /**
+     * Called when the user presses the back or home button
+     */
+    @Override
+    protected void onPause() {
+    	super.onPause();
+    	// Disconnect Robot properly
+    	RobotProvider.getDefaultProvider().disconnectControlledRobots();
+    	mRobots.clear();
+    }
 
 	/**
 	 * Called when the square button is clicked
@@ -426,14 +448,4 @@ public class MacroSample extends Activity
 			}
 		}
 	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-		
-		mRobots.clear();
-		//Disconnect Robots
-		RobotProvider.getDefaultProvider().disconnectControlledRobots();
-	}
-
 }

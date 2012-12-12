@@ -19,14 +19,6 @@
             </intent-filter>
         </activity>
 
-        <!-- StartupActivity for connecting to a Robot -->
-        <activity
-            android:name="orbotix.robot.app.StartupActivity"
-            android:launchMode="singleTop"
-            android:configChanges="orientation|keyboard|keyboardHidden"
-            android:theme="@android:style/Theme.Translucent"
-            />
-
         <!-- ColorPicker Activity for picking colors -->
         <activity
             android:name="orbotix.robot.app.ColorPickerActivity"

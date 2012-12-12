@@ -130,21 +130,28 @@ public class StreamingActivity extends Activity
 				Toast.makeText(StreamingActivity.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
 			}
 		});
-		mSpheroConnectionView.showSpheros();
     }
 
+    /**
+     * Called when the user comes back to this app
+     */
     @Override
-    protected void onStop() {
-        super.onStop();
-
-        // Do last commands
-        if(mRobot != null){
-
-            StabilizationCommand.sendCommand(mRobot, true);
-            BackLEDOutputCommand.sendCommand(mRobot, 0f);
-        }
-        // Disconnect properly
-        RobotProvider.getDefaultProvider().disconnectControlledRobots();
+    protected void onResume() {
+    	super.onResume();
+        // Refresh list of Spheros
+        mSpheroConnectionView.showSpheros();
+    }
+    
+    /**
+     * Called when the user presses the back or home button
+     */
+    @Override
+    protected void onPause() {
+    	super.onPause();
+        // register the async data listener
+        DeviceMessenger.getInstance().removeAsyncDataListener(mRobot, mDataListener);
+    	// Disconnect Robot properly
+    	RobotProvider.getDefaultProvider().disconnectControlledRobots();
     }
 
     private void requestDataStreaming() {

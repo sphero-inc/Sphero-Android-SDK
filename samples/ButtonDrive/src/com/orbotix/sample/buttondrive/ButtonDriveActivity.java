@@ -52,20 +52,26 @@ public class ButtonDriveActivity extends Activity
 				Toast.makeText(ButtonDriveActivity.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
 			}
 		});
-        // Only one Sphero can be attempting to connect at a time
-        mSpheroConnectionView.setSingleSpheroMode(true);
+    }
+    
+    /**
+     * Called when the user comes back to this app
+     */
+    @Override
+    protected void onResume() {
+    	super.onResume();
         // Refresh list of Spheros
         mSpheroConnectionView.showSpheros();
     }
     
     /**
-     * Disconnect from the robot when the Activity stops
+     * Called when the user presses the back or home button
      */
     @Override
-    protected void onStop() {
-        super.onStop();
-        // Disconnect robot
-        RobotProvider.getDefaultProvider().removeAllControls();
+    protected void onPause() {
+    	super.onPause();
+    	// Disconnect Robot properly
+    	RobotProvider.getDefaultProvider().disconnectControlledRobots();
     }
     
     /**

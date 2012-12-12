@@ -72,8 +72,29 @@ public class OrbBasicActivity extends ListActivity
 				Toast.makeText(OrbBasicActivity.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
 			}
 		});
-		mSpheroConnectionView.showSpheros();
 	}
+	
+    /**
+     * Called when the user comes back to this app
+     */
+    @Override
+    protected void onResume() {
+    	super.onResume();
+        // Refresh list of Spheros
+        mSpheroConnectionView.showSpheros();
+    }
+    
+    /**
+     * Called when the user presses the back or home button
+     */
+    @Override
+    protected void onPause() {
+    	super.onPause();
+        // register the async data listener
+        DeviceMessenger.getInstance().removeAsyncDataListener(mRobot, mDataListener);
+    	// Disconnect Robot properly
+    	RobotProvider.getDefaultProvider().disconnectControlledRobots();
+    }
 
     /**
      * Loads the contents of the raw res folder and puts it into the ListView adapter
@@ -131,18 +152,6 @@ public class OrbBasicActivity extends ListActivity
                 }
             }
         });
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        if(mRobot != null){
-            // Make sure the ball doesn't roll across the world
-            RollCommand.sendStop(mRobot);
-        }
-        // Disconnect properly
-        RobotProvider.getDefaultProvider().disconnectControlledRobots();
     }
 
     /**

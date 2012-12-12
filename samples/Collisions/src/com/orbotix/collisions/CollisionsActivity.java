@@ -114,22 +114,29 @@ public class CollisionsActivity extends Activity {
 				Toast.makeText(CollisionsActivity.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
 			}
 		});
-        mSpheroConnectionView.showSpheros();
 	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-
-		// Assume that collision detection is configured and disable it.
-		ConfigureCollisionDetectionCommand.sendCommand(mRobot, ConfigureCollisionDetectionCommand.DISABLE_DETECTION_METHOD, 0, 0, 0, 0, 0);
-		
+	
+    /**
+     * Called when the user comes back to this app
+     */
+    @Override
+    protected void onResume() {
+    	super.onResume();
+        // Refresh list of Spheros
+        mSpheroConnectionView.showSpheros();
+    }
+    
+    /**
+     * Called when the user presses the back or home button
+     */
+    @Override
+    protected void onPause() {
+    	super.onPause();
 		// Remove async data listener
 		DeviceMessenger.getInstance().removeAsyncDataListener(mRobot, mCollisionListener);
-		
-        //Disconnect Robots on stop
-        RobotProvider.getDefaultProvider().disconnectControlledRobots();
-	}
+    	// Disconnect Robot properly
+    	RobotProvider.getDefaultProvider().disconnectControlledRobots();
+    }
 	
 	private final AsyncDataListener mCollisionListener = new AsyncDataListener() {
 
