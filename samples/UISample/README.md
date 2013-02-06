@@ -2,7 +2,7 @@
 
 # UI Sample
 
-## Startup Acitivty
+## Startup Activity
 
 Mostly all of our Sphero apps use the StartupActivity to connect to a robot. However, this newest release of the SDK introduced the `SpheroConnectionView`.  The UI Sample shows you how to still use the StartupActivity.  
     

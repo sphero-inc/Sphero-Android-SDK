@@ -51,7 +51,7 @@ When the self level command completes, either successfully or unsuccessfully, it
 
 	DeviceMessenger.getInstance().addAsyncDataListener(mRobot, mDataListener);
    
-Withing the handleAsyncData callback we print out the async message status code in readable text to a label with the following code:
+Within the handleAsyncData callback we print out the async message status code in readable text to a label with the following code:
 
     private DeviceMessenger.AsyncDataListener mDataListener = new DeviceMessenger.AsyncDataListener() {
         @Override

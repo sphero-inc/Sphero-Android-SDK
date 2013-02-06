@@ -14,6 +14,7 @@ import android.view.animation.AnimationUtils;
 import orbotix.robot.base.Robot;
 import orbotix.robot.base.RunMacroCommand;
 import orbotix.uisample.R;
+import orbotix.view.calibration.widgets.Controller;
 
 /**
  * A widget that allows the user to put a robot to sleep by sliding a knob to the right.
@@ -219,8 +220,8 @@ public class SlideToSleepView extends View implements Controller {
     }
 
     /**
-     * Sets whether the SlideToSleepView will handle onTouchEvent, or work through interpretMotionEvent. If
-     * set to false, onTouchEvent will do nothing and always return false. If true, onTouchEvent will evaluate
+     * Sets whether the SlideToSleepView will handle onTouch, or work through interpretMotionEvent. If
+     * set to false, onTouch will do nothing and always return false. If true, onTouch will evaluate
      * the MotionEvent and interpetMotionEvent will do nothing.
      * @param val true, or false
      */

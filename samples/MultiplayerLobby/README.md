@@ -2,7 +2,7 @@
 
 # Multiplayer Lobby
 
-For future reference,  we are planning to depricate our multiplayer code.  We decided to make this decision, because there are better 3rd party mobile real-time multiplayer services out there, like [http://playphone.com/](http://playphone.com/).
+For future reference,  we are planning to deprecate our multiplayer code.  We decided to make this decision, because there are better 3rd party mobile real-time multiplayer services out there, like [http://playphone.com/](http://playphone.com/).
 
 **Our current multiplayer service has the following limitations:**
 

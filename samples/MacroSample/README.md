@@ -2,11 +2,11 @@
 
 # Macro Sample
 
-This sample demonstartes how to connect to multiple balls with the `SpheroConnectionView` and also how to programatically create macros and run them on multiple Spheros.
+This sample demonstrates how to connect to multiple balls with the `SpheroConnectionView` and also how to programmatically create macros and run them on multiple Spheros.
 
 ## Connecting to Multiple Spheros
 
-Instead of having a member variable that holds a single Robot object, you now have a member variable that is an ArrayList that holds mutliple Robot objects.
+Instead of having a member variable that holds a single Robot object, you now have a member variable that is an ArrayList that holds multiple Robot objects.
 
 	/** The Sphero Robots */
 	private ArrayList<Robot> mRobots = new ArrayList<Robot>();

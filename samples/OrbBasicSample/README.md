@@ -2,13 +2,13 @@
 
 # OrbBasic Sample
 
-This sample demonstartes how to load and execute OrbBasic programs on Sphero.  OrbBasic, like the macro executive, is another powerful resource that Sphero provides for autonomous behavior and integration with smart phone applications. It allows your to run a set of intructions on the ball which react to Sphero's sensors, without having to stream the data to the smartphone first.
+This sample demonstrates how to load and execute OrbBasic programs on Sphero.  OrbBasic, like the macro executive, is another powerful resource that Sphero provides for autonomous behavior and integration with smart phone applications. It allows your to run a set of instructions on the ball which react to Sphero's sensors, without having to stream the data to the smartphone first.
 
 ## OrbBasic Programs
 
 There are a few example programs in this sample.  Before you look at erasing the storage, loading or executing, or the rest of the sample code.  Take a look at the OrbBasic programs that reside in the `/res/raw/` directory.
 
-The sample programatically loads the .orbbas files in this directory into the ListView.
+The sample programmatically loads the .orbbas files in this directory into the ListView.
 
 ## Initializing an OrbBasic Program Object
 

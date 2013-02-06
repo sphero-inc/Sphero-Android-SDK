@@ -10,7 +10,7 @@
     xmlns:app="http://schemas.android.com/apk/res/orbotix.uisample"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#FFF" >
+    android:background="#fff" >
 
     <Button
         android:id="@+id/color_button"
@@ -28,8 +28,8 @@
         android:onClick="onSleepClick"
         android:text="Sleep" />
     
-    <orbotix.robot.widgets.CalibrateImageButton
-        android:id="@+id/calibration_button_above"
+    <orbotix.robot.widgets.CalibrationImageButtonView
+        android:id="@+id/calibration_image_button"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginBottom="20dp"
@@ -40,6 +40,7 @@
         app:widget_orientation="above"
         app:foreground_color="#FFFFFFFF"
         app:background_color="#FF1990FF"
+        app:calibration_circle_radius="100dp"
         />
     
     <orbotix.robot.widgets.SlideToSleepView
@@ -58,13 +59,8 @@
         app:edge_overlap="20dp"
         app:puck_radius="30dp" />
 
-    <orbotix.view.calibration.CalibrationButtonView
-        android:id="@+id/calibration_above"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
-
     <orbotix.view.calibration.CalibrationView
-        android:id="@+id/calibration_two_finger"
+        android:id="@+id/calibration_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
     

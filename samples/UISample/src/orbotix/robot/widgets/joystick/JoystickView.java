@@ -11,8 +11,8 @@ import android.view.View;
 import orbotix.robot.base.DriveControl;
 import orbotix.robot.base.Robot;
 import orbotix.robot.base.RotationRateCommand;
-import orbotix.robot.widgets.Controller;
 import orbotix.uisample.R;
+import orbotix.view.calibration.widgets.Controller;
 
 /**
  * View that displays the Joystick, and handles the user's interactions with it.

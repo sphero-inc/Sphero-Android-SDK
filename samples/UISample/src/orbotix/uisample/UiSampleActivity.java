@@ -2,6 +2,7 @@ package orbotix.uisample;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
@@ -11,14 +12,13 @@ import orbotix.robot.base.Robot;
 import orbotix.robot.base.RobotProvider;
 import orbotix.robot.base.RobotProvider.OnRobotDisconnectedListener;
 import orbotix.robot.base.SleepCommand;
-import orbotix.robot.widgets.ControllerActivity;
+import orbotix.robot.widgets.CalibrationImageButtonView;
 import orbotix.robot.widgets.NoSpheroConnectedView;
 import orbotix.robot.widgets.NoSpheroConnectedView.OnConnectButtonClickListener;
 import orbotix.robot.widgets.SlideToSleepView;
 import orbotix.robot.widgets.joystick.JoystickView;
-import orbotix.view.calibration.CalibrationButtonView;
-import orbotix.view.calibration.CalibrationButtonView.CalibrationCircleLocation;
 import orbotix.view.calibration.CalibrationView;
+import orbotix.view.calibration.widgets.ControllerActivity;
 import orbotix.view.connection.SpheroConnectionView;
 import orbotix.view.connection.SpheroConnectionView.OnRobotConnectionEventListener;
 
@@ -27,7 +27,7 @@ public class UiSampleActivity extends ControllerActivity
     /**
      * ID to start the StartupActivity for result to connect the Robot
      */
-    private final static int STARTUP_ACTIVITY            = 0;
+    private final static int  STARTUP_ACTIVITY            = 0;
 	private static final int  BLUETOOTH_ENABLE_REQUEST = 11;
 	private static final int  BLUETOOTH_SETTINGS_REQUEST = 12;
 
@@ -45,12 +45,12 @@ public class UiSampleActivity extends ControllerActivity
     /**
      * One-Touch Calibration Button
      */
-    private CalibrationButtonView mCalibrationButtonViewAbove;
+    private CalibrationImageButtonView mCalibrationImageButtonView;
     
     /**
-     * Two finger calibration widget
+     * Calibration View widget
      */
-    private CalibrationView mCalibrationTwoFingerView;
+    private CalibrationView mCalibrationView;
     
     /**
      * Slide to sleep view
@@ -82,8 +82,8 @@ public class UiSampleActivity extends ControllerActivity
         //Add the JoystickView as a Controller
         addController((JoystickView)findViewById(R.id.joystick));
 
-        // Add the two finger calibration method
-        mCalibrationTwoFingerView = (CalibrationView)findViewById(R.id.calibration_two_finger);
+        // Add the calibration view
+        mCalibrationView = (CalibrationView)findViewById(R.id.calibration_view);
         
         // Set up sleep view
         mSlideToSleepView = (SlideToSleepView)findViewById(R.id.slide_to_sleep_view);
@@ -98,11 +98,11 @@ public class UiSampleActivity extends ControllerActivity
         
         // Initialize calibrate button view where the calibration circle shows above button
         // This is the default behavior
-        mCalibrationButtonViewAbove = (CalibrationButtonView)findViewById(R.id.calibration_above);
-        mCalibrationButtonViewAbove.setCalibrationButton((View)findViewById(R.id.calibration_button_above));
-        // You can also change the size of the calibration views
-        mCalibrationButtonViewAbove.setRadius(300);
-        mCalibrationButtonViewAbove.setCalibrationCircleLocation(CalibrationCircleLocation.ABOVE);
+        mCalibrationImageButtonView = (CalibrationImageButtonView)findViewById(R.id.calibration_image_button);
+        mCalibrationImageButtonView.setCalibrationView(mCalibrationView);
+        // You can also change the size and location of the calibration views (or you can set it in XML)
+        mCalibrationImageButtonView.setRadius(100);
+        mCalibrationImageButtonView.setOrientation(CalibrationView.CalibrationCircleLocation.ABOVE);
         
         
         // Grab the No Sphero Connected View
@@ -118,7 +118,7 @@ public class UiSampleActivity extends ControllerActivity
 			@Override
 			public void onSettingsClick() {
 				// Open the Bluetooth Settings Intent
-				Intent settingsIntent = new Intent(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS);
+				Intent settingsIntent = new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
 				UiSampleActivity.this.startActivityForResult(settingsIntent, BLUETOOTH_SETTINGS_REQUEST);
 			}
 		});
@@ -147,9 +147,8 @@ public class UiSampleActivity extends ControllerActivity
                 //Set connected Robot to the Controllers
                 setRobot(mRobot);
                 
-                // Make sure you let the calibration views know the robot it should control
-                mCalibrationButtonViewAbove.setRobot(mRobot);
-                mCalibrationTwoFingerView.setRobot(mRobot);
+                // Make sure you let the calibration view knows the robot it should control
+                mCalibrationView.setRobot(mRobot);
                 
                 // Make connect sphero pop-up invisible if it was previously up
                 mNoSpheroConnectedView.setVisibility(View.GONE);
@@ -268,8 +267,7 @@ public class UiSampleActivity extends ControllerActivity
     
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-    	mCalibrationButtonViewAbove.interpretMotionEvent(event);
-    	mCalibrationTwoFingerView.interpretMotionEvent(event);
+    	mCalibrationView.interpretMotionEvent(event);
     	mSlideToSleepView.interpretMotionEvent(event);
     	return super.dispatchTouchEvent(event);
     }

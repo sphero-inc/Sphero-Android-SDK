@@ -33,15 +33,15 @@ The Sphero Android SDK has over 15 different sample projects.  Starting with one
 2.  **ButtonDrive** - This code sample demonstrates driving a Sphero by sending roll commands at 0°, 90°, 180°, and 270°
 3.  **Collisions** - This sample demonstrates how to set up Sphero collision detection, which is a firmware feature that generates a collision async message when an impact is detected.
 4.  **AcheivementSample** - This guide will walk you through the basics of adding achievements to the SpheroWorld back end and adding their tracking to an application.
-5.  **Locator** - This sample demonstrates how to use the Sphero Locator, which is a firmware feature that provides real-time position and velocity information about the robot.
-6.  **MacroSample** - This sample demonstartes how to connect to multiple balls and also how to programatically create macros and run them on multiple Spheros.
+5.  **Locator** - This sample demonstrates how to use the Sphero Locator, which is a firmware feature that provides real-time position and velocity information about the robot.programmatically
+6.  **MacroSample** - This sample demonstrates how to connect to multiple balls and also how to programmatically create macros and run them on multiple Spheros.
 7.  **MacroLoader** - This sample shows how to load macros created in MacroLab to run on the ball.
 8.  **MultiplayerLobby** - Shows how to connect two phones over a wifi network.  For multiplayer games.  Soon to be deprecated over better services like http://playphone.com/.  
 9.  **OptionFlags** - This sample demonstrates how to control option flags, which are settings that stay with Sphero even after it goes through power cycles.
-10. **orbBasicSample** - This sample demonstartes how to load and execute OrbBasic programs on Sphero.
+10. **orbBasicSample** - This sample demonstrates how to load and execute OrbBasic programs on Sphero.
 11. **SelfLevel** - This sample code demonstrates how to connect to a Sphero and perform the self level command.
-12. **StreamingExample** - Sphero supports asynchronous data streaming of certain control system and sensor parameters. This is great for using Sphero as a controller, or for retreiving data about its environment.  This sample shows you how.
-13. **StreamingAnimation** - This smaple demonstrates how to use Sphero and data streaming to move and rotate a 2D object on screen.
+12. **StreamingExample** - Sphero supports asynchronous data streaming of certain control system and sensor parameters. This is great for using Sphero as a controller, or for retrieving data about its environment.  This sample shows you how.
+13. **StreamingAnimation** - This sample demonstrates how to use Sphero and data streaming to move and rotate a 2D object on screen.
 14. **SpheroMotionTeapot** - This sample demonstrates how to use Sphero and data streaming to control the rotation of 3D object on screen.
 15. **UISample** - This is a great resource for application development.  It contains a pre-made drive joystick, a calibration widget, a color changing widget, and a sleep widget.  
 16. **TwoPhonesOneBall** - Demonstrates how to use two devices that are connected over wifi to control one Sphero.
@@ -64,13 +64,13 @@ At this point there should be no "red X's" or "red exclamation points" next to y
 
 2. Right click the project, and go to Properties.  Under the **Java Compiler** tab on the left, the compiler level should be 1.6 or above. 
 
-3. After you do these fixes, and problems still persits, try a "Project -> Clean" in the file menu.  60% of the time, this works all the time.
+3. After you do these fixes, and problems still persists, try a "Project -> Clean" in the file menu.  60% of the time, this works all the time.
 
 ## Create a new Android project in Eclipse with Sphero or Integrating Sphero into an Existing Project  
 
 If creating a new project it is important to take special notice to the Android API Level and the Java compliance level. The Sphero SDK currently supports: 
     
- - Andriod API level 8 (Android 2.2) or greater. 
+ - Android API level 8 (Android 2.2) or greater. 
  - Java language compliance level 6.0(1.6) or greater.
     
 ### Integrating the Sphero Libraries into your Project
@@ -84,7 +84,7 @@ If creating a new project it is important to take special notice to the Android 
 
 ### Setting the dependency to RobotLibrary.jar.  
    
-Eclipse should automatically add RobotLibrary.jar to the Android Dependencies folder.  But, if it doesn not, set the dependency in the project's properties in the Properties->Java Build Path-> Libraries dialog.  This will allow your project access to all the public method names in RobotLibrary.jar. 
+Eclipse should automatically add RobotLibrary.jar to the Android Dependencies folder.  But, if it does not, set the dependency in the project's properties in the Properties->Java Build Path-> Libraries dialog.  This will allow your project access to all the public method names in RobotLibrary.jar. 
  
  ![QSG-jar-depend.png](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/image003.png) 
 
@@ -96,7 +96,7 @@ Eclipse should automatically add RobotLibrary.jar to the Android Dependencies fo
  handle connecting to a Sphero. When the view fires a `onRobotConnected` event and your are ready to 
  send commands.  
     
-  - To use the `SpheroConnectionView`, add the following code to your Acitivity's xml layout file
+  - To use the `SpheroConnectionView`, add the following code to your Activity's xml layout file
  
         <FrameLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -134,9 +134,9 @@ Eclipse should automatically add RobotLibrary.jar to the Android Dependencies fo
 			}
 		});
 	
-  - These events are useful feedback from the user.  For example, you could use the `onNonePaired()` event to show a popup message that no Sphero's are conencted, and direct the user to a www.gosphero.com to buy one. 
+  - These events are useful feedback from the user.  For example, you could use the `onNonePaired()` event to show a popup message that no Sphero's are conneActivity'scted, and direct the user to a www.gosphero.com to buy one. 
 	
-  - Finally, you must disconnect the Sphero, and you must make sure to shutdown the connection view in your Acitivity's `onStop()` method.  Disconnecting Sphero, puts it back into the default stable state.  And, shutting down the connection view is needed, because if the user has bluetooth disabled, and chooses not to enable it with the pop-up presented, the view needs to be told to stop searching for the user enabling it.
+  - Finally, you must disconnect the Sphero, and you must make sure to shutdown the connection view in your Activity's `onStop()` method.  Disconnecting Sphero, puts it back into the default stable state.  And, shutting down the connection view is needed, because if the user has bluetooth disabled, and chooses not to enable it with the pop-up presented, the view needs to be told to stop searching for the user enabling it.
   
 	  	@Override
 		protected void onStop() {

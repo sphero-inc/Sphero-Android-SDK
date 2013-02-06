@@ -14,14 +14,8 @@
             <enum name="position2" value="2" />
         </attr>
     </declare-styleable>
-    
-    <declare-styleable name="JoystickView">
-        <attr name="puck_radius" format="dimension" />
-        <attr name="alpha" format="float" />
-        <attr name="edge_overlap" format="dimension" />
-    </declare-styleable>
-    
-    <declare-styleable name="CalibrateImageButton">
+
+    <declare-styleable name="CalibrationImageButtonView">
         <attr name="foreground_color" format="color" />
         <attr name="background_color" format="color" />
         <attr name="widget_orientation">
@@ -30,6 +24,13 @@
             <enum name="right" value="3" />
             <enum name="below" value="4" />
         </attr>
+        <attr name="calibration_circle_radius" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="JoystickView">
+        <attr name="puck_radius" format="dimension" />
+        <attr name="alpha" format="float" />
+        <attr name="edge_overlap" format="dimension" />
     </declare-styleable>
 
 </resources>
