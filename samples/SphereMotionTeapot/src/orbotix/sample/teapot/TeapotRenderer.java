@@ -1517,10 +1517,8 @@ public class TeapotRenderer implements GLSurfaceView.Renderer {
     float kTeapotScale = 3.0f;
 
     float size;
-    float kFilteringFactor = 0.1f;
 
     public TeapotRenderer() {
-        // mContext = context;
         teapot = new Teapot();
         Log.d("glesteapot", "TeapotRender");
     }
@@ -1604,8 +1602,8 @@ public class TeapotRenderer implements GLSurfaceView.Renderer {
 }
 
 class Teapot {
-    float kFilteringFactor = 0.1f;
-    float[] m2;
+//    float kFilteringFactor = 0.1f;
+//    float[] m2;
     float sensorValues[] = new float[3];
 
     static short teapot_indices[] = { 1122, 1243, 1272, 1242, 1273, 1241, 1274,
@@ -1849,9 +1847,9 @@ class Teapot {
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 
         // rotate the teapot according to the incoming sensor values
-        gl.glRotatef(sensorValues[2], 0, 0, 1);
+        gl.glRotatef(sensorValues[2], 0, 0, 1); // yaw
         gl.glRotatef(-sensorValues[0], 0, 1, 0);
-        gl.glRotatef(sensorValues[1] + 90.0f, 1, 0, 0);
+        gl.glRotatef((sensorValues[1] + 90.0f), 1, 0, 0);
 
         while (i < num_teapot_indices) {
             if (teapot_indices[i] == -1) {

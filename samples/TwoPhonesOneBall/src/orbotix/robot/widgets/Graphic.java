@@ -6,7 +6,7 @@ import android.graphics.Rect;
 /**
  * A Type that is drawable to a provided Canvas
  *
- * Created by Orbotix Inc.
+
  * Author: Adam Williams
  * Date: 11/22/11
  * Time: 8:35 AM

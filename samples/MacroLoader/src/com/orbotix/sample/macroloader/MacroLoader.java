@@ -5,23 +5,18 @@ import java.io.IOException;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 import orbotix.macro.MacroObject;
 import orbotix.macro.MacroObject.MacroObjectMode;
 import orbotix.robot.base.AbortMacroCommand;
 import orbotix.robot.base.BackLEDOutputCommand;
-import orbotix.robot.base.DeviceMessenger;
-import orbotix.robot.base.FrontLEDOutputCommand;
 import orbotix.robot.base.RGBLEDOutputCommand;
 import orbotix.robot.base.Robot;
 import orbotix.robot.base.RobotProvider;
 import orbotix.robot.base.RollCommand;
 import orbotix.robot.base.StabilizationCommand;
+import orbotix.sphero.ConnectionListener;
+import orbotix.sphero.Sphero;
 import orbotix.view.connection.SpheroConnectionView;
-import orbotix.view.connection.SpheroConnectionView.OnRobotConnectionEventListener;
-
-import com.orbotix.sample.macroloader.R;
 
 /**
  * Connects to an available Sphero robot, and then flashes its LED.
@@ -36,7 +31,7 @@ public class MacroLoader extends Activity
 	/**
 	 * The Sphero Robot
 	 */
-	private Robot mRobot;
+	private Sphero mRobot;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -48,26 +43,23 @@ public class MacroLoader extends Activity
 		// Grab Connection View
 		mSpheroConnectionView = (SpheroConnectionView)findViewById(R.id.sphero_connection_view);
 		// Listen to Robot Connection Events
-		mSpheroConnectionView.setOnRobotConnectionEventListener(new OnRobotConnectionEventListener() {
-			@Override
-			public void onRobotConnectionFailed(Robot arg0) {}
-			@Override
-			public void onNonePaired() {}
+        mSpheroConnectionView.addConnectionListener(new ConnectionListener() {
 
-			@Override
-			public void onRobotConnected(Robot arg0) {
-				// Set the robot
-				mRobot = arg0;
-				// Hide the connection view to only connect to one robot
-				mSpheroConnectionView.setVisibility(View.GONE);
-			}
-			
-			@Override
-			public void onBluetoothNotEnabled() {
-				// See UISample Sample on how to show BT settings screen, for now just notify user
-				Toast.makeText(MacroLoader.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
-			}
-		});
+            @Override
+            public void onConnected(Robot robot) {
+                mRobot = (Sphero)robot;
+            }
+
+            @Override
+            public void onConnectionFailed(Robot sphero) {
+                // let the SpheroConnectionView handle or hide it and do something here...
+            }
+
+            @Override
+            public void onDisconnected(Robot sphero) {
+                mSpheroConnectionView.startDiscovery();
+            }
+        });
 	}
 	
     /**
@@ -77,7 +69,7 @@ public class MacroLoader extends Activity
     protected void onResume() {
     	super.onResume();
         // Refresh list of Spheros
-        mSpheroConnectionView.showSpheros();
+        mSpheroConnectionView.startDiscovery();
     }
     
     /**

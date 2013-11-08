@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="ButtonDrive" default="help">
 
+
+    <exec executable="android">
+        <arg value="update"/>
+        <arg value="project"/>
+        <arg value="-p"/>
+        <arg value="."/>
+    </exec>
+
+
     <!-- The local.properties file is created and updated by the 'android' tool.
          It contains the path to the SDK. It should *NOT* be checked into
          Version Control Systems. -->
+    
     <loadproperties srcFile="local.properties" />
 
     <!-- The ant.properties file can be created by you. It is only edited by the
@@ -79,7 +89,7 @@
          In all cases you must update the value of version-tag below to read 'custom' instead of an integer,
          in order to avoid having your file be overridden by tools such as "android update project"
     -->
-    <!-- version-tag: 1 -->
+    <!-- version-tag: custom -->
     <import file="${sdk.dir}/tools/ant/build.xml" />
 
 </project>

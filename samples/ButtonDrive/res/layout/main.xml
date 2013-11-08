@@ -1,58 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="#ff888888" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#ff888888">
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="#ff888888" >
-
-        <Button
+    <Button
             android:id="@+id/stop_button"
             style="@style/ControlButton"
             android:layout_centerInParent="true"
             android:onClick="onStopClick"
-            android:text="STOP" />
+            android:text="STOP"/>
 
-        <Button
+    <Button
             android:id="@+id/zero_button"
             style="@style/ControlButton"
             android:layout_above="@id/stop_button"
             android:layout_alignLeft="@id/stop_button"
             android:onClick="onControlClick"
-            android:text="0˚" />
+            android:text="0˚"/>
 
-        <Button
+    <Button
             android:id="@+id/ninety_button"
             style="@style/ControlButton"
             android:layout_alignTop="@id/stop_button"
             android:layout_toRightOf="@id/stop_button"
             android:onClick="onControlClick"
-            android:text="90˚" />
+            android:text="90˚"/>
 
-        <Button
+    <Button
             android:id="@+id/one_eighty_button"
             style="@style/ControlButton"
             android:layout_alignLeft="@id/stop_button"
             android:layout_below="@id/stop_button"
             android:onClick="onControlClick"
-            android:text="180˚" />
+            android:text="180˚"/>
 
-        <Button
+    <Button
             android:id="@+id/two_seventy_button"
             style="@style/ControlButton"
             android:layout_alignTop="@id/stop_button"
             android:layout_toLeftOf="@id/stop_button"
             android:onClick="onControlClick"
-            android:text="270˚" />
-    </RelativeLayout>
-    
-    <orbotix.view.connection.SpheroConnectionView
-        android:id="@+id/sphero_connection_view"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="#A0000000" />
+            android:text="270˚"/>
 
-</FrameLayout>
+    <orbotix.view.connection.SpheroConnectionView
+            android:id="@+id/sphero_connection_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#D0000000"/>
+
+</RelativeLayout>

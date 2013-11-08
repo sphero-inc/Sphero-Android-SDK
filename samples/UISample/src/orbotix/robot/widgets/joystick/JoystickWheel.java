@@ -6,7 +6,7 @@ import android.graphics.drawable.Drawable;
 /**
  * Wheel that draws itself to the JoystickView
  *
- * Created by Orbotix Inc.
+
  * User: Adam
  * Date: 10/27/11
  * Time: 5:35 PM

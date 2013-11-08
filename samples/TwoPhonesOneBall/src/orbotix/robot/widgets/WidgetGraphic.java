@@ -3,7 +3,7 @@ package orbotix.robot.widgets;
 /**
  * A type that contains WidgetParts
  *
- * Created by Orbotix Inc.
+
  * Date: 11/22/11
  * @author Adam Williams
  */

@@ -7,7 +7,7 @@ import android.widget.TextView;
 import com.orbotix.sample.multiplayerlobby.R;
 
 /**
- * Created by Orbotix Inc.
+
  * Date: 4/17/12
  *
  * @author Adam Williams

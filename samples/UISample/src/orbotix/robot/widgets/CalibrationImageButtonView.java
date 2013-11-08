@@ -17,7 +17,7 @@ import orbotix.view.calibration.CalibrationView;
  * A type of {@link ImageButton} that uses the {@link CalibrationView} to calibrate Sphero with
  * a single touch, rather than a multi-touch rotation gesture.
  *
- * Created by Orbotix Inc.
+
  * Date: 1/31/13
  *
  * @author Adam Williams

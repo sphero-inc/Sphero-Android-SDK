@@ -8,7 +8,7 @@ import orbotix.robot.widgets.WidgetGraphicPart;
 /**
  * One of the three circles in the CalibrationView that rotate around the calibration point
  *
- * Created by Orbotix Inc.
+
  * Author: Adam Williams
  * Date: 11/22/11
  * Time: 8:45 AM

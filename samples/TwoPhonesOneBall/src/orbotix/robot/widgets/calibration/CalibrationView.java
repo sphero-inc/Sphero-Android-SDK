@@ -7,12 +7,10 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import orbotix.robot.animation.VectorAnimation;
-import orbotix.robot.base.CalibrateCommand;
-import orbotix.robot.base.FrontLEDOutputCommand;
-import orbotix.robot.base.Robot;
-import orbotix.robot.base.RollCommand;
+import orbotix.robot.base.*;
 import orbotix.robot.widgets.Controller;
 import orbotix.robot.widgets.WidgetGraphicView;
+import orbotix.sphero.Sphero;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +69,7 @@ import java.util.List;
  * </p>
  *
  *
- * Created by Orbotix Inc.
+
  * Date: 11/22/11
  * @author Adam Williams
  */
@@ -96,7 +94,7 @@ public class CalibrationView extends WidgetGraphicView implements Controller {
     private boolean mEnabled = true;
 
     //The Robot to calibrate
-    private Robot mRobot = null;
+    private Sphero mRobot = null;
 
     //Callbacks
     private Runnable mOnStartRunnable    = null;
@@ -301,7 +299,7 @@ public class CalibrationView extends WidgetGraphicView implements Controller {
      * @param robot A Robot to calibrate
      */
     public void setRobot(Robot robot){
-        mRobot = robot;
+        mRobot = (Sphero)robot;
     }
 
     /**
@@ -357,8 +355,8 @@ public class CalibrationView extends WidgetGraphicView implements Controller {
         //If there is a robot, then zero its calibration and show the LED
         if(mRobot != null){
             //DriveControl.INSTANCE.stopDriving();
-            FrontLEDOutputCommand.sendCommand(mRobot, 1f);
-            CalibrateCommand.sendCommand(mRobot, 0f);
+            mRobot.setBackLEDBrightness(1f);
+            mRobot.getConfiguration().setHeading(0f);
         }
 
         //Run any possibly overridden onRotationStart method
@@ -421,9 +419,9 @@ public class CalibrationView extends WidgetGraphicView implements Controller {
             // it does not already exist. This causes problems if a joystick is used after this is called.
             // commenting out for now, but I don't think it is necessary at all.
             //DriveControl.INSTANCE.startDriving(this.getContext(), DriveControl.JOY_STICK);
-            RollCommand.sendCommand(mRobot, (float)finalAngle, 0.0f, true);
-            FrontLEDOutputCommand.sendCommand(mRobot, 0f);
-            CalibrateCommand.sendCommand(mRobot, 0f);
+            mRobot.drive((float)finalAngle, 0.0f);
+            mRobot.setBackLEDBrightness(0f);
+            mRobot.getConfiguration().setHeading(0f);
         }
 
         //Run any possibly overridden onRotationEnded method

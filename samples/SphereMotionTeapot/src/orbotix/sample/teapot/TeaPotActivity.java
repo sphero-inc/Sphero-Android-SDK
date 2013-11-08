@@ -2,149 +2,106 @@ package orbotix.sample.teapot;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 import orbotix.robot.base.*;
 import orbotix.robot.sensor.DeviceSensorsData;
+import orbotix.sphero.ConnectionListener;
+import orbotix.sphero.SensorFlag;
+import orbotix.sphero.SensorListener;
+import orbotix.sphero.Sphero;
 import orbotix.view.connection.SpheroConnectionView;
-import orbotix.view.connection.SpheroConnectionView.OnRobotConnectionEventListener;
 
 public class TeaPotActivity extends Activity {
 
-	/**
-	 * Sphero Connection View
-	 */
+    /** Sphero Connection View */
     private SpheroConnectionView mSpheroConnectionView;
 
-    /** 
-     * Robot
-     */
-    private Robot mRobot;
-    private Handler mHandler = new Handler();
+    /** Robot */
+    private Sphero mRobot;
 
-    /** 
-     * Teapot Surface Code
-     */
+    /** Teapot Surface Code */
     private MyGLSurfaceView mGLSurfaceView;
-    
-    private final DeviceMessenger.AsyncDataListener mDataListener = new DeviceMessenger.AsyncDataListener() {
-        @Override
-        public void onDataReceived(DeviceAsyncData data) {
-            if (data instanceof DeviceSensorsAsyncData) {
-                DeviceSensorsData ballData = ((DeviceSensorsAsyncData)data).getAsyncData().get(0);
 
-                float[] sensorData = new float[3];
-                sensorData[0] = (float)ballData.getAttitudeData().getAttitudeSensor().pitch;
-                sensorData[1] = (float)ballData.getAttitudeData().getAttitudeSensor().roll;
-                sensorData[2] = (float)ballData.getAttitudeData().getAttitudeSensor().yaw;
-                mGLSurfaceView.onSensorChanged(sensorData);
-            }
+    private final SensorListener mDataListener = new SensorListener() {
+        @Override
+        public void sensorUpdated(DeviceSensorsData ballData) {
+            float[] sensorData = new float[3];
+            sensorData[0] = (float) ballData.getAttitudeData().pitch;
+            sensorData[1] = (float) ballData.getAttitudeData().roll;
+            sensorData[2] = (float) ballData.getAttitudeData().yaw;
+            mGLSurfaceView.onSensorChanged(sensorData);
         }
     };
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         mGLSurfaceView = new MyGLSurfaceView(this);
         mGLSurfaceView.setRenderer(new TeapotRenderer());
         setContentView(R.layout.main);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        
+
         // Add GL Surface, but hide it until Sphero is connected
-        FrameLayout layout = (FrameLayout)findViewById(R.id.teapot_layout);
+        FrameLayout layout = (FrameLayout) findViewById(R.id.teapot_layout);
         layout.addView(mGLSurfaceView);
         mGLSurfaceView.setVisibility(View.GONE);
-        
-		// Find Sphero Connection View from layout file
-		mSpheroConnectionView = (SpheroConnectionView)findViewById(R.id.sphero_connection_view);
-		// This event listener will notify you when these events occur, it is up to you what you want to do during them
-		mSpheroConnectionView.setOnRobotConnectionEventListener(new OnRobotConnectionEventListener() {
-			@Override
-			public void onRobotConnectionFailed(Robot arg0) {}
-			@Override
-			public void onNonePaired() {}
-			
-			@Override
-			public void onRobotConnected(Robot arg0) {
-				// Set the robot
-				mRobot = arg0;
-				// Hide the connection view. Comment this code if you want to connect to multiple robots
-				mSpheroConnectionView.setVisibility(View.GONE);
-				mGLSurfaceView.setVisibility(View.VISIBLE);
-				
-				// Calling Stream Data Command right after the robot connects, will not work
-				// You need to wait a second for the robot to initialize
-				mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        // turn rear light on
-                        BackLEDOutputCommand.sendCommand(mRobot, 1.0f);
-                        // turn stabilization off
-                        StabilizationCommand.sendCommand(mRobot, false);
-                        // register the async data listener
-                        DeviceMessenger.getInstance().addAsyncDataListener(mRobot, mDataListener);
-                        // Start streaming data
-                        requestDataStreaming();
-                    }
-                }, 1000);
-			}
-			
-			@Override
-			public void onBluetoothNotEnabled() {
-				// See ButtonDrive Sample on how to show BT settings screen, for now just notify user
-				Toast.makeText(TeaPotActivity.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
-			}
-		});
+
+        // Find Sphero Connection View from layout file - autostarts discovery (startDiscovery())
+        mSpheroConnectionView = (SpheroConnectionView) findViewById(R.id.sphero_connection_view);
+        // This event listener will notify you when these events occur, it is up to you what you want to do during them
+        mSpheroConnectionView.addConnectionListener(new ConnectionListener() {
+            @Override
+            public void onConnected(Robot sphero) {
+                // Set the robot
+                mRobot = (Sphero) sphero;
+                // Hide the connection view. Comment this code if you want to connect to multiple robots
+                mSpheroConnectionView.setVisibility(View.INVISIBLE);
+                mGLSurfaceView.setVisibility(View.VISIBLE);
+
+                // Calling Stream Data Command right after the robot connects, will not work
+                // You need to wait a second for the robot to initialize
+                // turn rear light on
+                mRobot.setBackLEDBrightness(1.0f);
+                // turn stabilization off
+                mRobot.enableStabilization(false);
+                // register the async data listener
+                mRobot.getSensorControl().setRate(60);
+                mRobot.getSensorControl().addSensorListener(mDataListener, SensorFlag.ATTITUDE);
+            }
+
+            @Override
+            public void onConnectionFailed(Robot sphero) {
+                // let the SpheroConnectionView handle or hide it and do something here...
+            }
+
+            @Override
+            public void onDisconnected(Robot sphero) {
+                mSpheroConnectionView.startDiscovery();
+                mGLSurfaceView.setVisibility(View.INVISIBLE);
+            }
+        });
     }
 
-    /**
-     * Called when the user comes back to this app
-     */
+    /** Called when the user comes back to this app */
     @Override
     protected void onResume() {
-    	super.onResume();
-    	mGLSurfaceView.onResume();
+        super.onResume();
+        mGLSurfaceView.onResume();
         // Refresh list of Spheros
-        mSpheroConnectionView.showSpheros();
+        mSpheroConnectionView.startDiscovery();
     }
-    
-    /**
-     * Called when the user presses the back or home button
-     */
+
+    /** Called when the user presses the back or home button */
     @Override
     protected void onPause() {
-    	super.onPause();
-    	mGLSurfaceView.onPause();
+        super.onPause();
+        mGLSurfaceView.onPause();
         // unregister the async data listener to prevent a memory leak.
-        DeviceMessenger.getInstance().removeAsyncDataListener(mRobot, mDataListener);
-    	// Disconnect Robot properly
-    	RobotProvider.getDefaultProvider().disconnectControlledRobots();
-    }
-    
-    private void requestDataStreaming() {
-
-        if(mRobot != null){
-
-            // Set up a bitmask containing the sensor information we want to stream
-            final long mask = SetDataStreamingCommand.DATA_STREAMING_MASK_IMU_ANGLES_FILTERED_ALL;
-
-            // Specify a divisor. The frequency of responses that will be sent is 400hz divided by this divisor.
-            final int divisor = 20;
-
-            // Specify the number of frames that will be in each response. You can use a higher number to "save up" responses
-            // and send them at once with a lower frequency, but more packets per response.
-            final int packet_frames = 1;
-
-            // Count is the number of async data packets Sphero will send you before
-            // it stops.  Use a count of 0 for infinite data streaming.
-            final int response_count = 0;
-
-            //Send this command to Sphero to start streaming
-            SetDataStreamingCommand.sendCommand(mRobot, divisor, packet_frames, mask, response_count);
+        if(mRobot !=null){
+            mRobot.disconnect();
         }
     }
 }

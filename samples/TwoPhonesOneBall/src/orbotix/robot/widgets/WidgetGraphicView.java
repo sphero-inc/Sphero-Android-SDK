@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * A View that can have many WidgetParts added to it, and will draw them each invalidation cycle.
  *
- * Created by Orbotix Inc.
+
  * Author: Adam Williams
  * Date: 11/22/11
  * Time: 10:28 AM

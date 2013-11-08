@@ -12,12 +12,12 @@ import orbotix.robot.base.DriveControl;
 import orbotix.robot.base.Robot;
 import orbotix.robot.base.RotationRateCommand;
 import orbotix.uisample.R;
-import orbotix.view.calibration.widgets.Controller;
+import orbotix.view.calibration.Controller;
 
 /**
  * View that displays the Joystick, and handles the user's interactions with it.
  *
- * Created by Orbotix Inc.
+
  * @author Adam Williams
  */
 public class JoystickView extends View implements Controller {

@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="UISample" default="help">
 
-    <!-- The local.properties file is created and updated by the 'android' tool.
+    <exec executable="android">
+        <arg value="update"/>
+        <arg value="project"/>
+        <arg value="-p"/>
+        <arg value="."/>
+    </exec>
+
+
+    <!-- The local.properties file is created and sensorUpdated by the 'android' tool.
          It contains the path to the SDK. It should *NOT* be checked into
          Version Control Systems. -->
     <loadproperties srcFile="local.properties" />
@@ -20,7 +28,7 @@
          files in the SDK, at tools/ant/build.xml
 
          Properties related to the SDK location or the project target should
-         be updated using the 'android' tool with the 'update' action.
+         be sensorUpdated using the 'android' tool with the 'update' action.
 
          This file is an integral part of the build system for your
          application and should be checked into Version Control Systems.
@@ -28,7 +36,7 @@
          -->
     <property file="ant.properties" />
 
-    <!-- The project.properties file is created and updated by the 'android'
+    <!-- The project.properties file is created and sensorUpdated by the 'android'
          tool, as well as ADT.
 
          This contains project specific properties such as project target, and library

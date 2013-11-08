@@ -55,10 +55,6 @@ public class HSBColorPickerView extends View {
 	// listener
 	private OnColorChangedListener mListener;
 
-	public HSBColorPickerView(Context context, AttributeSet attrs, int defStyle, int startingColor, OnColorChangedListener listener) {
-		this(context, attrs, defStyle, startingColor);
-		mListener = listener;
-	}
 
 	public HSBColorPickerView(Context context, AttributeSet attrs, int defStyle, int startingColor) {
 		super(context, attrs, defStyle);
@@ -96,7 +92,7 @@ public class HSBColorPickerView extends View {
 	}
 
 	/**
-	 * Sets the {@link orbotix.robot.app.ColorPickerActivity.OnColorChangedListener} to be updated when the color in this
+	 * Sets the {@link orbotix.robot.app.ColorPickerActivity.OnColorChangedListener} to be sensorUpdated when the color in this
 	 * view is changed either by user input or by setting a color using {@link HSBColorPickerView#setNewColor(int)}.
 	 */
 	public void setOnColorChangedListener(OnColorChangedListener listener) {

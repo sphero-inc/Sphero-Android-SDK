@@ -28,16 +28,16 @@
         </activity>
 
         <!-- Connecting to Sphero -->
-        <activity
-            android:name="orbotix.robot.app.StartupActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
-            android:screenOrientation="landscape"
-            android:configChanges="orientation|keyboard|keyboardHidden"
-            />
+        <!--<activity-->
+            <!--android:name="orbotix.robot.app.StartupActivity"-->
+            <!--android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"-->
+            <!--android:screenOrientation="landscape"-->
+            <!--android:configChanges="orientation|keyboard|keyboardHidden"-->
+            <!--/>-->
 
         <!-- Multiplayer service -->
         <service
-            android:name="orbotix.multiplayer.MultiplayerManager"
+            android:name="orbotix.multiplayerMultiplayerManager"
             android:label="@string/multiplayer_service_label"
             android:description="@string/multiplayer_service_desc"
             />

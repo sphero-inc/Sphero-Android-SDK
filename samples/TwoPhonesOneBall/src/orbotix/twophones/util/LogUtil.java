@@ -3,7 +3,7 @@ package orbotix.twophones.util;
 import android.util.Log;
 
 /**
- * Created by Orbotix Inc.
+
  * Date: 1/20/12
  *
  * @author Adam Williams

@@ -8,7 +8,7 @@ import orbotix.robot.utilities.ColorTools;
  * Puck that draws itself to the JoystickView
  *
  *
- * Created by Orbotix Inc.
+
  * User: Adam
  * Date: 10/27/11
  * Time: 5:34 PM

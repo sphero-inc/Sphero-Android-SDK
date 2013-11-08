@@ -1,7 +1,7 @@
 package orbotix.robot.utilities;
 
 /**
- * Created by Orbotix Inc.
+
  * User: brandon
  * Date: 10/24/11
  * Time: 3:06 PM

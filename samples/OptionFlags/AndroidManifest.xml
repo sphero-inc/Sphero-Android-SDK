@@ -3,8 +3,8 @@
           package="com.orbotix.sample.optionflags"
           android:versionCode="1"
           android:versionName="1.0">
-    <uses-sdk android:minSdkVersion="8"/>
 
+    <uses-sdk android:minSdkVersion="8"/>
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
@@ -18,8 +18,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
-        <activity android:name="orbotix.robot.app.StartupActivity"/>
 
     </application>
 

@@ -14,7 +14,7 @@ import android.view.animation.AnimationUtils;
 import orbotix.robot.base.Robot;
 import orbotix.robot.base.RunMacroCommand;
 import orbotix.uisample.R;
-import orbotix.view.calibration.widgets.Controller;
+import orbotix.view.calibration.Controller;
 
 /**
  * A widget that allows the user to put a robot to sleep by sliding a knob to the right.

@@ -1,9 +1,5 @@
 package orbotix.robot.widgets;
 
-import orbotix.robot.base.Robot;
-import orbotix.robot.base.RobotProvider;
-import orbotix.robot.base.RobotProvider.OnNoRobotsPairedListener;
-import orbotix.robot.base.RobotProvider.OnRobotFoundListener;
 import orbotix.uisample.R;
 import android.content.Context;
 import android.content.Intent;

@@ -11,7 +11,7 @@ import java.util.List;
  * An Activity that contains Controllers and can use them to control the Robot. Extend this class to 
  * more easily attach Controllers to your application.
  *
- * Created by Orbotix Inc.
+
  * Date: 12/13/11
  *
  * @author Adam Williams

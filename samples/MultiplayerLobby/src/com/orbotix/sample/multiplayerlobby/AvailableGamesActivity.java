@@ -77,7 +77,7 @@ public class AvailableGamesActivity extends Activity
         //Set local player, pretty much only setting the name to the default name
         mMultiplayerClient.setLocalPlayer(new RemotePlayer(mPlayerName, 0, false, false, true));
 
-        //Opens the multiplayer manager service, starting communications
+        //Opens the orbotix.multiplayer manager service, starting communications
         mMultiplayerClient.open();
 
         //When new games come in, update the games list
@@ -89,11 +89,11 @@ public class AvailableGamesActivity extends Activity
             }
         });
 
-        // When the multiplayer service is online, start requesting games
+        // When the orbotix.multiplayer service is online, start requesting games
         mMultiplayerClient.setOnOnlineListener(new LocalMultiplayerClient.OnOnlineListener() {
             @Override
             public void onOnline(Context context) {
-                //Request games from the multiplayer service
+                //Request games from the orbotix.multiplayer service
                 mMultiplayerClient.requestAvailableGames();
             }
         });
@@ -148,7 +148,7 @@ public class AvailableGamesActivity extends Activity
     }
 
     /**
-     * A BaseAdapter that keeps track of the games received from the multiplayer service
+     * A BaseAdapter that keeps track of the games received from the orbotix.multiplayer service
      */
     private class GamesListAdapter extends BaseAdapter {
 

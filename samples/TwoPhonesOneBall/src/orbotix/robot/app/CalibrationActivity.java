@@ -12,6 +12,7 @@ import android.widget.TextView;
 import orbotix.robot.base.RobotControl;
 import orbotix.robot.base.RobotProvider;
 import orbotix.robot.widgets.calibration.CalibrationDialView;
+import orbotix.sphero.Sphero;
 import orbotix.twophones.R;
 
 /**
@@ -70,7 +71,7 @@ public class CalibrationActivity extends Activity implements CalibrationDialView
 	public static final String EXTRA_TITLE_TEXT_RESOURCE_ID = "orbotix.robot.cal.intent.extra.TITLE_TEXT";
 
 	private CalibrationDialView calibrationView;
-	private RobotControl robotControl;
+    private Sphero sphero;
 
 	// customizable layout elements
 	private ViewGroup backgroundLayout;
@@ -149,16 +150,17 @@ public class CalibrationActivity extends Activity implements CalibrationDialView
 		String robot_id = intent.getStringExtra(ROBOT_ID_EXTRA);
 		if (robot_id != null) {
 			RobotProvider provider = RobotProvider.getDefaultProvider();
-			robotControl = provider.getRobotControl(provider.findRobot(robot_id));
+            sphero = provider.getRobots().iterator().next();
+//			robotControl = provider.getRobotControl(provider.findRobot(robot_id));
 		}
 	}
 
 	@Override
 	protected void onStart() {
 		super.onStart();
-		if (robotControl != null) {
-			robotControl.startCalibration();
-		}
+        if(sphero != null){
+            sphero.startCalibration();
+        }
 	}
 
 	/**
@@ -175,15 +177,15 @@ public class CalibrationActivity extends Activity implements CalibrationDialView
 	 */
 	@Override
 	public void onCalibrationStop(boolean calibrate) {
-		if (robotControl != null) {
-			robotControl.stopCalibration(calibrate);
+		if (sphero != null) {
+			sphero.stopCalibration(calibrate);
 		}
 		finish();
 	}
 
     public void onDoneButtonClicked(View v) {
-        if (robotControl != null) {
-			robotControl.stopCalibration(true);
+        if (sphero != null) {
+			sphero.stopCalibration(true);
 		}
 		finish();
     }
@@ -191,8 +193,8 @@ public class CalibrationActivity extends Activity implements CalibrationDialView
     @Override
     public void onBackPressed() {
         // this will cancel the calibration
-        if (robotControl != null) {
-			robotControl.stopCalibration(false);
+        if (sphero != null) {
+			sphero.stopCalibration(false);
 		}
 		finish();
     }
@@ -203,8 +205,8 @@ public class CalibrationActivity extends Activity implements CalibrationDialView
 	 */
 	@Override
 	public void onHeadingRotation(float heading) {
-		if (robotControl != null) {
-			robotControl.rotate(heading);
+		if (sphero != null) {
+			sphero.rotate(heading);
 		}
 	}
 

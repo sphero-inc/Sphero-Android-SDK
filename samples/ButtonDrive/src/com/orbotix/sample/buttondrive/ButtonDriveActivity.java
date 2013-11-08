@@ -3,107 +3,96 @@ package com.orbotix.sample.buttondrive;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
-import orbotix.robot.base.*;
+import orbotix.robot.base.Robot;
+import orbotix.robot.base.RobotProvider;
+import orbotix.robot.base.RollCommand;
+import orbotix.sphero.ConnectionListener;
+import orbotix.sphero.Sphero;
 import orbotix.view.connection.SpheroConnectionView;
-import orbotix.view.connection.SpheroConnectionView.OnRobotConnectionEventListener;
 
-/**
- * Activity for controlling the Sphero with five control buttons.
- */
-public class ButtonDriveActivity extends Activity
-{
-    /**
-     * Robot to control
-     */
-    private Robot mRobot;
+/** Activity for controlling the Sphero with five control buttons. */
+public class ButtonDriveActivity extends Activity {
 
-    /**
-     * The Sphero Connection View
-     */
+    private Sphero mRobot;
+
+    /** The Sphero Connection View */
     private SpheroConnectionView mSpheroConnectionView;
-    
+
     /** Called when the activity is first created. */
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        
-        mSpheroConnectionView = (SpheroConnectionView)findViewById(R.id.sphero_connection_view);
-        // Set the connection event listener 
-        mSpheroConnectionView.setOnRobotConnectionEventListener(new OnRobotConnectionEventListener() {
-        	// If the user clicked a Sphero and it failed to connect, this event will be fired
-			@Override
-			public void onRobotConnectionFailed(Robot robot) {}
-			// If there are no Spheros paired to this device, this event will be fired
-			@Override
-			public void onNonePaired() {}
-			// The user clicked a Sphero and it successfully paired.
-			@Override
-			public void onRobotConnected(Robot robot) {
-				mRobot = robot;
-				// Skip this next step if you want the user to be able to connect multiple Spheros
-				mSpheroConnectionView.setVisibility(View.GONE);
-			}
-			@Override
-			public void onBluetoothNotEnabled() {
-				// See UISample Sample on how to show BT settings screen, for now just notify user
-				Toast.makeText(ButtonDriveActivity.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
-			}
-		});
+
+        mSpheroConnectionView = (SpheroConnectionView) findViewById(R.id.sphero_connection_view);
+        mSpheroConnectionView.addConnectionListener(new ConnectionListener() {
+
+            @Override
+            public void onConnected(Robot robot) {
+                //SpheroConnectionView is made invisible on connect by default
+                mRobot = (Sphero) robot;
+            }
+
+            @Override
+            public void onConnectionFailed(Robot sphero) {
+                // let the SpheroConnectionView handle or hide it and do something here...
+            }
+
+            @Override
+            public void onDisconnected(Robot sphero) {
+                mSpheroConnectionView.startDiscovery();
+            }
+        });
     }
-    
-    /**
-     * Called when the user comes back to this app
-     */
+
+
+    /** Called when the user comes back to this app */
     @Override
     protected void onResume() {
-    	super.onResume();
+        super.onResume();
         // Refresh list of Spheros
-        mSpheroConnectionView.showSpheros();
+        mSpheroConnectionView.startDiscovery();
     }
-    
-    /**
-     * Called when the user presses the back or home button
-     */
+
+
+    /** Called when the user presses the back or home button */
     @Override
     protected void onPause() {
-    	super.onPause();
-    	// Disconnect Robot properly
-    	RobotProvider.getDefaultProvider().disconnectControlledRobots();
+        super.onPause();
+        // Disconnect Robot properly
+        RobotProvider.getDefaultProvider().disconnectControlledRobots();
     }
-    
+
     /**
      * When the user clicks "STOP", stop the Robot.
+     *
      * @param v The View that had been clicked
      */
-    public void onStopClick(View v){
-
-        if(mRobot != null){
+    public void onStopClick(View v) {
+        if (mRobot != null) {
             // Stop robot
-            RollCommand.sendCommand(mRobot, 0f, 0f);
+            mRobot.stop();
         }
     }
 
     /**
      * When the user clicks a control button, roll the Robot in that direction
+     *
      * @param v The View that had been clicked
      */
-    public void onControlClick(View v){
-        
+    public void onControlClick(View v) {
         // Find the heading, based on which button was clicked
         final float heading;
-        switch (v.getId()){
-            
+        switch (v.getId()) {
+
             case R.id.ninety_button:
                 heading = 90f;
                 break;
-            
+
             case R.id.one_eighty_button:
                 heading = 180f;
                 break;
-            
+
             case R.id.two_seventy_button:
                 heading = 270f;
                 break;
@@ -112,11 +101,11 @@ public class ButtonDriveActivity extends Activity
                 heading = 0f;
                 break;
         }
-        
+
         // Set speed. 60% of full speed
         final float speed = 0.6f;
 
         // Roll robot
-        RollCommand.sendCommand(mRobot, heading, speed);
+        mRobot.drive(heading, speed);
     }
 }

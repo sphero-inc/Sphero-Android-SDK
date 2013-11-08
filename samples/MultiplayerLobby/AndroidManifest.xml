@@ -29,7 +29,7 @@
             />
 
         <!-- MultiplayerManager service -->
-        <service android:name="orbotix.multiplayer.MultiplayerManager"
+        <service android:name="orbotix.multiplayerMultiplayerManager"
                  />
 
     </application>

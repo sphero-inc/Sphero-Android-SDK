@@ -17,7 +17,7 @@ import orbotix.twophones.R;
 /**
  * View that displays the Joystick, and handles the user's interactions with it.
  *
- * Created by Orbotix Inc.
+
  * @author Adam Williams
  */
 public class JoystickView extends View implements Controller {

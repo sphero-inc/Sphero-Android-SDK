@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="SphereMotionTeapot" default="help">
 
+
+    <exec executable="android">
+        <arg value="update"/>
+        <arg value="project"/>
+        <arg value="-p"/>
+        <arg value="."/>
+    </exec>
+    
     <!-- The local.properties file is created and updated by the 'android' tool.
          It contains the path to the SDK. It should *NOT* be checked into
          Version Control Systems. -->

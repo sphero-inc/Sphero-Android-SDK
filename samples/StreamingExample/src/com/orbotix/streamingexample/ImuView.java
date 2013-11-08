@@ -7,7 +7,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 /**
- * Created by Orbotix Inc.
+
  * Date: 4/30/12
  *
  * @author Adam Williams

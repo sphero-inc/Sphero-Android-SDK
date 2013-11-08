@@ -9,7 +9,7 @@ import orbotix.robot.base.RGBLEDOutputCommand;
 import orbotix.robot.base.Robot;
 
 /**
- * Created by Orbotix Inc.
+
  * Date: 2/6/12
  *
  * @author Adam Williams

@@ -17,22 +17,15 @@ import orbotix.macro.RotateOverTime;
 import orbotix.macro.RGB;
 import orbotix.macro.Stabilization;
 import orbotix.robot.base.AbortMacroCommand;
-import orbotix.robot.base.BackLEDOutputCommand;
-import orbotix.robot.base.RGBLEDOutputCommand;
 import orbotix.robot.base.Robot;
-import orbotix.robot.base.RobotProvider;
-import orbotix.robot.base.RollCommand;
-import orbotix.robot.base.StabilizationCommand;
+import orbotix.sphero.ConnectionListener;
+import orbotix.sphero.Sphero;
 import orbotix.view.connection.SpheroConnectionView;
-import orbotix.view.connection.SpheroConnectionView.OnRobotConnectionEventListener;
 
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.SeekBar.OnSeekBarChangeListener;
-
-import com.orbotix.sample.macrosample.R;
 
 /**
  * Connects to an available Sphero robot, and then flashes its LED.
@@ -49,7 +42,7 @@ public class MacroSample extends Activity
 	/**
 	 * The Sphero Robots
 	 */
-	private ArrayList<Robot> mRobots = new ArrayList<Robot>();
+	private ArrayList<Sphero> mRobots = new ArrayList<Sphero>();
 
 	/**
 	 * The SpheroConnectionView
@@ -133,24 +126,23 @@ public class MacroSample extends Activity
 		// Find Sphero Connection View from layout file
 		mSpheroConnectionView = (SpheroConnectionView)findViewById(R.id.sphero_connection_view);
 		// This event listener will notify you when these events occur, it is up to you what you want to do during them
-		mSpheroConnectionView.setOnRobotConnectionEventListener(new OnRobotConnectionEventListener() {
-			@Override
-			public void onRobotConnectionFailed(Robot arg0) {}
-			@Override
-			public void onNonePaired() {}
+		mSpheroConnectionView.addConnectionListener(new ConnectionListener() {
 
-			@Override
-			public void onRobotConnected(Robot arg0) {
-				// Add the robot
-				mRobots.add(arg0);
-			}
-			
-			@Override
-			public void onBluetoothNotEnabled() {
-				// See UISample Sample on how to show BT settings screen, for now just notify user
-				Toast.makeText(MacroSample.this, "Bluetooth Not Enabled", Toast.LENGTH_LONG).show();
-			}
-		});
+            @Override
+            public void onConnected(Robot robot) {
+                mRobots.add((Sphero)robot);
+            }
+
+            @Override
+            public void onConnectionFailed(Robot robot) {
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+
+            @Override
+            public void onDisconnected(Robot robot) {
+                mRobots.remove(robot);
+            }
+        });
 	}
 	
     /**
@@ -160,7 +152,7 @@ public class MacroSample extends Activity
     protected void onResume() {
     	super.onResume();
         // Refresh list of Spheros
-        mSpheroConnectionView.showSpheros();
+        mSpheroConnectionView.startDiscovery();
     	mSpheroConnectionView.setVisibility(View.VISIBLE);
 		mDoneButton.setVisibility(View.VISIBLE);
 		findViewById(R.id.connection_layout).setVisibility(View.VISIBLE);
@@ -173,7 +165,9 @@ public class MacroSample extends Activity
     protected void onPause() {
     	super.onPause();
     	// Disconnect Robot properly
-    	RobotProvider.getDefaultProvider().disconnectControlledRobots();
+        for(Sphero s : mRobots){
+            s.disconnect();
+        }
     	mRobots.clear();
     }
 
@@ -188,7 +182,7 @@ public class MacroSample extends Activity
 		returnSpheroToStableState();
 
 		if(mRobots.size() > 0){
-			for( Robot mRobot : mRobots ) {
+			for( Sphero sphero : mRobots ) {
 				float speed = ((float)(speedValue))/10.0f;
 				//Create a new macro object to send to Sphero
 				MacroObject squareMacro = new MacroObject();
@@ -224,9 +218,8 @@ public class MacroSample extends Activity
 				//Change Color
 				squareMacro.addCommand(new RGB(255, 255, 255, 255));        
 				squareMacro.addCommand(new Roll(0.0f,0,255));
-				squareMacro.setMode(MacroObject.MacroObjectMode.Normal);
-				squareMacro.setRobot(mRobot);
-				squareMacro.playMacro();
+
+                sphero.executeMacro(squareMacro);
 			}
 		}
 	}
@@ -240,7 +233,7 @@ public class MacroSample extends Activity
 		returnSpheroToStableState();
 
 		if(mRobots.size() > 0){
-			for( Robot mRobot : mRobots ) {
+			for( Sphero sphero : mRobots ) {
 				//Create a new macro object to send to Sphero
 				MacroObject fadeMacro = new MacroObject();
 				fadeMacro.addCommand(new LoopStart(loopValue));
@@ -255,9 +248,7 @@ public class MacroSample extends Activity
 				fadeMacro.addCommand(new Fade(255, 255, 0, delayValue));
 				fadeMacro.addCommand(new Delay(delayValue));
 				fadeMacro.addCommand(new LoopEnd());
-				fadeMacro.setMode(MacroObject.MacroObjectMode.Normal);
-				fadeMacro.setRobot(mRobot);
-				fadeMacro.playMacro();
+                sphero.executeMacro(fadeMacro);
 			}
 		}
 	}
@@ -439,12 +430,12 @@ public class MacroSample extends Activity
 	 */
 	private void returnSpheroToStableState() {
 		if(mRobots.size() > 0){
-			for( Robot mRobot : mRobots ) {
-				AbortMacroCommand.sendCommand(mRobot); // abort command
-				StabilizationCommand.sendCommand(mRobot, true); // turn on stabilization
-				RGBLEDOutputCommand.sendCommand(mRobot, 255, 255, 255); // make Sphero White
-				BackLEDOutputCommand.sendCommand(mRobot, 0.0f);  // Turn off tail light
-				RollCommand.sendStop(mRobot);  // Stop rolling
+			for( Sphero sphero : mRobots ) {
+				AbortMacroCommand.sendCommand(sphero); // abort command
+				sphero.enableStabilization(true);// turn on stabilization
+                sphero.setColor(255, 255, 255);
+                sphero.setBackLEDBrightness(0.0f);
+    		    sphero.stop();
 			}
 		}
 	}

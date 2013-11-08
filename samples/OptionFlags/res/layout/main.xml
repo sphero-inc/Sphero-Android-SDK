@@ -139,55 +139,6 @@
                         android:text="Restore Defaults" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingRight="50dp" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text="Current Option Flags"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/txt_bit0"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:text="@string/bit0_description" />
-
-                    <TextView
-                        android:id="@+id/txt_bit1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:text="@string/bit1_description" />
-
-                    <TextView
-                        android:id="@+id/txt_bit2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:text="@string/bit2_description" />
-
-                    <TextView
-                        android:id="@+id/txt_bit3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:text="@string/bit3_description" />
-
-                    <TextView
-                        android:id="@+id/txt_bit4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:text="@string/bit4_description" />
-                </LinearLayout>
 
                 <Button
                     android:layout_width="wrap_content"
@@ -203,6 +154,6 @@
         android:id="@+id/sphero_connection_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="#FFF" />
+        android:background="#B0000000" />
 
 </FrameLayout>

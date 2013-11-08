@@ -8,7 +8,7 @@ import orbotix.robot.widgets.WidgetGraphicPart;
 /**
  * A WidgetGraphicPart that represents a glowing point of light
  *
- * Created by Orbotix Inc.
+
  * Author: Adam Williams
  * Date: 11/22/11
  * Time: 1:34 PM

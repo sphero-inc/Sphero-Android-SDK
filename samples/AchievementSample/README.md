@@ -111,7 +111,7 @@ You can register to receive an NSNotification whenever a user has earned an achi
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(spheroWorldAchievementEarned:) name:RKAchievementEarnedNotification object:nil];
 
-When the notification fires you can extract the RKAchievement object the user earned from the user info dictionary.  You can use the information in the RKAchievement object to display a notification to the user.  An example is shown below.
+When the notification invokes you can extract the RKAchievement object the user earned from the user info dictionary.  You can use the information in the RKAchievement object to display a notification to the user.  An example is shown below.
 
     -(void)spheroWorldAchievementEarned:(NSNotification*)notification {
 	    //Get the achievement that was earned from the userInfo dictionary

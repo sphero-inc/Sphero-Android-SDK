@@ -5,7 +5,7 @@ import orbotix.robot.base.Robot;
 /**
  * A type that controls the Robot in real time.
  *
- * Created by Orbotix Inc.
+
  * Date: 12/13/11
  *
  * @author Adam Williams

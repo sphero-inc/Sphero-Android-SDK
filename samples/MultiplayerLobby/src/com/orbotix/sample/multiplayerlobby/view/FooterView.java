@@ -6,7 +6,7 @@ import android.widget.RelativeLayout;
 import com.orbotix.sample.multiplayerlobby.R;
 
 /**
- * Created by Orbotix Inc.
+
  * Date: 4/18/12
  *
  * @author Adam Williams

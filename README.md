@@ -8,9 +8,9 @@ This Guide walks you through the basics of creating mobile apps for Android that
 
 *In general this guide will walk you through:*
 
- - Installing the SDK
- - Changing Sphero's Color
- - Using the Roll Command to move Sphero 
+ - [Installing the SDK](https://github.com/orbotix/Sphero-Android-SDK#installing-the-sphero-android-sdk)
+ - [Changing Sphero's Color](https://github.com/orbotix/Sphero-Android-SDK#add-code-to-blink-the-rgb-led)
+ - [Using the Roll Command to move Sphero](https://github.com/orbotix/Sphero-Android-SDK#sendings-roll-commands) 
 
 ### Before we begin - Installing Eclipse
 
@@ -29,22 +29,21 @@ Before you begin to develop applications that interface with Sphero on Android, 
 
 The Sphero Android SDK has over 15 different sample projects.  Starting with one of these is the best way to get going programming Sphero, and doing so is very simple.
 
-1.  **HelloWorld** - This sample code demonstrates how to connect to a Sphero and blink it's RGB LED blue.
-2.  **ButtonDrive** - This code sample demonstrates driving a Sphero by sending roll commands at 0°, 90°, 180°, and 270°
-3.  **Collisions** - This sample demonstrates how to set up Sphero collision detection, which is a firmware feature that generates a collision async message when an impact is detected.
-4.  **AcheivementSample** - This guide will walk you through the basics of adding achievements to the SpheroWorld back end and adding their tracking to an application.
-5.  **Locator** - This sample demonstrates how to use the Sphero Locator, which is a firmware feature that provides real-time position and velocity information about the robot.programmatically
-6.  **MacroSample** - This sample demonstrates how to connect to multiple balls and also how to programmatically create macros and run them on multiple Spheros.
-7.  **MacroLoader** - This sample shows how to load macros created in MacroLab to run on the ball.
-8.  **MultiplayerLobby** - Shows how to connect two phones over a wifi network.  For multiplayer games.  Soon to be deprecated over better services like http://playphone.com/.  
-9.  **OptionFlags** - This sample demonstrates how to control option flags, which are settings that stay with Sphero even after it goes through power cycles.
-10. **orbBasicSample** - This sample demonstrates how to load and execute OrbBasic programs on Sphero.
-11. **SelfLevel** - This sample code demonstrates how to connect to a Sphero and perform the self level command.
-12. **StreamingExample** - Sphero supports asynchronous data streaming of certain control system and sensor parameters. This is great for using Sphero as a controller, or for retrieving data about its environment.  This sample shows you how.
-13. **StreamingAnimation** - This sample demonstrates how to use Sphero and data streaming to move and rotate a 2D object on screen.
-14. **SpheroMotionTeapot** - This sample demonstrates how to use Sphero and data streaming to control the rotation of 3D object on screen.
-15. **UISample** - This is a great resource for application development.  It contains a pre-made drive joystick, a calibration widget, a color changing widget, and a sleep widget.  
-16. **TwoPhonesOneBall** - Demonstrates how to use two devices that are connected over wifi to control one Sphero.
+1.  [**HelloWorld**](https://github.com/orbotix/Sphero-Android-SDK/tree/master/samples/HelloWorld) - This sample code demonstrates how to connect to a Sphero and blink it's RGB LED blue.
+2.  [**ButtonDrive**](https://github.com/orbotix/Sphero-Android-SDK/tree/master/samples/ButtonDrive) - This code sample demonstrates driving a Sphero by sending roll commands at 0°, 90°, 180°, and 270°
+3.  [**Collisions**](https://github.com/orbotix/Sphero-Android-SDK/tree/master/samples/Collisions) - This sample demonstrates how to set up Sphero collision detection, which is a firmware feature that generates a collision async message when an impact is detected.
+4.  [**AcheivementSample**](https://github.com/orbotix/Sphero-Android-SDK/tree/master/samples/AchievementSample) - This guide will walk you through the basics of adding achievements to the SpheroWorld back end and adding their tracking to an application.
+5.  [**Locator**](https://github.com/orbotix/Sphero-Android-SDK/tree/master/samples/Locator) - This sample demonstrates how to use the Sphero Locator, which is a firmware feature that provides real-time position and velocity information about the robot.programmatically
+6.  [**MacroSample**](https://github.com/orbotix/Sphero-Android-SDK/tree/master/samples/MacroSample) - This sample demonstrates how to connect to multiple balls and also how to programmatically create macros and run them on multiple Spheros.
+7.  [**MacroLoader**](https://github.com/orbotix/Sphero-Android-SDK/tree/master/samples/MacroLoader) - This sample shows how to load macros created in MacroLab to run on the ball.
+8.  [**MultiplayerLobby**](https://github.com/orbotix/Sphero-Android-SDK/tree/master/samples/MultiplayerLobby) - Shows how to connect two phones over a wifi network.  For multiplayer games.  Soon to be deprecated over better services like http://playphone.com/.  
+9.  [**OptionFlags**](https://github.com/orbotix/Sphero-Android-SDK/tree/master/samples/OptionFlags) - This sample demonstrates how to control option flags, which are settings that stay with Sphero even after it goes through power cycles.
+10. [**orbBasicSample**](https://github.com/orbotix/Sphero-Android-SDK/tree/master/samples/OrbBasicSample) - This sample demonstrates how to load and execute OrbBasic programs on Sphero.
+11. [**SelfLevel**](https://github.com/orbotix/Sphero-Android-SDK/tree/master/samples/SelfLevel) - This sample code demonstrates how to connect to a Sphero and perform the self level command.
+12. [**StreamingExample**](https://github.com/orbotix/Sphero-Android-SDK/tree/master/samples/StreamingExample) - Sphero supports asynchronous data streaming of certain control system and sensor parameters. This is great for using Sphero as a controller, or for retrieving data about its environment.  This sample shows you how.
+13. [**StreamingAnimation**](https://github.com/orbotix/Sphero-Android-SDK/tree/master/samples/StreamingAnimation) - This sample demonstrates how to use Sphero and data streaming to move and rotate a 2D object on screen.
+14. [**SpheroMotionTeapot**](https://github.com/orbotix/Sphero-Android-SDK/tree/master/samples/SphereMotionTeapot) - This sample demonstrates how to use Sphero and data streaming to control the rotation of 3D object on screen.
+15. [**UISample**](https://github.com/orbotix/Sphero-Android-SDK/tree/master/samples/UISample) - This is a great resource for application development.  It contains a pre-made drive joystick, a calibration widget, a color changing widget, and a sleep widget.  
      
 ## Importing a Sphero Sample Project
 

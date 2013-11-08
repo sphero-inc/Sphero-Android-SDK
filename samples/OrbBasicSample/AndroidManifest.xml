@@ -3,8 +3,8 @@
           package="com.orbotix.sample.orbbasic"
           android:versionCode="1"
           android:versionName="1.0">
-    <uses-sdk android:minSdkVersion="8"/>
 
+    <uses-sdk android:minSdkVersion="8"/>
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 

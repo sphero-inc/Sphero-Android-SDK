@@ -5,7 +5,7 @@ import android.graphics.Point;
 /**
  * A part of a WidgetGraphic that can be drawn to a View.
  *
- * Created by Orbotix Inc.
+
  * Date: 11/22/11
  * @author Adam Williams
  */
