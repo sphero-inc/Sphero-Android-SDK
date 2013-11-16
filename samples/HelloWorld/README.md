@@ -1,8 +1,8 @@
 #HelloWorld
 
-This sample code demonstrates how to connect to a Sphero and blink it's RGB LED blue. This sample does not use the `SpheroConnectionView`, because we wanted it to be simple and pair to the first Sphero device that it finds paired to the phone.  This sample is a good starting point if you want to make your own custom Connection View. Also, the code sample is the bases for the application created in the Quick Start Guide. 
+This sample code demonstrates how to connect to a Sphero and blink it's RGB LED blue. This sample does not use the `SpheroConnectionView`, because we wanted it to be simple and pair to the first Sphero device that it finds paired to the phone.  This sample is a good starting point if you want to make your own custom Connection View. Also, the code sample is the basis for the application created in the Quick Start Guide. 
 
-The connection is made in your Activity by simply adding the following onResume() and wiring the `connected()` callback. 
+The connection is made in your Activity by simply adding the following onResume() and wiring the `connected()` method. 
 
 		protected void onResume() {
         super.onResume();
@@ -10,7 +10,9 @@ The connection is made in your Activity by simply adding the following onResume(
         RobotProvider.getDefaultProvider().addConnectionListener(new ConnectionListener() {
             @Override
             public void onConnected(Robot robot) {
+            	// Save the robot
                 mRobot = (Sphero) robot;
+                // Start the connected method
                 HelloWorldActivity.this.connected();
             }
 
@@ -55,13 +57,13 @@ The connection is made in your Activity by simply adding the following onResume(
     }
     
     
-Next, you need to get a reference to a Robot object from RobotProvider using the following line of code.
+Next, if you didn't save the robot in the `onConnected()` callback, you need to get a reference to a Robot object from RobotProvider using the following line of code.
 
                 mRobot = RobotProvider.getDefaultProvider().findRobot(robot_id);
 
 RobotProvider is a singleton that is used to manage connected Spheros, and is capable of allowing multiple connections. So, the Robot object is how you reference which Sphero to communicate with. 
 
-The final call in `onActivityResult()` is to ``blink()``, which is method that toggles the RGB LED's blue component on or off every second. The LED is controlled by using the RGBLEDOutputCommand class to message the device. This is a subclass of DeviceCommand which is used to encapsulate commands, and posted to DeviceMessenger. DeviceCommand subclasses have `sendCommand()` class methods that post the command to DeviceMessenger for convenience. The blink method commands the device to turn off the LED with the following code line.
+The final call in `onActivityResult()` is to ``blink()``, which is method that toggles the RGB LED's blue component every second. The LED is controlled by using the `setColor()` method. This method encapsulates the RGBLEDOutputCommand for convenience (less typing is better right?), and posts this call to DeviceMessenger, which sends the command down to the ball. The blink method commands the device to turn off the LED with the following code line.
 
                 mRobot.setColor(0,0,0);
                 
