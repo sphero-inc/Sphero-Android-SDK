@@ -264,7 +264,7 @@ public class MacroSample extends Activity
 		if( loopValue == 0 ) return;
 
 		if(mRobots.size() > 0){
-			for( Robot mRobot : mRobots ) {
+			for( Sphero mRobot : mRobots ) {
 				float speed = ((float)(speedValue))/10.0f;
 				//Create a new macro object to send to Sphero
 				MacroObject shapeMacro = new MacroObject();
@@ -286,7 +286,7 @@ public class MacroSample extends Activity
 				shapeMacro.setMode(MacroObject.MacroObjectMode.Normal);
 				shapeMacro.setRobot(mRobot);
 				//Send Macro
-				shapeMacro.playMacro();
+                mRobot.executeMacro(shapeMacro);
 			}
 		}
 	}
@@ -300,7 +300,7 @@ public class MacroSample extends Activity
 		returnSpheroToStableState();
 
 		if(mRobots.size() > 0){
-			for( Robot mRobot : mRobots ) {
+			for( Sphero mRobot : mRobots ) {
 				float speed = ((float)(speedValue))/10.0f;
 				//Create a new macro object to send to Sphero
 				MacroObject figure8Macro = new MacroObject();
@@ -322,7 +322,7 @@ public class MacroSample extends Activity
 				figure8Macro.addCommand(new Roll(0.0f,0,255));
 				figure8Macro.setMode(MacroObject.MacroObjectMode.Normal);
 				figure8Macro.setRobot(mRobot);
-				figure8Macro.playMacro();
+                mRobot.executeMacro(figure8Macro);
 			}
 		}
 	}
@@ -336,7 +336,7 @@ public class MacroSample extends Activity
 		returnSpheroToStableState();
 
 		if(mRobots.size() > 0){
-			for( Robot mRobot : mRobots ) {
+			for( Sphero mRobot : mRobots ) {
 				//Create a new macro object to send to Sphero
 				MacroObject vibrateMacro = new MacroObject();
 				vibrateMacro.addCommand(new RGB(255, 0, 0, 0));
@@ -355,7 +355,7 @@ public class MacroSample extends Activity
 				vibrateMacro.addCommand(new RGB(0, 255, 0, 0));
 				vibrateMacro.setMode(MacroObject.MacroObjectMode.Normal);
 				vibrateMacro.setRobot(mRobot);
-				vibrateMacro.playMacro();
+                mRobot.executeMacro(vibrateMacro);
 			}
 		}
 	}
@@ -368,7 +368,7 @@ public class MacroSample extends Activity
 	public void spinMacroClicked(View v) {
 		returnSpheroToStableState();
 		if(mRobots.size() > 0){
-			for( Robot mRobot : mRobots ) {
+			for( Sphero mRobot : mRobots ) {
 				//Create a new macro object to send to Sphero
 				MacroObject spinMacro = new MacroObject();
 				// Turn on the tail light
@@ -383,7 +383,7 @@ public class MacroSample extends Activity
 				spinMacro.addCommand(new BackLED(0, 0));
 				spinMacro.setMode(MacroObject.MacroObjectMode.Normal);
 				spinMacro.setRobot(mRobot);
-				spinMacro.playMacro();
+                mRobot.executeMacro(spinMacro);
 			}
 		}
 	}
@@ -397,7 +397,7 @@ public class MacroSample extends Activity
 		returnSpheroToStableState();
 
 		if(mRobots.size() > 0){
-			for( Robot mRobot : mRobots ) {
+			for( Sphero mRobot : mRobots ) {
 				//Create a new macro object to send to Sphero
 				MacroObject flipMacro = new MacroObject();
 				flipMacro.addCommand(new RGB(0, 0, 255, 0));
@@ -412,7 +412,7 @@ public class MacroSample extends Activity
 				flipMacro.addCommand(new RGB(0, 255, 0, 0));
 				flipMacro.setMode(MacroObject.MacroObjectMode.Normal);
 				flipMacro.setRobot(mRobot);
-				flipMacro.playMacro();
+				mRobot.executeMacro(flipMacro);
 			}
 		}
 	}

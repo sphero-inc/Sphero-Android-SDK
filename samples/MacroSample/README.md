@@ -63,7 +63,7 @@ There are 5 main steps to running a macro on a Sphero.
 
 5. Lastly, play the macro
 
-		macro.playMacro();
+		mRobot.executeMacro(macro);
 		
 ## Running Macros on Multiple Spheros
 
@@ -85,10 +85,11 @@ When you want to end a macro, or play another macro, use the abort command and t
 	private void returnSpheroToStableState() {
 		if(mRobots.size() > 0){
 			for( Robot mRobot : mRobots ) {
-				AbortMacroCommand.sendCommand(mRobot);
-				StabilizationCommand.sendCommand(mRobot, true);
-				RGBLEDOutputCommand.sendCommand(mRobot, 255, 255, 255);
-				FrontLEDOutputCommand.sendCommand(mRobot, 0.0f);
+				AbortMacroCommand.sendCommand(mRobot); // abort command
+				mRobot.enableStabilization(true); // turn on stabilization
+				mRobot.setColor(255, 255, 255); // make Sphero White
+				mRobot.setBackLEDBrightness(0.0f);  // Turn off tail light
+				mRobot.stop();  // Stop rolling
 			}
 		}
 	}
