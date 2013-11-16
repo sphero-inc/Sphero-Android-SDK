@@ -32,7 +32,8 @@ http://forum.gosphero.com/showthread...5-Share-Macros
 	                     //Set Robot
 						 macro.setRobot(mRobot);
 						 //Send Macro to Sphero
-	                     macro.playMacro(); 
+						 mRobot.executeMacro(macro);
+	                     
 					} catch (IOException e) {
 						throw new RuntimeException(e);
 					} catch (Exception e) {
@@ -46,9 +47,10 @@ http://forum.gosphero.com/showthread...5-Share-Macros
 When you want to stop a previous played command, its easy to send in an Abort and reset the Sphero's state you want it to continue in.  The code is as follows:
 
 		AbortMacroCommand.sendCommand(mRobot); // abort command
-		StabilizationCommand.sendCommand(mRobot, true); // turn on stabilization
-		RGBLEDOutputCommand.sendCommand(mRobot, 255, 255, 255); // make Sphero White
-		FrontLEDOutputCommand.sendCommand(mRobot, 0.0f);  // Turn off tail light
+		mRobot.enableStabilization(true); // turn on stabilization
+		mRobot.setColor(255, 255, 255); // make Sphero White
+		mRobot.setBackLEDBrightness(0.0f);  // Turn off tail light
+		mRobot.stop();  // Stop rolling
 
 ## Chunky Macros vs Normal Macros
 

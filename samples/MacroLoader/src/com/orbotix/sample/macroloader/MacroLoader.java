@@ -101,7 +101,7 @@ public class MacroLoader extends Activity
 				//Set Robot
 				macro.setRobot(mRobot);
 				//Send Macro to Sphero
-				macro.playMacro(); 
+                mRobot.executeMacro(macro);
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			} catch (Exception e) {
@@ -128,7 +128,7 @@ public class MacroLoader extends Activity
 				//Set Robot
 				macro.setRobot(mRobot);
 				//Send Macro to Sphero
-				macro.playMacro(); 
+				mRobot.executeMacro(macro);
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			} catch (Exception e) {
@@ -155,7 +155,7 @@ public class MacroLoader extends Activity
 				//Set Robot
 				macro.setRobot(mRobot);
 				//Send Macro to Sphero
-				macro.playMacro(); 
+                mRobot.executeMacro(macro);
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			} catch (Exception e) {
@@ -181,7 +181,7 @@ public class MacroLoader extends Activity
 				//Set Robot
 				macro.setRobot(mRobot);
 				//Send Macro to Sphero
-				macro.playMacro(); 
+                mRobot.executeMacro(macro);
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			} catch (Exception e) {
@@ -203,10 +203,10 @@ public class MacroLoader extends Activity
 	 */
 	private void returnSpheroToStableState() {
 		AbortMacroCommand.sendCommand(mRobot); // abort command
-		StabilizationCommand.sendCommand(mRobot, true); // turn on stabilization
-		RGBLEDOutputCommand.sendCommand(mRobot, 255, 255, 255); // make Sphero White
-		BackLEDOutputCommand.sendCommand(mRobot, 0.0f);  // Turn off tail light
-		RollCommand.sendStop(mRobot);  // Stop rolling
+		mRobot.enableStabilization(true); // turn on stabilization
+		mRobot.setColor(255, 255, 255); // make Sphero White
+		mRobot.setBackLEDBrightness(0.0f);  // Turn off tail light
+		mRobot.stop();  // Stop rolling
 	}
 }
 
