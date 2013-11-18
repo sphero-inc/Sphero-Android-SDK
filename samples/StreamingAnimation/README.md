@@ -1,7 +1,7 @@
 ![logo](http://update.orbotix.com/developer/sphero-small.png)
 
 # Streaming Animation SampleStreamingAnimation demonstrates how to use Sphero as a controller to move and rotate a Sphero ball image around the screen.  To control the image, we use asynchronous data streaming of the IMU values of **Roll, Pitch, and Yaw**.  Roll and Pitch control x and y translation and Yaw controls rotating the image.## UI Elements
-The samples has a `main.xml` resource file that contains the SpheroConnectionView, IMU TextViews, Calibrate Button, and Sphero Image. If you want the SpheroConnectionView explained in more detail, look at the Android SDK ReadMe.
+The samples has a *main.xml* resource file that contains the *SpheroConnectionView*, IMU TextViews, Calibrate Button, and Sphero Image. If you want the *SpheroConnectionView* explained in more detail, look at the Android SDK ReadMe.
 
     <RelativeLayout
         android:id="@+id/relative_layout"
@@ -51,11 +51,11 @@
 
     </RelativeLayout>
 
-It is important to note the ImageView, because it is a little bit more advanced.  The `matrix` scale type is telling Android that we will control the scale and rotation of the image ourselves using matrix transformations.  
+It is important to note the ImageView, because it is a little bit more advanced.  The matrix scale type is telling Android that we will control the scale and rotation of the image ourselves using matrix transformations.  
 
 ### Making the Sample Fullscreen
 
-In the `AndroidManifest.xml` see the <Activity> tag for our StreamingAnimationAcitivty:
+In the *AndroidManifest.xml* see the <Activity> tag for our *StreamingAnimationAcitivty*:
 
 	<activity android:name=".CoinCollectorActivity"
                   android:label="@string/app_name"
@@ -65,7 +65,7 @@ We simply added the theme attribute to make the game full screen (remove the tit
     
 ### Getting the Android Device Screen Size
 
-Most Android devices have different screen sizes.  To get the correct width and height of the screen (in pixels) we use the `DisplayMetrics` class.  We will use this width and height to bound the Sphero image's movement.  This code in the `onCreate()` method.
+Most Android devices have different screen sizes.  To get the correct width and height of the screen (in pixels) we use the *DisplayMetrics* class.  We will use this width and height to bound the Sphero image's movement.  This code in the `onCreate()` method.
 
         // Get Screen width and height
         DisplayMetrics displaymetrics = new DisplayMetrics();
@@ -129,7 +129,7 @@ Most Android devices have different screen sizes.  To get the correct width and 
     
 ### Calling the updateSpheroPosition Function
 
-The `StreamingExample` set up the data for us, so all we need to do is get it to the function we created.  We do this by replacing the code in `onDataReceived(DeviceAsyncData data)` to 
+The *StreamingExample* set up the data for us, so all we need to do is get it to the function we created.  We do this by replacing the code in `onDataReceived(DeviceAsyncData data)` to 
  
     //get the frames in the response
     List<DeviceSensorsData> data_list = ((DeviceSensorsAsyncData)data).getAsyncData();
