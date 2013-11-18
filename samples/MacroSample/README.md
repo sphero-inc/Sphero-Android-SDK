@@ -2,7 +2,7 @@
 
 # Macro Sample
 
-This sample demonstrates how to connect to multiple balls with the *SpheroConnectionView* and also how to programmatically create macros and run them on multiple Spheros.
+This sample demonstrates how to connect to multiple balls with the `SpheroConnectionView` and also how to programmatically create macros and run them on multiple Spheros.
 
 ## Connecting to Multiple Spheros
 
@@ -11,7 +11,7 @@ Instead of having a member variable that holds a single Robot object, you now ha
 	/** The Sphero Robots */
 	private ArrayList<Robot> mRobots = new ArrayList<Robot>();
 	
-In previous samples, we have hidden the *SpheroConnectionView* after the first Robot connected.  However, in this sample, we will continue to add Robots to the ArrayList until the user clicks the done button.  The program code for this is below:
+In previous samples, we have hidden the `SpheroConnectionView` after the first Robot connected.  However, in this sample, we will continue to add Robots to the ArrayList until the user clicks the done button.  The program code for this is below:
 
 		// Set the done button to make the connection view go away
 		mDoneButton = (Button)findViewById(R.id.done_button);

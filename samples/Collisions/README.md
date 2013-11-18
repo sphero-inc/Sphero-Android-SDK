@@ -19,7 +19,7 @@ Ball to ball collisions is a little bit tougher to determine, since Sphero may t
 These values suggest a low collision threshold when you are not moving, and a higher one when Sphero is driving at full power. That way, we will minimize the false collisions when just driving around.  This also will trigger collisions on both axis.  We don't want the deadTime to be as high here, because if we get a false collision before an actual collision, we don't want to ignore the real one.
 
 ## Preparing the Collision Detection Listener
-To start using collision detection, you must first make a listener object that conforms to the *CollisionListener* interface. Create a listener like so with the `collisionDetected(CollisionDetectedAsyncData collisionData)` method. This will automatically get called once a collision is detected once the listener is attached later.
+To start using collision detection, you must first make a listener object that conforms to the `CollisionListener` interface. Create a listener like so with the `collisionDetected(CollisionDetectedAsyncData collisionData)` method. This will automatically get called once a collision is detected once the listener is attached later.
 	
 	private final CollisionListener mCollisionListener = new CollisionListener() {
         public void collisionDetected(CollisionDetectedAsyncData collisionData) {
@@ -29,7 +29,7 @@ To start using collision detection, you must first make a listener object that c
                                               
 ## Registering for Collision Async Data
 
-As with data streaming, you have to register for async data notifications with this line after you configure the collision listener (assuming that mRobot is a *Sphero* object):
+As with data streaming, you have to register for async data notifications with this line after you configure the collision listener (assuming that mRobot is a `Sphero` object):
 
 	mRobot.getCollisionControl().addCollisionListener(mCollisionListener);                                      	
 ## Enabling Collision Detection

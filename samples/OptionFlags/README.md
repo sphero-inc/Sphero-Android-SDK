@@ -19,11 +19,11 @@ By default, your Sphero only has vector drive enabled.
 ## Get Current Option Flags
 
 
-To get the populate the current state of the persistent option flags, you now need only call `update()` on the *ConfigurationControl* of Sphero.
+To get the populate the current state of the persistent option flags, you now need only call `update()` on the `ConfigurationControl` of Sphero.
 
 	mRobot.getConfiguration().update();
 	
-This will get the flags as soon as it can. To avoid a race condition, a listener for the response is needed. Setup a listener to listen for the *GetOptionFlagsResponse*.
+This will get the flags as soon as it can. To avoid a race condition, a listener for the response is needed. Setup a listener to listen for the `GetOptionFlagsResponse`.
 
 	private DeviceMessenger.DeviceResponseListener mResponseListener = new DeviceMessenger.DeviceResponseListener() {
         @Override
@@ -43,7 +43,7 @@ Here we are getting the state of each option flag in a boolean variable which wi
 
 ## Set Option Flags
 
-You can change the value of the option flags by using *ConfigurationControl*'s method `setPersistentFlag(PersistentOptionFlags flags, bool enabled)` like so:
+You can change the value of the option flags by using `ConfigurationControl`'s method `setPersistentFlag(PersistentOptionFlags flags, bool enabled)` like so:
 
 	mRobot.getConfiguration().setPersistentFlag(PersistentOptionFlags.PreventSleepInCharger, (cbPreventSleepInCharger.isChecked()));
 	mRobot.getConfiguration().setPersistentFlag(PersistentOptionFlags.EnableVectorDrive, cbEnableVectorDrive.isChecked());

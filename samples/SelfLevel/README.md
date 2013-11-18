@@ -10,7 +10,7 @@ This sample code demonstrates how to connect to a Sphero and perform the self le
 
 ## Default Self Level Command
 
-A basic self level command can be performed by the developer by calling (assuming mRobot is a prepopulated *Sphero* object):
+A basic self level command can be performed by the developer by calling (assuming mRobot is a prepopulated `Sphero` object):
 
 	mRobot.getConfiguration().performSelfLevel();
 	
@@ -29,7 +29,7 @@ Additional settings include the options flag.  This flag is a bitwise mask the s
 3. **Sleep Bit**: 0 stays awake after leveling. 1 goes to sleep after leveling.
 4. **Control System Bit**: 0 turns control system off after leveling. 1 turns control system on after leveling.
 
-When you do *mRobot.getConfiguration.performSelfLevel()* the values for these settings it uses are, the **Stop Bit** = 1, **Final Angle Bit** = 1, **Sleep Bit** = 0, and **Control System Bit** = 0.
+When you do `mRobot.getConfiguration.performSelfLevel()` the values for these settings it uses are, the **Stop Bit** = 1, **Final Angle Bit** = 1, **Sleep Bit** = 0, and **Control System Bit** = 0.
 
 ## Customized Self Level Command
 

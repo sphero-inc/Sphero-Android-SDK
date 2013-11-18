@@ -12,7 +12,7 @@ The sample programmatically loads the .orbbas files in this directory into the L
 
 ## Initializing an OrbBasic Program Object
 
-In the sample, when you click an item in the ListView, you will initialize the *OrbBasicProgram* object.  This is the first step in putting an OrbBasic program on the ball.  At this point, you are only providing the object with the byte array of data, or the text file content.  Here is the code:
+In the sample, when you click an item in the ListView, you will initialize the `OrbBasicProgram` object.  This is the first step in putting an OrbBasic program on the ball.  At this point, you are only providing the object with the byte array of data, or the text file content.  Here is the code:
 
 	// Retrieve byte array from file
 	Resources res = getResources();
@@ -60,7 +60,7 @@ You can run the program with the `executeProgram()` function.  Depending on the 
 
 The AsyncDataListener set up is the same as the StreamingExample, Locator Sample, and a few others in our SDK.
 
-In the *onRobotConnected* event of the *SpheroConnectionView* you should set up AsyncDataListening when you connect to a robot.
+In the `onRobotConnected` event of the `SpheroConnectionView` you should set up AsyncDataListening when you connect to a robot.
 
 			@Override
 			public void onRobotConnected(Robot arg0) {
