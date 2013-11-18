@@ -77,7 +77,7 @@ To run the macros on multiple Spheros, simply wrap the macro command creation an
 
 ## Return Sphero to Default State
 
-When you want to end a macro, or play another macro, use the abort command and then set sphere in the default state.
+When you want to end a macro, or play another macro, use the abort command and then set the Spheros back to their default state.
 
 	/**
 	 * Puts Spheros back into their default state
