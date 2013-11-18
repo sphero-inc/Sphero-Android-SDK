@@ -113,8 +113,8 @@ public class OptionFlagActivity extends Activity {
      * @param v
      */
     public void refreshOptionFlagsPressed(View v) {
-//        mSphero.getConfiguration().update();
-        GetOptionFlagsCommand.sendCommand(mSphero);
+        // Refreshes all the internal ball fields to be accessed later
+        mSphero.getConfiguration().update();
     }
 
     public void updateUI() {
