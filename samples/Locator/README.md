@@ -4,7 +4,7 @@
 In this document, we show how to configure the locator and use it's information on Android.	Note: This command only works on Sphero's with Firmware 1.20 or greater'
 	
 ## Preparing the Data Streaming Listener
-To start, you must make a listener that can handle the async packets received from the ball. To do this, you make a `LocatorListener` to handle the information. This internal method `onLocatorChanged()` will be called every time the ball's locator is updated.	private LocatorListener mLocatorListener = new LocatorListener() {
+To start, you must make a listener that can handle the async packets received from the ball. To do this, you make a *LocatorListener* to handle the information. This internal method `onLocatorChanged(LocatorData locatorData)` will be called every time the ball's locator is updated.	private LocatorListener mLocatorListener = new LocatorListener() {
         @Override
         public void onLocatorChanged(LocatorData locatorData) {
         	// Do stuff with the locator data	
@@ -19,7 +19,7 @@ Assuming you already have a Sphero object that is connected, attaching the liste
 	
 ## Configuring the Data Streaming Listener
 
-Now that the listener is connected, you must set the data streaming rate (at the least). The maximum sensor sampling rate is ~420 Hz, but we recommend using a value in the 20-40Hz range for Android devices. At 20 Hz, virtually every device will not see a slowdown from the packet detection. However, 40 Hz is only viable when targeting only high-end devices. To set the streaming value, use the `setRate()` member method of the `SensorControl` class of the Sphero.
+Now that the listener is connected, you must set the data streaming rate (at the least). The maximum sensor sampling rate is ~420 Hz, but we recommend using a value in the 20-40Hz range for Android devices. At 20 Hz, virtually every device will not see a slowdown from the packet detection. However, 40 Hz is only viable when targeting only high-end devices. To set the streaming value, use the `setRate(int hz)` member method of the *SensorControl* class of the Sphero.
 
 	mSphero.getSensorControl().setRate(20 /*Hz*/);
 	
@@ -35,7 +35,7 @@ Now you're set to receive locator data from the Sphero!
 ## Making the Most of the Locator
 Depending on your needs there are a few ways to set up and use the Locator.1. Do you need to know position (go to 2) or just distance traveled (go to 3)?2. Do you want to use roll commands to move Sphero to specific locator positions (go to 4) or does it suffice to simply know where Sphero is (go to 5)?3. Do you want to know an arc length/odometer distance (go to 6) or do you want to the distance “as the crow flies” (go to 5)?4. See The Full Setup.5. See The Default Setup.6. See Distance Traveled.## The Default SetupSign up for locator position streaming.  Leave the locator in its default configuration with flag 0 set to true.  The application may use the standard joystick and calibration UI elements freely.## Distance TraveledSign up for locator velocity streaming.  Leave the locator in its default configuration with flag 0 set to true.  The application may use the standard joystick and calibration UI elements freely.  If you want to keep track of distance in the odometer sense, when a data streaming callback comes in accumulate a total using the following formula:
 	Distance Traveled += √(Vx^2 + Vy^2 ) * dt
-Where *Vx* and *Vy* are the x and y velocity components and dt is the time between data samples.  Rather than actually measuring dt (and fighting with Bluetooth latency to get a good timestamp) it is better to synthesize it using the formula:
+Where *Vx* and *Vy* are the x and y velocity components and *dt* is the time between data samples.  Rather than actually measuring dt (and fighting with Bluetooth latency to get a good timestamp) it is better to synthesize it using the formula:
 	dt = N/420Where N is the divisor used in the Set Locator Streaming command.## The Full Setup
 The easiest way to use locator coordinates and roll command headings together in your app is to turn auto-correction off (set the first flag bit to false) and avoid the Set Heading command altogether.  You may freely use the Configure Locator command to set the location of Sphero as long as you always set yaw tare to zero.  Again, do not use the Set Heading command!
 Your app may freely use the standard joystick UI element.  Unfortunately, the calibration UI element uses the Set Heading command and so should be avoided.  To achieve the same effect one can use Roll commands with a speed of zero to rotate the ball.  Of course, this does not change the meaning of yaw angles the same way Set Heading does.  In order to simulate this effect, you must maintain a private yaw offset, which you set when reorienting the ball.  Your joystick (or other control mechanism) must be modified to add this yaw offset to every outgoing roll command.In this way, the user gets all the functionality of the set heading command without altering the locator coordinate system or the IMU headings.  If you want to drive from one location toward another the following formula gives the heading you should use:

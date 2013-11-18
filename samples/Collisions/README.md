@@ -19,7 +19,7 @@ Ball to ball collisions is a little bit tougher to determine, since Sphero may t
 These values suggest a low collision threshold when you are not moving, and a higher one when Sphero is driving at full power. That way, we will minimize the false collisions when just driving around.  This also will trigger collisions on both axis.  We don't want the deadTime to be as high here, because if we get a false collision before an actual collision, we don't want to ignore the real one.
 
 ## Preparing the Collision Detection Listener
-To start using collision detection, you must first make a listener object that conforms to the `CollisionListener` interface. Create a listener like so with the `collisionDetected()` method. This will automatically get called once a collision is detected once the listener is attached later.
+To start using collision detection, you must first make a listener object that conforms to the *CollisionListener* interface. Create a listener like so with the `collisionDetected(CollisionDetectedAsyncData collisionData)` method. This will automatically get called once a collision is detected once the listener is attached later.
 	
 	private final CollisionListener mCollisionListener = new CollisionListener() {
         public void collisionDetected(CollisionDetectedAsyncData collisionData) {
@@ -29,11 +29,11 @@ To start using collision detection, you must first make a listener object that c
                                               
 ## Registering for Collision Async Data
 
-As with data streaming, you have to register for async data notifications with this line after you configure the collision listener (assuming that mRobot is a Sphero object):
+As with data streaming, you have to register for async data notifications with this line after you configure the collision listener (assuming that mRobot is a *Sphero* object):
 
 	mRobot.getCollisionControl().addCollisionListener(mCollisionListener);                                      	
 ## Enabling Collision Detection
-Finally enable the collision detection via the `startdetection()` member method of the Collision Control class. Every robot (or Sphero) object has a Collision Control, and is populated when a Sphero is connected, so you do not need to worry about initializing it.
+Finally enable the collision detection via the `startdetection(int Xt, int Xsp, int Yt, int Ysp, int deadTime)` member method of the Collision Control class. Every robot (or Sphero) object has a Collision Control, and is populated when a Sphero is connected, so you do not need to worry about initializing it.
 
 		    mRobot.getCollisionControl().startDetection(45, 45, 100, 100, 100); // These values are the ones discussed earlier
 ## Understanding Collision DataAn impact is reported via an asynchronous messages to the phone.  The details of the impact are reported using two different methodologies.First, the actual power impact value is given in xMagnitude and yMagnitude. These values are the power that was detected in the impact and were compared to the threshold to determine a reportable collision. The Axis field indicates which (or both) axis crossed the threshold and is being reported.  In the sample code, these values are:
