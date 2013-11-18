@@ -21,7 +21,7 @@ public class LocatorActivity extends Activity {
 
     private static final String TAG = "OBX-LocatorSample";
     /** Robot to from which we are streaming */
-    private Sphero mSphero = null;
+    private Sphero mRobot = null;
 
     /** The Sphero Connection View */
     private SpheroConnectionView mSpheroConnectionView;
@@ -54,11 +54,11 @@ public class LocatorActivity extends Activity {
         mSpheroConnectionView.addConnectionListener(new ConnectionListener() {
             @Override
             public void onConnected(Robot sphero) {
-                mSphero = (Sphero) sphero;
+                mRobot = (Sphero) sphero;
                 // Skip this next step if you want the user to be able to connect multiple Spheros
                 mSpheroConnectionView.setVisibility(View.INVISIBLE);
-                mSphero.getSensorControl().addLocatorListener(mLocatorListener);
-                mSphero.getSensorControl().setRate(5);
+                mRobot.getSensorControl().addLocatorListener(mLocatorListener);
+                mRobot.getSensorControl().setRate(5);
             }
 
             @Override
@@ -86,9 +86,9 @@ public class LocatorActivity extends Activity {
     protected void onPause() {
         super.onPause();
         //Set the AsyncDataListener that will process each response.
-        if (mSphero != null) {
-            mSphero.getSensorControl().removeLocatorListener(mLocatorListener);
-            mSphero.disconnect();           // Disconnect Robot properly
+        if (mRobot != null) {
+            mRobot.getSensorControl().removeLocatorListener(mLocatorListener);
+            mRobot.disconnect();           // Disconnect Robot properly
         }
     }
 
@@ -99,7 +99,7 @@ public class LocatorActivity extends Activity {
      */
     public void configurePressed(View v) {
 
-        if (mSphero == null) return;
+        if (mRobot == null) return;
 
         int newX = 0;   // The locator's current X position value will be set to this value
         int newY = 0;   // The locator's current Y position value will be set to this value
@@ -128,26 +128,26 @@ public class LocatorActivity extends Activity {
                 ConfigureLocatorCommand.ROTATE_WITH_CALIBRATE_FLAG_ON :
                 ConfigureLocatorCommand.ROTATE_WITH_CALIBRATE_FLAG_OFF;
 
-        ConfigureLocatorCommand.sendCommand(mSphero, flag, newX, newY, newYaw);
+        ConfigureLocatorCommand.sendCommand(mRobot, flag, newX, newY, newYaw);
     }
 
     public void upPressed(View v) {
-        mSphero.drive(0, .6f);
+        mRobot.drive(0, .6f);
     }
 
     public void rightPressed(View v) {
-        mSphero.drive(90, .6f);
+        mRobot.drive(90, .6f);
     }
 
     public void downPressed(View v) {
-        mSphero.drive(180, .6f);
+        mRobot.drive(180, .6f);
     }
 
     public void leftPressed(View v) {
-        mSphero.drive(270, .6f);
+        mRobot.drive(270, .6f);
     }
 
     public void stopPressed(View v) {
-        mSphero.stop();
+        mRobot.stop();
     }
 }

@@ -21,7 +21,7 @@ By default, your Sphero only has vector drive enabled.
 
 To get the populate the current state of the persistent option flags, you now need only call `update()` on the *ConfigurationControl* of Sphero.
 
-	mSphero.getConfiguration().update();
+	mRobot.getConfiguration().update();
 	
 This will get the flags as soon as it can. To avoid a race condition, a listener for the response is needed. Setup a listener to listen for the *GetOptionFlagsResponse*.
 
@@ -37,7 +37,7 @@ This will get the flags as soon as it can. To avoid a race condition, a listener
 Once the flags are populated, get a flag's state by using the `isPersistentFlagEnabled()` method like so:
 
 	// This gets the "prevent sleep in charger" flag, and returns true if it's enabled, saving it to the boolean. 
-	Boolean preventSleepInChargerSet = mSphero.getConfiguration().isPersistentFlagEnabled(PersistentOptionFlags.PreventSleepInCharger);
+	Boolean preventSleepInChargerSet = mRobot.getConfiguration().isPersistentFlagEnabled(PersistentOptionFlags.PreventSleepInCharger);
 	
 Here we are getting the state of each option flag in a boolean variable which will be either false (off) or true (on).
 
@@ -45,10 +45,10 @@ Here we are getting the state of each option flag in a boolean variable which wi
 
 You can change the value of the option flags by using *ConfigurationControl*'s method `setPersistentFlag(PersistentOptionFlags flags, bool enabled)` like so:
 
-	mSphero.getConfiguration().setPersistentFlag(PersistentOptionFlags.PreventSleepInCharger, (cbPreventSleepInCharger.isChecked()));
-	mSphero.getConfiguration().setPersistentFlag(PersistentOptionFlags.EnableVectorDrive, cbEnableVectorDrive.isChecked());
-   	mSphero.getConfiguration().setPersistentFlag(PersistentOptionFlags.DisableSelfLevelInCharger, (cbPreventSleepInCharger.isChecked()));
-    mSphero.getConfiguration().setPersistentFlag(PersistentOptionFlags.EnablePersistentTailLight, cbEnableTailPersistent.isChecked());
+	mRobot.getConfiguration().setPersistentFlag(PersistentOptionFlags.PreventSleepInCharger, (cbPreventSleepInCharger.isChecked()));
+	mRobot.getConfiguration().setPersistentFlag(PersistentOptionFlags.EnableVectorDrive, cbEnableVectorDrive.isChecked());
+   	mRobot.getConfiguration().setPersistentFlag(PersistentOptionFlags.DisableSelfLevelInCharger, (cbPreventSleepInCharger.isChecked()));
+    mRobot.getConfiguration().setPersistentFlag(PersistentOptionFlags.EnablePersistentTailLight, cbEnableTailPersistent.isChecked());
     
     
 Here we set the value of each flag to the value of a UI CheckBox.  We then send the command to ball to set the option flags.

@@ -15,13 +15,13 @@
 
 Assuming you already have a Sphero object that is connected, attaching the listener is done with this line.
 
-	mSphero.getSensorControl().addLocatorListener(mLocatorListener);
+	mRobot.getSensorControl().addLocatorListener(mLocatorListener);
 	
 ## Configuring the Data Streaming Listener
 
 Now that the listener is connected, you must set the data streaming rate (at the least). The maximum sensor sampling rate is ~420 Hz, but we recommend using a value in the 20-40Hz range for Android devices. At 20 Hz, virtually every device will not see a slowdown from the packet detection. However, 40 Hz is only viable when targeting only high-end devices. To set the streaming value, use the `setRate(int hz)` member method of the *SensorControl* class of the Sphero.
 
-	mSphero.getSensorControl().setRate(20 /*Hz*/);
+	mRobot.getSensorControl().setRate(20 /*Hz*/);
 	
 Now you're set to receive locator data from the Sphero!
 ## Interpreting Locator DataThe locator treats the ground as a 2D plane and provides Sphero’s position in X,Y coordinates.  By default, roll heading 0, points down the positive Y-axis with positive X-axis to the right.  So, if you shake Sphero awake and send a roll command with heading 0, you will see the Sphero’s Y coordinate counting up.  If you then send a roll command with heading 90, Sphero’s X coordinate will count up.
