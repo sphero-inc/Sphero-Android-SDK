@@ -12,33 +12,33 @@ The sample programmatically loads the .orbbas files in this directory into the L
 
 ## Initializing an OrbBasic Program Object
 
-In the sample, when you click an item in the ListView, you will initialize the `OrbBasicProgram` object.  This is the first step in putting an OrbBasic program on the ball.  At this point, you are only providing the object with the byte array of data, or the text file content.  Here is the code:
+In the sample, when you click an item in the ListView, you will initialize the *OrbBasicProgram* object.  This is the first step in putting an OrbBasic program on the ball.  At this point, you are only providing the object with the byte array of data, or the text file content.  Here is the code:
 
-                    // Retrieve byte array from file
-                    Resources res = getResources();
-
-                    InputStream in_s = res.openRawResource(mOrbBasicProgramResource);
-                    byte[] program = new byte[in_s.available()];
-                    in_s.read(program);
-
-                    // Create the OrbBasic Program object
-                    mOrbBasicProgram = new OrbBasicProgram(program);
-                    mOrbBasicProgram.setRobot(mRobot);
-
-                    // Set the listener for the OrbBasic Program Events
-                    mOrbBasicProgram.setOrbBasicProgramEventListener(new OrbBasicProgram.OrbBasicProgramEventListener() {
-                        @Override
-                        public void onEraseCompleted(boolean success) {
-                            String successStr = (success) ? "Success":"Failure";
-                            addMessageToStatus("Done Erasing: " + successStr);
-                        }
-
-                        @Override
-                        public void onLoadProgramComplete(boolean success) {
-                            String successStr = (success) ? "Success":"Failure";
-                            addMessageToStatus("Done Loading: " + successStr);
-                        }
-                    });
+	// Retrieve byte array from file
+	Resources res = getResources();
+	
+	InputStream in_s = res.openRawResource(mOrbBasicProgramResource);
+	byte[] program = new byte[in_s.available()];
+	in_s.read(program);
+	
+	// Create the OrbBasic Program object
+	mOrbBasicProgram = new OrbBasicProgram(program);
+	mOrbBasicProgram.setRobot(mRobot);
+	
+	// Set the listener for the OrbBasic Program Events
+	mOrbBasicProgram.setOrbBasicProgramEventListener(new OrbBasicProgram.OrbBasicProgramEventListener() {
+	    @Override
+	    public void onEraseCompleted(boolean success) {
+	        String successStr = (success) ? "Success":"Failure";
+	        addMessageToStatus("Done Erasing: " + successStr);
+	    }
+	
+	    @Override
+	    public void onLoadProgramComplete(boolean success) {
+	        String successStr = (success) ? "Success":"Failure";
+	        addMessageToStatus("Done Loading: " + successStr);
+	    }
+	});
                     
 The event listener notifies you when an erase storage command or a load program command is finished.  
 
@@ -60,7 +60,7 @@ You can run the program with the `executeProgram()` function.  Depending on the 
 
 The AsyncDataListener set up is the same as the StreamingExample, Locator Sample, and a few others in our SDK.
 
-In the `onRobotConnected` event of the `SpheroConnectionView` you should set up AsyncDataListening when you connect to a robot.
+In the *onRobotConnected* event of the *SpheroConnectionView* you should set up AsyncDataListening when you connect to a robot.
 
 			@Override
 			public void onRobotConnected(Robot arg0) {
