@@ -35,68 +35,36 @@ Quaternions are a number system that extends the complex numbers.  They are used
 		Note: You need firmware 1.20 or above on Sphero, or these values will always be 0
 		
 The locator returns values for the x,y position of Sphero on the floor, and the current velocity vector of Sphero.  Please see the locator sample documentation for more information.## Requesting Data Streaming
-In the Set Data Streaming command, we recommend a value of 20 <= divisor <= 50 and packetFrames=1 for most purposes.  Since the maximum sensor sampling rate is ~420 Hz, if we take divisor=20 and packetFrames=1 we get approx. 420/20 = ~21 packets/second each containing one set of requested data values.  For iOS devices divisor=20 works well.  For many Android devices divisor = 10 or less is possible (42+ samples/second).
-    private void requestDataStreaming() {
+For the sensor data streaming command, the maximum sensor sampling rate is ~420 Hz. We recommend using a value in the 20-40Hz range for Android devices. At 20 Hz, virtually every device will not see a slowdown from the packet detection. However, 40 Hz is only viable when targeting only high-end devices.    private void requestDataStreaming() {
 
-        if(mRobot != null){
-        	
-            final long mask = SetDataStreamingCommand.DATA_STREAMING_MASK_ACCELEROMETER_FILTERED_ALL |
-            				  SetDataStreamingCommand.DATA_STREAMING_MASK_IMU_ANGLES_FILTERED_ALL;
-            
-            final int divisor = 50;
-
-            final int packet_frames = 1;
-
-            mPacketCounter = 0;
-            
-            final int response_count = TOTAL_PACKET_COUNT;  // 200
-
-            SetDataStreamingCommand.sendCommand(mRobot, divisor, packet_frames, mask, response_count);
+        if(mRobot != null) {
+			mRobot.getSensorControl().setRate(10 /*Hz*/);
+			mRobot.getSensorControl().addSensorListener
         }
     }
-    For real time applications setting packetFrames > 1 is usually pointless since you are only interested in the most recent data.  However it is possible to obtain all the samples by setting, for instance, divisor=1 and packetFrames=21 (~20 packets/second each containing 21 sets of data.It is important to note that we are only requesting 200 sets of data from this Set Data Streaming Command.  Therefore, you will have to request after you get close to 200.  This is done to solve the problem of requesting infinite data putting the Sphero robot in a bad state if your app crashes and did not disconnect properly.   
-## Receiving Async Data Packets
+    ## Receiving Async Data Packets
 
-You will receive an `onDataReceived` callback at the frequency in which you requested data streaming.  The callback will contain `DeviceAsyncData` with a certain number of frames (also determined when requesting data).  The data will contain all the variables you requested as well.
+You will receive an `sensorUpdated` callback at the frequency in which you requested data streaming.  The callback will contain `DeviceSensorsData` with a certain number of frames (also determined when requesting data).  The data will contain all the variables you requested as well.
 
 In this example, you have access to the Attitude (IMU) data and the filtered accelerometer data. 
  
-    private DeviceMessenger.AsyncDataListener mDataListener = new DeviceMessenger.AsyncDataListener() {
+    private final SensorListener mSensorListener = new SensorListener() {
         @Override
-        public void onDataReceived(DeviceAsyncData data) {
+        public void sensorUpdated(DeviceSensorsData datum) {
+            //Show attitude data
+            AttitudeSensor attitude = datum.getAttitudeData();
+            if (attitude != null) {
+                mImuView.setPitch(String.format("%+3d", attitude.pitch));
+                mImuView.setRoll(String.format("%+3d", attitude.roll));
+                mImuView.setYaw(String.format("%+3d", attitude.yaw));
+            }
 
-            if(data instanceof DeviceSensorsAsyncData){
-
-                // If we are getting close to packet limit, request more
-                mPacketCounter++;
-                if( mPacketCounter > (TOTAL_PACKET_COUNT - PACKET_COUNT_THRESHOLD) ) {
-                    requestDataStreaming();
-                }
-
-                //get the frames in the response
-                List<DeviceSensorsData> data_list = ((DeviceSensorsAsyncData)data).getAsyncData();
-                if(data_list != null){
-
-                    //Iterate over each frame
-                    for(DeviceSensorsData datum : data_list){
-
-                        //Show attitude data
-                        AttitudeData attitude = datum.getAttitudeData();
-                        if(attitude != null){
-                            mImuView.setPitch("" + attitude.getAttitudeSensor().pitch);
-                            mImuView.setRoll("" + attitude.getAttitudeSensor().roll);
-                            mImuView.setYaw("" + attitude.getAttitudeSensor().yaw);
-                        }
-
-                        //Show accelerometer data
-                        AccelerometerData accel = datum.getAccelerometerData();
-                        if(attitude != null){
-                            mAccelerometerFilteredView.setX(""+accel.getFilteredAcceleration().x);
-                            mAccelerometerFilteredView.setY("" + accel.getFilteredAcceleration().y);
-                            mAccelerometerFilteredView.setZ("" + accel.getFilteredAcceleration().z);
-                        }
-                    }
-                }
+            //Show accelerometer data
+            AccelerometerData accel = datum.getAccelerometerData();
+            if (attitude != null) {
+                mAccelerometerFilteredView.setX(String.format("%+.4f", accel.getFilteredAcceleration().x));
+                mAccelerometerFilteredView.setY(String.format("%+.4f", accel.getFilteredAcceleration().y));
+                mAccelerometerFilteredView.setZ(String.format("%+.4f", accel.getFilteredAcceleration().z));
             }
         }
     };## Questions
