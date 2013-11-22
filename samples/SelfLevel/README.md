@@ -10,17 +10,17 @@ This sample code demonstrates how to connect to a Sphero and perform the self le
 
 ## Default Self Level Command
 
-A basic self level command can be performed by the developer by calling 
+A basic self level command can be performed by the developer by calling (assuming mRobot is a prepopulated `Sphero` object):
 
-	SelfLevelCommand.sendCommand(mRobot);
+	mRobot.getConfiguration().performSelfLevel();
 	
-This will make you Sphero attempt to level itself.  You can also provide the RKSelfLevelCommand with settings to customize the self level command to perform perfect for your application.  The settings are as follows:
+This will make you Sphero attempt to level itself.  You can also provide the self level command with settings to customize it to perform perfect for your application.  The settings are as follows:
 
 1. **Angle Limit**: The amount of degrees the roll and pitch angles must be within to be considered level.
 2. **Accuracy Time**: The length of time in centiseconds the roll and pitch angles must be within the Angle Limit before it is considered level. 
 3. **Timeout**: The length of time in seconds you will allow Sphero to try and self level itself to within the angle limit and accuracy time.
 
-When you do *SelfLevelCommand.sendCommand(mRobot)* the values for these settings it uses are, **Angle Limit** = 2 **Accuracy Time** = 30 (300 milliseconds), **Timeout** = 15.
+When you do a default self level command, the values for these settings it uses are: **Angle Limit** = 2 **Accuracy Time** = 30 (300 milliseconds), **Timeout** = 15.
 
 Additional settings include the options flag.  This flag is a bitwise mask the size of a byte.  The settings include:
 
@@ -29,17 +29,17 @@ Additional settings include the options flag.  This flag is a bitwise mask the s
 3. **Sleep Bit**: 0 stays awake after leveling. 1 goes to sleep after leveling.
 4. **Control System Bit**: 0 turns control system off after leveling. 1 turns control system on after leveling.
 
-When you do *SelfLevelCommand.sendCommand(mRobot)* the values for these settings it uses are, the **Stop Bit** = 1, **Final Angle Bit** = 1, **Sleep Bit** = 0, and **Control System Bit** = 0.
+When you do `mRobot.getConfiguration.performSelfLevel()` the values for these settings it uses are, the **Stop Bit** = 1, **Final Angle Bit** = 1, **Sleep Bit** = 0, and **Control System Bit** = 0.
 
 ## Customized Self Level Command
 
 To take advantage of the settings described above, you can implement the custom command with the following code:
 
-	SelfLevelCommand.sendCommand(mRobot, options, angleLimit, timeout, accuracy);
+	mRobot.getConfiguration(options, angleLimit, timeout, accuracy);
 	
 The options flag is created with the following code:
 
-	RKSelfLevelCommandOptions options = RKSelfLevelCommandOptionStart;
+	SelfLevelCommandOptions options = SelfLevelCommandOptionStart;
 	
 To add options to the flag you simply logical or the other options to the options variable.  For example, this code below will set all the bits to 1:
 

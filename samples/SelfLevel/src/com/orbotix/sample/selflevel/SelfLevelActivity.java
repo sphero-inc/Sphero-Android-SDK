@@ -135,6 +135,7 @@ public class SelfLevelActivity extends Activity {
     public void abortPressed(View v) {
         // Easy command to abort self level
         SelfLevelCommand.sendCommandAbortSelfLevel(mRobot);
+        mRobot.getConfiguration().performSelfLevel();
 
         // Let the user know the ball is aborting self level
         ((TextView) findViewById(R.id.txt_self_level)).setText("Aborting...");

@@ -22,7 +22,7 @@ public class StreamingActivity extends Activity {
     private Handler mHandler = new Handler();
 
     /** Robot to from which we are streaming */
-    private Sphero mSphero = null;
+    private Sphero mRobot = null;
 
     //The views that will show the streaming data
     private ImuView mImuView;
@@ -74,12 +74,12 @@ public class StreamingActivity extends Activity {
                 // Currently streaming doesn't support multiple robots.
                 mSpheroConnectionView.setVisibility(View.INVISIBLE);
 
-                mSphero = (Sphero) sphero;
-                mSphero.setBackLEDBrightness(1.0f);
-                mSphero.setColor(50, 130, 60);
-                mSphero.enableStabilization(false);  // disable
-                mSphero.getSensorControl().setRate(10  /*Hz*/);
-                mSphero.getSensorControl().addSensorListener(mSensorListener, SensorFlag.ACCELEROMETER_NORMALIZED, SensorFlag.ATTITUDE);
+                mRobot = (Sphero) sphero;
+                mRobot.setBackLEDBrightness(1.0f);
+                mRobot.setColor(50, 130, 60);
+                mRobot.enableStabilization(false);  // disable
+                mRobot.getSensorControl().setRate(10  /*Hz*/);
+                mRobot.getSensorControl().addSensorListener(mSensorListener, SensorFlag.ACCELEROMETER_NORMALIZED, SensorFlag.ATTITUDE);
             }
 
             @Override
@@ -108,10 +108,10 @@ public class StreamingActivity extends Activity {
     protected void onPause() {
         super.onPause();
         BluetoothAdapter.getDefaultAdapter().cancelDiscovery();
-        if (mSphero != null) {
+        if (mRobot != null) {
             // make sure to remove the streaming listener!
-            mSphero.getSensorControl().removeSensorListener(mSensorListener);
-            mSphero.disconnect(); // Disconnect Robot properly
+            mRobot.getSensorControl().removeSensorListener(mSensorListener);
+            mRobot.disconnect(); // Disconnect Robot properly
         }
     }
 

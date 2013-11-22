@@ -1,16 +1,18 @@
 #HelloWorld
 
-This sample code demonstrates how to connect to a Sphero and blink it's RGB LED blue. This sample does not use the `SpheroConnectionView`, because we wanted it to be simple and pair to the first Sphero device that it finds paired to the phone.  This sample is a good starting point if you want to make your own custom Connection View. Also, the code sample is the bases for the application created in the Quick Start Guide. 
+This sample code demonstrates how to connect to a Sphero and blink it's RGB LED blue. This sample does not use the `SpheroConnectionView`, because we wanted it to be simple and pair to the first Sphero device that it finds paired to the phone.  This sample is a good starting point if you want to make your own custom Connection View. Also, the code sample is the basis for the application created in the Quick Start Guide. 
 
-The connection is made in your Activity by simply adding the following onResume() and wiring the `connected()` callback. 
+The connection is made in your Activity by simply adding the following `onResume()` and wiring the `connected()` method. This is also the best place to save Sphero so that you do not have to find him again later.
 
-		protected void onResume() {
+	protected void onResume() {
         super.onResume();
 
         RobotProvider.getDefaultProvider().addConnectionListener(new ConnectionListener() {
             @Override
             public void onConnected(Robot robot) {
+            	// Save the robot
                 mRobot = (Sphero) robot;
+                // Start the connected method
                 HelloWorldActivity.this.connected();
             }
 
@@ -28,45 +30,16 @@ The connection is made in your Activity by simply adding the following onResume(
                 mRobot = null;
             }
         });
-
-        RobotProvider.getDefaultProvider().addDiscoveryListener(new DiscoveryListener() {
-            @Override
-            public void onBluetoothDisabled() {
-                Log.d(TAG, "Bluetooth Disabled");
-                Toast.makeText(HelloWorldActivity.this, "Bluetooth Disabled", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void discoveryComplete(List<Sphero> spheros) {
-                Log.d(TAG, "Found " + spheros.size() + " robots");
-            }
-
-            @Override
-            public void onFound(List<Sphero> sphero) {
-                Log.d(TAG, "Found: " + sphero);
-                RobotProvider.getDefaultProvider().connect(sphero.iterator().next());
-            }
-        });
-
-        boolean success = RobotProvider.getDefaultProvider().startDiscovery(this);
-        if(!success){
-            Toast.makeText(HelloWorldActivity.this, "Unable To start Discovery!", Toast.LENGTH_LONG).show();
-        }
     }
-    
-    
-Next, you need to get a reference to a Robot object from RobotProvider using the following line of code.
-
-                mRobot = RobotProvider.getDefaultProvider().findRobot(robot_id);
 
 RobotProvider is a singleton that is used to manage connected Spheros, and is capable of allowing multiple connections. So, the Robot object is how you reference which Sphero to communicate with. 
 
-The final call in `onActivityResult()` is to ``blink()``, which is method that toggles the RGB LED's blue component on or off every second. The LED is controlled by using the RGBLEDOutputCommand class to message the device. This is a subclass of DeviceCommand which is used to encapsulate commands, and posted to DeviceMessenger. DeviceCommand subclasses have `sendCommand()` class methods that post the command to DeviceMessenger for convenience. The blink method commands the device to turn off the LED with the following code line.
+The final call in `connected()` is to `blink(boolean enableLED)`, which is method that toggles the RGB LED's blue component every second. The LED is controlled by using the `setColor(int r, int g, int b)` method. This method encapsulates the RGBLEDOutputCommand for convenience (less typing is better right?), and posts this call to DeviceMessenger, which sends the command down to the ball. The blink method commands the device to turn off the LED with the following code line.
 
                 mRobot.setColor(0,0,0);
                 
                 
-Where `mRobot` is the reference to the Robot object that the API uses determine which device to send a command to, and the last arguments set the brightness of red, green, and blue components of the LED. In this case, all color components are turned off. The method sets the blue LED component to full brightness with the following code line.
+Where mRobot is the reference to the `Sphero` object that the API uses determine which device to send a command to, and the last arguments set the brightness of red, green, and blue components of the LED. In this case, all color components are turned off. The method sets the blue LED component to full brightness with the following code line.
 
                 mRobot.setColor(0, 0, 255);
 

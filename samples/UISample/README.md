@@ -6,13 +6,13 @@
 
 Mostly all of our Sphero apps use the StartupActivity to connect to a robot. However, this newest release of the SDK introduced the `SpheroConnectionView`.  The UI Sample shows you how to still use the StartupActivity.  
     
-  - To run the StartupActivity, add the following code to the main activity's onStart() method,  
-
-        Intent i = new Intent(this, StartupActivity.class);  
-        startActivityForResult(i, STARTUP_ACTIVITY);  
+  To run the StartupActivity, add the following code to the main activity's `onStart()` method,  
+        
+    Intent i = new Intent(this, StartupActivity.class);  
+    startActivityForResult(i, STARTUP_ACTIVITY);  
        
    This will launch the StartupActivity using the intent, and sets an activity results 
-   identifier. The ``STARTUP_ACTIVITY`` constant is returned in the ``onActivityResult()`` method 
+   identifier. The `STARTUP_ACTIVITY` constant is returned in the `onActivityResult()` method 
    after the StartupActivity finishes as shown in the code below.  
    
        private final static int STARTUP_ACTIVITY = 0;
@@ -56,7 +56,6 @@ To ensure the color picker starts on the correct color, you must pass the RGB va
 
 To receive the color changes via a `BroadcastIntent`, you must register a broadcast receiver using an `IntentFilter`. In the receiver, you can do what you need with the color.
 
-
 	private Robot mRobot;
 
 	private BroadcastReceiver mColorChangeReceiver = new BroadcastReceiver() {
@@ -71,11 +70,11 @@ To receive the color changes via a `BroadcastIntent`, you must register a broadc
 			mCurrentColor = Color.rgb(red, green, blue);
 			
 			// change the color on the ball
-			RGBLEDOutputCommand.sendCommand(mRobot, red, green, blue);
+			mRobot.setColor(red, green, blue);
 		}
 	};
 
-Before you show the color picker, create an `IntentFilter` using the `ACTION_COLOR_CHANGE` from the ColorPickerActivity.
+Before you show the color picker, create an `IntentFilter` using the `ACTION_COLOR_CHANGE` from the `ColorPickerActivity`.
 
 	IntentFilter filter = new IntentFilter(ColorPickerActivity.ACTION_COLOR_CHANGE);
 	registerReceiver(mColorChangeReceiver, filter);

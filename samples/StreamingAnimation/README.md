@@ -1,7 +1,7 @@
 ![logo](http://update.orbotix.com/developer/sphero-small.png)
 
 # Streaming Animation SampleStreamingAnimation demonstrates how to use Sphero as a controller to move and rotate a Sphero ball image around the screen.  To control the image, we use asynchronous data streaming of the IMU values of **Roll, Pitch, and Yaw**.  Roll and Pitch control x and y translation and Yaw controls rotating the image.## UI Elements
-The samples has a `main.xml` resource file that contains the SpheroConnectionView, IMU TextViews, Calibrate Button, and Sphero Image. If you want the SpheroConnectionView explained in more detail, look at the Android SDK ReadMe.
+The samples has a `main.xml` resource file that contains the `SpheroConnectionView`, IMU TextViews, Calibrate Button, and Sphero Image. If you want the `SpheroConnectionView` explained in more detail, look at the Android SDK ReadMe.
 
     <RelativeLayout
         android:id="@+id/relative_layout"
@@ -51,11 +51,11 @@
 
     </RelativeLayout>
 
-It is important to note the ImageView, because it is a little bit more advanced.  The `matrix` scale type is telling Android that we will control the scale and rotation of the image ourselves using matrix transformations.  
+It is important to note the ImageView, because it is a little bit more advanced.  The matrix scale type is telling Android that we will control the scale and rotation of the image ourselves using matrix transformations.  
 
 ### Making the Sample Fullscreen
 
-In the `AndroidManifest.xml` see the <Activity> tag for our StreamingAnimationAcitivty:
+In the `AndroidManifest.xml` see the <Activity> tag for our `StreamingAnimationAcitivty`:
 
 	<activity android:name=".CoinCollectorActivity"
                   android:label="@string/app_name"
