@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ACTIVITY_ENTRY_NAME</string>
+
+    <!-- Robot picker strings-->
+    <string name="ollie">OLLIE</string>
+    <string name="sphero">SPHERO</string>
+    <string name="robot_picker_dialog_prompt">Which robot are you using?</string>
+</resources>

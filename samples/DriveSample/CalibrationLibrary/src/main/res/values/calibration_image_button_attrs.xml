@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CalibrationImageButtonView">
+        <attr name="foreground_color" format="color" />
+        <attr name="background_color" format="color" />
+        <attr name="widget_orientation">
+            <enum name="above" value="1" />
+            <enum name="left" value="2" />
+            <enum name="right" value="3" />
+            <enum name="below" value="4" />
+        </attr>
+        <attr name="calibration_circle_radius" format="dimension" />
+        <attr name="android:src" />
+        <attr name="calibration_view" format="reference" />
+        <attr name="calibration_center_x" format="dimension" />
+        <attr name="calibration_center_y" format="dimension" />
+    </declare-styleable>
+</resources>

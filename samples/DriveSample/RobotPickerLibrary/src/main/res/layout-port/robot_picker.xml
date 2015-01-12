@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+        >
+
+    <TextView
+            android:layout_width="158dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText"
+            android:typeface="normal"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:background="#00FFFFFF"
+            android:text="@string/robot_picker_dialog_prompt"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="28dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"/>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editText"
+            android:layout_alignParentLeft="false"
+            android:layout_marginTop="30dp"
+            android:id="@+id/linearLayout"
+            android:layout_centerHorizontal="true">
+        <ImageButton android:layout_width="133dp"
+                     android:layout_height="133dp"
+                     android:layout_marginLeft="20dp"
+                     android:id="@+id/ollie_button"
+                     android:src="@drawable/ollie_button_selector"
+                     android:scaleType="fitCenter"
+                     android:background="#00ffffff"
+                />
+        <ImageButton
+                android:layout_width="133dp"
+                android:layout_height="133dp"
+                android:layout_marginRight="20dp"
+                android:id="@+id/sphero_button"
+                android:src="@drawable/sphero_button_selector"
+                android:scaleType="fitCenter"
+                android:background="#00ffffff"
+                android:layout_marginLeft="25dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="28dp"
+            android:orientation="horizontal"
+            android:layout_below="@id/linearLayout"
+            android:layout_centerHorizontal="true">
+
+        <TextView
+                android:layout_width="127dp"
+                android:layout_height="wrap_content"
+                android:text="@string/ollie"
+                android:id="@+id/textView"
+                android:textSize="20dp"
+                android:typeface="normal"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_weight="0.03"
+                android:layout_below="@+id/linearLayout"
+                android:layout_alignParentLeft="true"
+                />
+
+        <TextView android:layout_width="136dp"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/editText3"
+                  android:typeface="normal"
+                  android:textStyle="bold"
+                  android:textSize="20dp"
+                  android:background="#00FFFFFF"
+                  android:text="@string/sphero"
+                  android:gravity="center"
+                  android:layout_gravity="right"
+                  android:layout_below="@+id/linearLayout"
+                  android:layout_toRightOf="@+id/textView"
+                  android:layout_marginLeft="34dp"/>
+            </LinearLayout>
+
+</RelativeLayout>

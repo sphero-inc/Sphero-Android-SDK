@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="SpeedSliderView">
+        <attr name="android:src" />
+        <attr name="maxSpeed" format="float" />
+        <attr name="minSpeed" format="float" />
+        <attr name="sweepStartAngle" format="float" />
+        <attr name="sweepEndAngle" format="float" />
+        <attr name="leftHandDriveMode" format="boolean" />
+    </declare-styleable>
+</resources>

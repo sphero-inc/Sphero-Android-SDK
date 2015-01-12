@@ -1,9 +1,0 @@
-#Specific files
-.DS_STORE
-local.properties
-
-#Dirs
-.idea/
-out/
-gen/
-temp/

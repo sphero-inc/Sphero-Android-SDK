@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="color_picker_title">Color Picker</string>
+    <string name="done_button_text">DONE</string>
+</resources>
