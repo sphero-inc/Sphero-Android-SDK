@@ -125,6 +125,8 @@ public class MacroSample extends Activity
 
 		// Find Sphero Connection View from layout file
 		mSpheroConnectionView = (SpheroConnectionView)findViewById(R.id.sphero_connection_view);
+        // Set the connection view to support connecting to multiple Spheros
+        mSpheroConnectionView.setSingleSpheroMode(false);
 		// This event listener will notify you when these events occur, it is up to you what you want to do during them
 		mSpheroConnectionView.addConnectionListener(new ConnectionListener() {
 
