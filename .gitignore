@@ -10,7 +10,6 @@ proguard.cfg
 .metadata
 
 # dirs
-.idea/
 out/
 gen/
 bin/

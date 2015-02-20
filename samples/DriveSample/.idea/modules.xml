@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/CalibrationLibrary/CalibrationLibrary.iml" filepath="$PROJECT_DIR$/CalibrationLibrary/CalibrationLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ColorPickerLibrary/ColorPickerLibrary.iml" filepath="$PROJECT_DIR$/ColorPickerLibrary/ColorPickerLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DriveSample.iml" filepath="$PROJECT_DIR$/DriveSample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DriveSampleApp/DriveSampleApp.iml" filepath="$PROJECT_DIR$/DriveSampleApp/DriveSampleApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JoystickLibrary/JoystickLibrary.iml" filepath="$PROJECT_DIR$/JoystickLibrary/JoystickLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RobotPickerLibrary/RobotPickerLibrary.iml" filepath="$PROJECT_DIR$/RobotPickerLibrary/RobotPickerLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SpeedSliderLibrary/SpeedSliderLibrary.iml" filepath="$PROJECT_DIR$/SpeedSliderLibrary/SpeedSliderLibrary.iml" />
+    </modules>
+  </component>
+</project>
+
