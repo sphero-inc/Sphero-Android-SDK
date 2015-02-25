@@ -206,7 +206,7 @@ public class MainActivity extends Activity implements RobotPickerDialog.RobotPic
         // For the purpose of this sample, we'll only handle the connected and disconnected notifications
         switch (type) {
             // A robot was connected, and is ready for you to send commands to it.
-            case Connected:
+            case Online:
                 // When a robot is connected, this is a good time to stop discovery. Discovery takes a lot of system
                 // resources, and if left running, will cause your app to eat the user's battery up, and may cause
                 // your application to run slowly. To do this, use DiscoveryAgent#stopDiscovery().
