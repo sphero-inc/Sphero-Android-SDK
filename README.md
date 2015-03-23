@@ -4,4 +4,4 @@
 
 **NOTICE: This is a Beta release. Use at your own risk!!!!**
 
-Documentation will soon follow.
+Documentation can now be found [here](http://docs-beta.gosphero.com)
