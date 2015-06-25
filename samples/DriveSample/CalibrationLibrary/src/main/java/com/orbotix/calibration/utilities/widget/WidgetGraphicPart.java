@@ -1,6 +1,7 @@
 package com.orbotix.calibration.utilities.widget;
 
 import android.graphics.Point;
+
 import com.orbotix.calibration.utilities.graphic.Graphic;
 
 /**

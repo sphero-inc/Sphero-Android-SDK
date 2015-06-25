@@ -2,6 +2,6 @@
 
 # Android Developer Documentation
 
-**NOTICE: This is a Beta release. Use at your own risk!!!!**
+Verison 3.1.65
 
-Documentation can now be found [here](http://docs-beta.gosphero.com)
+For documentation on this SDK and others, visit the [SDK Documentation](http://sdk.sphero.com)

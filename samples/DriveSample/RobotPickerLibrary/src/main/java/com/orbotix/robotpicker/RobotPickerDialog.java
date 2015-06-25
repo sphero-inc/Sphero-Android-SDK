@@ -1,4 +1,4 @@
-package com.orbotix.robot_picker;
+package com.orbotix.robotpicker;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -14,8 +14,15 @@ public class RobotPickerDialog extends Dialog {
     private RobotPickerListener _pickerListener;
 
     public enum RobotPicked {
-        Sphero,
-        Ollie
+        Sphero(0),
+        Ollie(1);
+
+        private int value;
+        private RobotPicked(int value) {
+            this.value = value;
+        }
+
+        public int getValue() { return value; }
     }
 
     public RobotPickerDialog(Context context) {

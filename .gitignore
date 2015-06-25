@@ -14,7 +14,10 @@ out/
 gen/
 bin/
 
-samples/MacroLoader/.classpath~HEAD
-samples/MacroLoader/.classpath~upstream_master
-samples/MacroLoader/lint.xml~HEAD
-samples/MacroLoader/lint.xml~upstream_master
+compiler.xml
+gradle.xml
+misc.xml
+vcs.xml
+encodings.xml
+scope_settings.xml
+modules.xml

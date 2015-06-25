@@ -1,6 +1,12 @@
 package com.orbotix.joystick.internal;
 
-import android.graphics.*;
+import android.graphics.BlurMaskFilter;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.Paint;
+import android.graphics.PixelFormat;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 
 /**

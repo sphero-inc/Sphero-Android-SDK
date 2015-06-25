@@ -1,7 +1,19 @@
 package com.orbotix.joystick.internal;
 
-import android.graphics.*;
+import android.graphics.BlurMaskFilter;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.LinearGradient;
+import android.graphics.Paint;
+import android.graphics.PixelFormat;
+import android.graphics.Point;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.RadialGradient;
+import android.graphics.Rect;
+import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
+
 import com.orbotix.joystick.utilities.color.ColorTools;
 
 /**

@@ -8,7 +8,7 @@ android {
         minSdkVersion 12
         targetSdkVersion 21
         versionCode 1
-        versionName "1.0"
+        versionName "3.1"
     }
     buildTypes {
         release {
@@ -16,9 +16,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_6
+        targetCompatibility JavaVersion.VERSION_1_6
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:21.0.3'
+    compile 'com.android.support:appcompat-v7:22.2.0'
 }

@@ -25,7 +25,7 @@ import com.orbotix.joystick.api.JoystickEventListener;
 import com.orbotix.joystick.api.JoystickView;
 import com.orbotix.le.DiscoveryAgentLE;
 import com.orbotix.le.RobotLE;
-import com.orbotix.robot_picker.RobotPickerDialog;
+import com.orbotix.robotpicker.RobotPickerDialog;
 
 import java.util.List;
 
@@ -191,8 +191,8 @@ public class MainActivity extends Activity implements RobotPickerDialog.RobotPic
         else if (_currentDiscoveryAgent instanceof DiscoveryAgentLE) {
             // If we are using the LE discovery agent, and therefore using Ollie, there's not much we need to do here.
             // The SDK will automatically connect to the robot that you touch the phone to, and you will get a message
-            // saying that the robot has connected. For now, let's just log the robots that we are seeing.
-            Log.v(TAG, "Robots: " + robots.toString());
+            // saying that the robot has connected.
+            // Note that this method is called very frequently and will cause your app to slow down if you log.
         }
     }
 
@@ -202,7 +202,7 @@ public class MainActivity extends Activity implements RobotPickerDialog.RobotPic
      * @param type Describes what changed in the state
      */
     @Override
-    public void changedState(Robot robot, RobotChangedStateNotificationType type) {
+    public void handleRobotChangedState(Robot robot, RobotChangedStateNotificationType type) {
         // For the purpose of this sample, we'll only handle the connected and disconnected notifications
         switch (type) {
             // A robot was connected, and is ready for you to send commands to it.
@@ -254,8 +254,11 @@ public class MainActivity extends Activity implements RobotPickerDialog.RobotPic
                 }
 
                 // When a robot disconnects, you might want to start discovery so that you can reconnect to a robot.
-                // In this case, we have no reason to not reconnect to a robot, so we will start discovery again.
-                startDiscovery();
+                // Starting discovery on disconnect however can cause unintended side effects like connecting to
+                // a robot with the application closed. You should think carefully of when to start and stop discovery.
+                // In this case, we will not start discovery when the robot disconnects. You can uncomment the following line of
+                // code to see the start discovery on disconnection in action.
+//                startDiscovery();
                 break;
             default:
                 Log.v(TAG, "Not handling state change notification: " + type);

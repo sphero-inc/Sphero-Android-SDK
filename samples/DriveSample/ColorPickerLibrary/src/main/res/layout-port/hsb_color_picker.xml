@@ -89,8 +89,7 @@
                 android:layout_alignTop="@+id/RedSeekBar"
                 android:layout_alignBottom="@+id/RedSeekBar"/>
             <SeekBar android:id="@+id/RedSeekBar"
-                style="@style/ColorPicker.RGBPicker.SeekBar"
-                android:layout_below="@+id/Title"/>
+                style="@style/ColorPicker.RGBPicker.SeekBar"/>
             <TextView android:id="@+id/GreenTextView"
                 style="@style/ColorPicker.RGBPicker.Text"
                 android:text="Green"

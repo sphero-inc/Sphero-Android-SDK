@@ -8,6 +8,7 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+
 import com.orbotix.joystick.R;
 import com.orbotix.joystick.internal.JoystickPuck;
 import com.orbotix.joystick.internal.JoystickWheel;
@@ -69,6 +70,10 @@ public class JoystickView extends View implements Controller {
 
             //Get edge overlap
             this.puck_edge_overlap = (int)a.getDimension(R.styleable.JoystickView_edge_overlap, 10);
+
+            setWheelColor(a.getColor(R.styleable.JoystickView_color_wheel, 0xff454545));
+
+            a.recycle();
         }
     }
 

@@ -2,7 +2,12 @@ package com.orbotix.calibration.api;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Point;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
@@ -10,6 +15,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
+
 import com.orbotix.calibration.R;
 
 /**
@@ -90,8 +96,6 @@ public class CalibrationImageButtonView extends ImageButton implements View.OnTo
     }
 
     private void applyOrientationAttributes(TypedArray a) {
-
-
         final int orientation =
             a.getInt(R.styleable.CalibrationImageButtonView_widget_orientation, NONE);
         setOrientation(getCalibrationCircleLocationFromId(orientation));
@@ -105,7 +109,7 @@ public class CalibrationImageButtonView extends ImageButton implements View.OnTo
     }
 
     private void applyBackgroundColorsAttributes(TypedArray a) {
-        if(isDrawableSpecified()){
+        if(!isDrawableSpecified()){
             mColorBackground = a.getColor(
                 R.styleable.CalibrationImageButtonView_background_color,
                 mColorBackground);

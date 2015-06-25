@@ -8,6 +8,7 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+
 import com.orbotix.calibration.R;
 import com.orbotix.calibration.internal.CalibrationCircle;
 import com.orbotix.calibration.internal.CalibrationGestureDetector;

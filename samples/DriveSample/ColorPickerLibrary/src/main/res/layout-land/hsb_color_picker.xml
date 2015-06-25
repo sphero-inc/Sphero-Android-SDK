@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:onClick="onRollClick"
         android:clickable="true"
         android:visibility="gone"
         >
@@ -24,7 +23,7 @@
             android:layout_alignParentTop="true"
             android:src="@drawable/roll_button"
             />
-
+`
         <TextView
             android:id="@+id/roll_button_label"
             android:layout_width="wrap_content"
@@ -107,8 +106,7 @@
                     android:layout_alignTop="@+id/RedSeekBar"
                     android:layout_alignBottom="@+id/RedSeekBar"/>
                 <SeekBar android:id="@+id/RedSeekBar"
-                    style="@style/ColorPicker.RGBPicker.SeekBar"
-                    android:layout_below="@+id/TitleSpace"/>
+                    style="@style/ColorPicker.RGBPicker.SeekBar"/>
                 <TextView android:id="@+id/GreenTextView"
                     style="@style/ColorPicker.RGBPicker.Text"
                     android:text="Green"
