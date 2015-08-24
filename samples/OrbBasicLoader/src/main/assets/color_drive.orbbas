@@ -1,0 +1,4 @@
+10 goroll 0, 255, 1
+20 LEDC (speed/37)+1
+30 delay 50
+40 goto 20

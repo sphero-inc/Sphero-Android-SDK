@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">OrbBasicLoader</string>
+
+    <string name="ob_color_drive">Color Drive</string>
+    <string name="ob_data">Data</string>
+    <string name="ob_program_error">Program Error</string>
+    <string name="ob_simple_assignment">Simple Assignment</string>
+    <string name="ob_syntax_error">Syntax Error</string>
+    <string name="ob_toss_double_shake">Toss Double Shake</string>
+
+</resources>

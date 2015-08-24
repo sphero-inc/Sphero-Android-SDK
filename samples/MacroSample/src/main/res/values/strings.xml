@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MacroSample</string>
+
+    <string name="macro_square">Square Macro</string>
+    <string name="macro_color">Color</string>
+    <string name="macro_shape">Shape Macro</string>
+    <string name="macro_figure_8">Figure 8</string>
+    <string name="macro_vibrate">Vibrate</string>
+    <string name="macro_spin">Spin</string>
+    <string name="macro_abort">Abort Macro</string>
+</resources>

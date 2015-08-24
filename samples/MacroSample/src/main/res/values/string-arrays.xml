@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="macros">
+        <item>@string/macro_square</item>
+        <item>@string/macro_color</item>
+        <item>@string/macro_shape</item>
+        <item>@string/macro_figure_8</item>
+        <item>@string/macro_vibrate</item>
+        <item>@string/macro_spin</item>
+        <item>@string/macro_abort</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="macros">
+        <item>@string/macro_strobe</item>
+        <item>@string/macro_rainbow</item>
+        <item>@string/macro_clover</item>
+        <item>@string/macro_small_dance</item>
+        <item>@string/macro_medium_square</item>
+        <item>@string/macro_large_dance</item>
+        <item>@string/macro_stop</item>
+    </string-array>
+</resources>

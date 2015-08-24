@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="orb_basic_programs">
+        <item>@string/ob_color_drive</item>
+        <item>@string/ob_data</item>
+        <item>@string/ob_program_error</item>
+        <item>@string/ob_simple_assignment</item>
+        <item>@string/ob_syntax_error</item>
+        <item>@string/ob_toss_double_shake</item>
+    </string-array>
+</resources>
