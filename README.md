@@ -1,4 +1,4 @@
-![android.jpg](https://github.com/orbotix/Sphero-Android-SDK/raw/master/assets/image001.jpg)
+![android.jpg](https://raw.githubusercontent.com/orbotix/Sphero-Android-SDK/master/android.jpg)
 
 # Android Developer Documentation
 
