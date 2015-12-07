@@ -1,6 +1,9 @@
 package com.orbotix.buttondrive;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +14,9 @@ import com.orbotix.DualStackDiscoveryAgent;
 import com.orbotix.common.DiscoveryException;
 import com.orbotix.common.Robot;
 import com.orbotix.common.RobotChangedStateListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Button Drive sample
@@ -26,6 +32,7 @@ import com.orbotix.common.RobotChangedStateListener;
  */
 public class MainActivity extends Activity implements View.OnClickListener, RobotChangedStateListener {
 
+    private static final int REQUEST_CODE_LOCATION_PERMISSION = 42;
     private static final float ROBOT_VELOCITY = 0.6f;
 
     private ConvenienceRobot mRobot;
@@ -50,6 +57,38 @@ public class MainActivity extends Activity implements View.OnClickListener, Robo
         DualStackDiscoveryAgent.getInstance().addRobotStateListener( this );
 
         initViews();
+
+        if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ) {
+            int hasLocationPermission = checkSelfPermission( Manifest.permission.ACCESS_COARSE_LOCATION );
+            if( hasLocationPermission != PackageManager.PERMISSION_GRANTED ) {
+                Log.e( "Sphero", "Location permission has not already been granted" );
+                List<String> permissions = new ArrayList<String>();
+                permissions.add( Manifest.permission.ACCESS_COARSE_LOCATION);
+                requestPermissions(permissions.toArray(new String[permissions.size()] ), REQUEST_CODE_LOCATION_PERMISSION );
+            } else {
+                Log.d( "Sphero", "Location permission already granted" );
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch ( requestCode ) {
+            case REQUEST_CODE_LOCATION_PERMISSION: {
+                for( int i = 0; i < permissions.length; i++ ) {
+                    if( grantResults[i] == PackageManager.PERMISSION_GRANTED ) {
+                        startDiscovery();
+                        Log.d( "Permissions", "Permission Granted: " + permissions[i] );
+                    } else if( grantResults[i] == PackageManager.PERMISSION_DENIED ) {
+                        Log.d( "Permissions", "Permission Denied: " + permissions[i] );
+                    }
+                }
+            }
+            break;
+            default: {
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            }
+        }
     }
 
     private void initViews() {
@@ -70,6 +109,13 @@ public class MainActivity extends Activity implements View.OnClickListener, Robo
     protected void onStart() {
         super.onStart();
 
+        if( Build.VERSION.SDK_INT < Build.VERSION_CODES.M
+                || checkSelfPermission( Manifest.permission.ACCESS_COARSE_LOCATION ) == PackageManager.PERMISSION_GRANTED ) {
+            startDiscovery();
+        }
+    }
+
+    private void startDiscovery() {
         //If the DiscoveryAgent is not already looking for robots, start discovery.
         if( !DualStackDiscoveryAgent.getInstance().isDiscovering() ) {
             try {

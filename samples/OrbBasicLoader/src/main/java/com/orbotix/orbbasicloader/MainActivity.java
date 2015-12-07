@@ -1,6 +1,9 @@
 package com.orbotix.orbbasicloader;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -21,6 +24,8 @@ import com.orbotix.orbbasic.OrbBasicEventListener;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Orb Basic Loader sample
@@ -29,6 +34,8 @@ import java.io.InputStream;
  *
  */
 public class MainActivity extends Activity implements AdapterView.OnItemClickListener, View.OnClickListener, OrbBasicEventListener, RobotChangedStateListener {
+
+    private static final int REQUEST_CODE_LOCATION_PERMISSION = 42;
 
     private ConvenienceRobot mRobot;
     private OrbBasicControl mOrbBasicControl;
@@ -56,6 +63,18 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
             DiscoveryAgentLE checks only for Bluetooth LE robots.
         */
         DualStackDiscoveryAgent.getInstance().addRobotStateListener( this );
+
+        if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ) {
+            int hasLocationPermission = checkSelfPermission( Manifest.permission.ACCESS_COARSE_LOCATION );
+            if( hasLocationPermission != PackageManager.PERMISSION_GRANTED ) {
+                Log.e( "Sphero", "Location permission has not already been granted" );
+                List<String> permissions = new ArrayList<String>();
+                permissions.add( Manifest.permission.ACCESS_COARSE_LOCATION);
+                requestPermissions(permissions.toArray(new String[permissions.size()] ), REQUEST_CODE_LOCATION_PERMISSION );
+            } else {
+                Log.d( "Sphero", "Location permission already granted" );
+            }
+        }
     }
 
     private void initViews() {
@@ -75,13 +94,40 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch ( requestCode ) {
+            case REQUEST_CODE_LOCATION_PERMISSION: {
+                for( int i = 0; i < permissions.length; i++ ) {
+                    if( grantResults[i] == PackageManager.PERMISSION_GRANTED ) {
+                        startDiscovery();
+                        Log.d( "Permissions", "Permission Granted: " + permissions[i] );
+                    } else if( grantResults[i] == PackageManager.PERMISSION_DENIED ) {
+                        Log.d( "Permissions", "Permission Denied: " + permissions[i] );
+                    }
+                }
+            }
+            break;
+            default: {
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            }
+        }
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
 
+        if( Build.VERSION.SDK_INT < Build.VERSION_CODES.M
+                || checkSelfPermission( Manifest.permission.ACCESS_COARSE_LOCATION ) == PackageManager.PERMISSION_GRANTED ) {
+            startDiscovery();
+        }
+    }
+
+    private void startDiscovery() {
         //If the DiscoveryAgent is not already looking for robots, start discovery.
         if( !DualStackDiscoveryAgent.getInstance().isDiscovering() ) {
             try {
-                DualStackDiscoveryAgent.getInstance().startDiscovery(getApplicationContext());
+                DualStackDiscoveryAgent.getInstance().startDiscovery( this );
             } catch (DiscoveryException e) {
                 Log.e("Sphero", "DiscoveryException: " + e.getMessage());
             }
