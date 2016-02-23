@@ -147,10 +147,7 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
 
                 //Create an OvalControl for sending oval programs to the connected robot
                 mOvalControl = new OvalControl( robot, MainActivity.this );
-
-                //Reset the OVM so you're working with a clean slate
-                //Send the programs when the OVM resets
-                mOvalControl.resetOvm(true);
+                mOvalControl.enableCompileReport(true);
             }
         }
     }
@@ -189,6 +186,13 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
 
     @Override
     public void onOvalQueueEmptied(OvalControl control) {
+    }
+
+    @Override
+    public void onOvalControlInitialized(OvalControl control) {
+        //Reset the OVM so you're working with a clean slate
+        //Send the programs when the OVM resets
+        mOvalControl.resetOvm(true);
     }
 
     @Override

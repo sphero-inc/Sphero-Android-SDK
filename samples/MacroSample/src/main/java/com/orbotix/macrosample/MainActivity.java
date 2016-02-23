@@ -45,6 +45,8 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 42;
 
     private ConvenienceRobot mRobot;
+    
+    private DualStackDiscoveryAgent mDiscoveryAgent;
 
     private ListView mListView;
 
@@ -67,7 +69,8 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
             DiscoveryAgentClassic checks only for Bluetooth Classic robots.
             DiscoveryAgentLE checks only for Bluetooth LE robots.
         */
-        DualStackDiscoveryAgent.getInstance().addRobotStateListener( this );
+        mDiscoveryAgent = new DualStackDiscoveryAgent();
+        mDiscoveryAgent.addRobotStateListener( this );
 
         initViews();
 
@@ -116,9 +119,9 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
 
     private void startDiscovery() {
         //If the DiscoveryAgent is not already looking for robots, start discovery.
-        if( !DualStackDiscoveryAgent.getInstance().isDiscovering() ) {
+        if( !mDiscoveryAgent.isDiscovering() ) {
             try {
-                DualStackDiscoveryAgent.getInstance().startDiscovery( this );
+                mDiscoveryAgent.startDiscovery( this );
             } catch (DiscoveryException e) {
                 Log.e("Sphero", "DiscoveryException: " + e.getMessage());
             }
@@ -128,8 +131,8 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
     @Override
     protected void onStop() {
         //If the DiscoveryAgent is in discovery mode, stop it.
-        if( DualStackDiscoveryAgent.getInstance().isDiscovering() ) {
-            DualStackDiscoveryAgent.getInstance().stopDiscovery();
+        if( mDiscoveryAgent.isDiscovering() ) {
+            mDiscoveryAgent.stopDiscovery();
         }
 
         //If a robot is connected to the device, disconnect it
@@ -144,7 +147,7 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        DualStackDiscoveryAgent.getInstance().addRobotStateListener(null);
+        mDiscoveryAgent.addRobotStateListener(null);
     }
 
     private void initViews() {
