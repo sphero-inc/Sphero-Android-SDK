@@ -34,7 +34,7 @@ import java.util.List;
  * Keeps track of the robot's position by recording direction and speed.
  * This sample demonstrates how to use the Locator and Velocity sensors.
  *
- * For more explaination on driving, see the Button Drive sample
+ * For more explanation on driving, see the Button Drive sample
  *
  */
 public class MainActivity extends Activity implements View.OnClickListener, RobotChangedStateListener, ResponseListener {
