@@ -47,6 +47,13 @@ public class MainActivity extends Activity implements RobotChangedStateListener 
         mDiscoveryAgent = new DualStackDiscoveryAgent();
         mDiscoveryAgent.addRobotStateListener( this );
 
+        /*
+            Since Android Marshmallow Android requires location services to scan for Bluetooth Low Energy peripherals.
+            This makes us very sad :(
+            https://developer.android.com/reference/android/bluetooth/le/BluetoothLeScanner.html#startScan(android.bluetooth.le.ScanCallback)
+
+            If you are able to target API <= 22 but want your app to run on API >= 23 you need to add coarse or fine location permissions in your AndroidManifest.xml.
+         */
         if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ) {
             int hasLocationPermission = checkSelfPermission( Manifest.permission.ACCESS_COARSE_LOCATION );
             if( hasLocationPermission != PackageManager.PERMISSION_GRANTED ) {
