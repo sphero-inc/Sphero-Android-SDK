@@ -1,3 +1,13 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.1.2'
+    }
+}
+
 apply plugin: 'com.android.application'
 
 android {
@@ -20,13 +30,5 @@ android {
 }
 
 dependencies {
-    //compile fileTree(dir: 'libs', include: ['*.jar'])
-
-    releaseCompile project(path: ':RobotCommonLibrary', configuration: 'release')
-    releaseCompile project(path: ':RobotLeConnectorLibrary', configuration: 'release')
-    releaseCompile project(path: ':RobotLibraryUmbrella', configuration: 'release')
-
-    debugCompile project(path: ':RobotLeConnectorLibrary', configuration: 'debug')
-    debugCompile project(path: ':RobotCommonLibrary', configuration: 'debug')
-    debugCompile project(path: ':RobotLibraryUmbrella', configuration: 'debug')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
 }
