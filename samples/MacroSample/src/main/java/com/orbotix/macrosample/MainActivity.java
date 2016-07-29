@@ -18,7 +18,7 @@ import com.orbotix.DualStackDiscoveryAgent;
 import com.orbotix.common.DiscoveryException;
 import com.orbotix.common.Robot;
 import com.orbotix.common.RobotChangedStateListener;
-import com.orbotix.macro.AbortMacroCommand;
+import com.orbotix.command.AbortMacroCommand;
 import com.orbotix.macro.MacroObject;
 import com.orbotix.macro.cmd.BackLED;
 import com.orbotix.macro.cmd.Delay;
