@@ -17,9 +17,9 @@ import com.orbotix.common.DiscoveryException;
 import com.orbotix.common.ResponseListener;
 import com.orbotix.common.Robot;
 import com.orbotix.common.RobotChangedStateListener;
-import com.orbotix.common.internal.AsyncMessage;
-import com.orbotix.common.internal.DeviceResponse;
-import com.orbotix.macro.AbortMacroCommand;
+import com.orbotix.async.AsyncMessage;
+import com.orbotix.response.DeviceResponse;
+import com.orbotix.command.AbortMacroCommand;
 import com.orbotix.macro.MacroObject;
 import com.orbotix.macro.cmd.MacroCommandCreationException;
 
