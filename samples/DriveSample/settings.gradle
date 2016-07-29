@@ -1,1 +1,1 @@
-include ':DriveSampleApp', ':CalibrationLibrary', ':ColorPickerLibrary', ':JoystickLibrary', ':RobotPickerLibrary', ':SpeedSliderLibrary'
+include ':DriveSampleApp', ':CalibrationLibrary', ':ColorPickerLibrary', ':JoystickLibrary', ':SpeedSliderLibrary'
