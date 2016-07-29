@@ -20,9 +20,9 @@ import com.orbotix.common.DiscoveryException;
 import com.orbotix.common.ResponseListener;
 import com.orbotix.common.Robot;
 import com.orbotix.common.RobotChangedStateListener;
-import com.orbotix.common.internal.AsyncMessage;
-import com.orbotix.common.internal.DeviceResponse;
 import com.orbotix.common.sensor.SensorFlag;
+import com.orbotix.async.AsyncMessage;
+import com.orbotix.response.DeviceResponse;
 import com.orbotix.subsystem.SensorControl;
 
 import java.util.ArrayList;
@@ -258,10 +258,11 @@ public class MainActivity extends Activity implements View.OnClickListener, Robo
     @Override
     public void handleAsyncMessage(AsyncMessage asyncMessage, Robot robot) {
         if( asyncMessage instanceof DeviceSensorAsyncMessage ) {
-            float positionX = ( (DeviceSensorAsyncMessage) asyncMessage ).getAsyncData().get( 0 ).getLocatorData().getPositionX();
-            float positionY = ( (DeviceSensorAsyncMessage) asyncMessage ).getAsyncData().get( 0 ).getLocatorData().getPositionY();
-            float velocityX = ( (DeviceSensorAsyncMessage) asyncMessage ).getAsyncData().get( 0 ).getLocatorData().getVelocity().x;
-            float velocityY = ( (DeviceSensorAsyncMessage) asyncMessage ).getAsyncData().get( 0 ).getLocatorData().getVelocity().y;
+            DeviceSensorAsyncMessage deviceSensorMessage = (DeviceSensorAsyncMessage)asyncMessage;
+            float positionX = deviceSensorMessage.getSensorDataFrames().get(0).getLocatorData().getPositionX();
+            float positionY = deviceSensorMessage.getSensorDataFrames().get(0).getLocatorData().getPositionY();
+            float velocityX = deviceSensorMessage.getSensorDataFrames().get(0).getLocatorData().getVelocity().x;
+            float velocityY = deviceSensorMessage.getSensorDataFrames().get(0).getLocatorData().getVelocity().y;
 
             mTextViewLocatorX.setText(positionX + "cm");
             mTextViewLocatorY.setText( positionY + "cm" );
@@ -274,9 +275,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Robo
     public void handleRobotChangedState(Robot robot, RobotChangedStateNotificationType type) {
         switch (type) {
             case Online: {
-
                 //Sensor flags can be bitwise ORed together to enable multiple sensors
-                long sensorFlag = SensorFlag.VELOCITY.longValue() | SensorFlag.LOCATOR.longValue();
+                SensorFlag sensorFlag = new SensorFlag(SensorFlag.SENSOR_FLAG_VELOCITY | SensorFlag.SENSOR_FLAG_LOCATOR);
 
                 //Save the robot as a ConvenienceRobot for additional utility methods
                 mRobot = new ConvenienceRobot(robot);
