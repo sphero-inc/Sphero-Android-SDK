@@ -29,7 +29,16 @@ android {
     }
 }
 
+task copySharedObjects(type: Copy) {
+    from(file("../../library/libs"))
+    into "src/main/jniLibs"
+}
+
+preBuild.dependsOn copySharedObjects
+
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(dir: '../../library', include: ['*.jar'])
     compile "com.android.support:appcompat-v7:23.0.+"
 }
+
+

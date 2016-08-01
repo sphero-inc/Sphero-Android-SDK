@@ -137,21 +137,6 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
 
     @Override
     public void onOvalControlInitialized(OvalControl ovalControl) {
-
-    }
-
-    @Override
-    public void onProgramFailedToSend(OvalControl control, String message) {
-        Log.e( "Sphero", "onProgramFailedToSend" );
-    }
-
-    @Override
-    public void onProgramSentSuccessfully(OvalControl control) {
-        Log.e( "Sphero", "onProgramSentSuccessfully" );
-    }
-
-    @Override
-    public void onOvmReset(OvalControl control) {
         //Load the collision program onto the robot
         String program = null;
         try {
@@ -162,6 +147,21 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
         if (program != null) {
             mOvalControl.sendOval(program);
         }
+    }
+
+    @Override
+    public void onProgramFailedToSend(OvalControl control, String failedProgram, String message) {
+        Log.e( "Sphero", "onProgramFailedToSend" );
+    }
+
+    @Override
+    public void onProgramSentSuccessfully(OvalControl control) {
+        Log.e( "Sphero", "onProgramSentSuccessfully" );
+    }
+
+    @Override
+    public void onOvmReset(OvalControl control) {
+
     }
 
     @Override
@@ -193,10 +193,6 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
 
                 //Create an OvalControl for sending oval programs to the connected robot
                 mOvalControl = new OvalControl(robot, MainActivity.this);
-
-                //Reset the OVM so you're working with a clean slate
-                //Send the programs when the OVM resets
-                mOvalControl.resetOvm(true);
             }
         }
     }
