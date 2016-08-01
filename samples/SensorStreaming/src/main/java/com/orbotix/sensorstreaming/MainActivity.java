@@ -15,8 +15,8 @@ import com.orbotix.common.DiscoveryException;
 import com.orbotix.common.ResponseListener;
 import com.orbotix.common.Robot;
 import com.orbotix.common.RobotChangedStateListener;
-import com.orbotix.common.internal.AsyncMessage;
-import com.orbotix.common.internal.DeviceResponse;
+import com.orbotix.async.AsyncMessage;
+import com.orbotix.response.DeviceResponse;
 import com.orbotix.common.sensor.AccelerometerData;
 import com.orbotix.common.sensor.AttitudeSensor;
 import com.orbotix.common.sensor.BackEMFSensor;
@@ -186,11 +186,11 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
             case Online: {
 
                 //Use bitwise OR operations to create a flag to notify the robot what sensors we're interested in
-                long sensorFlag = SensorFlag.QUATERNION.longValue()
-                        | SensorFlag.ACCELEROMETER_NORMALIZED.longValue()
-                        | SensorFlag.GYRO_NORMALIZED.longValue()
-                        | SensorFlag.MOTOR_BACKEMF_NORMALIZED.longValue()
-                        | SensorFlag.ATTITUDE.longValue();
+                SensorFlag sensorFlag = new SensorFlag(SensorFlag.SENSOR_FLAG_QUATERNION
+                        | SensorFlag.SENSOR_FLAG_ACCELEROMETER_NORMALIZED
+                        | SensorFlag.SENSOR_FLAG_GYRO_NORMALIZED
+                        | SensorFlag.SENSOR_FLAG_MOTOR_BACKEMF_NORMALIZED
+                        | SensorFlag.SENSOR_FLAG_ATTITUDE);
 
                 //Save the robot as a ConvenienceRobot for additional utility methods
                 mRobot = new ConvenienceRobot( robot );
@@ -228,13 +228,13 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
         if( asyncMessage instanceof DeviceSensorAsyncMessage ) {
             DeviceSensorAsyncMessage message = (DeviceSensorAsyncMessage) asyncMessage;
 
-            if( message.getAsyncData() == null
-                    || message.getAsyncData().isEmpty()
-                    || message.getAsyncData().get( 0 ) == null )
+            if( message.getSensorDataFrames() == null
+                    || message.getSensorDataFrames().isEmpty()
+                    || message.getSensorDataFrames().get( 0 ) == null )
                 return;
 
             //Retrieve DeviceSensorsData from the async message
-            DeviceSensorsData data = message.getAsyncData().get( 0 );
+            DeviceSensorsData data = message.getSensorDataFrames().get( 0 );
 
             //Extract the accelerometer data from the sensor data
             displayAccelerometer(data.getAccelerometerData());
