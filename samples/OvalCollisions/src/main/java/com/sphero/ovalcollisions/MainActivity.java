@@ -41,6 +41,7 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
             DiscoveryAgentClassic checks only for Bluetooth Classic robots.
             DiscoveryAgentLE checks only for Bluetooth LE robots.
         */
+        mDiscoveryAgent = new DualStackDiscoveryAgent();
         mDiscoveryAgent.addRobotStateListener(this);
 
         /*
@@ -135,21 +136,19 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
 
                 //Create an OvalControl for sending oval programs to the connected robot
                 mOvalControl = new OvalControl(robot, MainActivity.this);
-
-                //Reset the OVM so you're working with a clean slate
-                //Send the programs when the OVM resets
-                mOvalControl.resetOvm(true);
             }
         }
     }
 
     @Override
     public void onOvalControlInitialized(OvalControl ovalControl) {
-
+        //Reset the OVM so you're working with a clean slate
+        //Send the programs when the OVM resets
+        mOvalControl.resetOvm(true);
     }
 
     @Override
-    public void onProgramFailedToSend(OvalControl control, String message) {
+    public void onProgramFailedToSend(OvalControl control, String failedProgram, String message) {
 
     }
 
