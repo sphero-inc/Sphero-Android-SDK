@@ -28,6 +28,6 @@ jniLibs/
 build/
 *.iml
 gradle/
-*/gradlew
-*/gradlew.bat
+gradlew
+gradlew.bat
 libs/
