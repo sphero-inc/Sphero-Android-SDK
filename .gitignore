@@ -21,3 +21,5 @@ vcs.xml
 encodings.xml
 scope_settings.xml
 modules.xml
+
+jniLibs/
