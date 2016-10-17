@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+
 import com.orbotix.ConvenienceRobot;
 import com.orbotix.DualStackDiscoveryAgent;
 import com.orbotix.common.DiscoveryException;
@@ -35,6 +36,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Robo
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 42;
     private static final float ROBOT_VELOCITY = 0.6f;
 
+    private DualStackDiscoveryAgent mDiscoveryAgent;
     private ConvenienceRobot mRobot;
 
     private Button mBtn0;
@@ -43,12 +45,10 @@ public class MainActivity extends Activity implements View.OnClickListener, Robo
     private Button mBtn270;
     private Button mBtnStop;
 
-    private DualStackDiscoveryAgent mDiscoveryAgent;
-
     @Override
-    protected void onCreate( Bundle savedInstanceState ) {
-        super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_main );
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
         /*
             Associate a listener for robot state changes with the DualStackDiscoveryAgent.
@@ -57,40 +57,33 @@ public class MainActivity extends Activity implements View.OnClickListener, Robo
             DiscoveryAgentLE checks only for Bluetooth LE robots.
        */
         mDiscoveryAgent = new DualStackDiscoveryAgent();
-        mDiscoveryAgent.addRobotStateListener( this );
+        mDiscoveryAgent.addRobotStateListener(this);
 
         initViews();
 
-        /*
-            Since Android Marshmallow Android requires location services to scan for Bluetooth Low Energy peripherals.
-            This makes us very sad :(
-            https://developer.android.com/reference/android/bluetooth/le/BluetoothLeScanner.html#startScan(android.bluetooth.le.ScanCallback)
-
-            If you are able to target API <= 22 but want your app to run on API >= 23 you need to add coarse or fine location permissions in your AndroidManifest.xml.
-         */
-        if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ) {
-            int hasLocationPermission = checkSelfPermission( Manifest.permission.ACCESS_COARSE_LOCATION );
-            if( hasLocationPermission != PackageManager.PERMISSION_GRANTED ) {
-                Log.e( "Sphero", "Location permission has not already been granted" );
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int hasLocationPermission = checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION);
+            if (hasLocationPermission != PackageManager.PERMISSION_GRANTED) {
+                Log.e("Sphero", "Location permission has not already been granted");
                 List<String> permissions = new ArrayList<String>();
-                permissions.add( Manifest.permission.ACCESS_COARSE_LOCATION);
-                requestPermissions(permissions.toArray(new String[permissions.size()] ), REQUEST_CODE_LOCATION_PERMISSION );
+                permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+                requestPermissions(permissions.toArray(new String[permissions.size()]), REQUEST_CODE_LOCATION_PERMISSION);
             } else {
-                Log.d( "Sphero", "Location permission already granted" );
+                Log.d("Sphero", "Location permission already granted");
             }
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch ( requestCode ) {
+        switch (requestCode) {
             case REQUEST_CODE_LOCATION_PERMISSION: {
-                for( int i = 0; i < permissions.length; i++ ) {
-                    if( grantResults[i] == PackageManager.PERMISSION_GRANTED ) {
+                for (int i = 0; i < permissions.length; i++) {
+                    if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
                         startDiscovery();
-                        Log.d( "Permissions", "Permission Granted: " + permissions[i] );
-                    } else if( grantResults[i] == PackageManager.PERMISSION_DENIED ) {
-                        Log.d( "Permissions", "Permission Denied: " + permissions[i] );
+                        Log.d("Permissions", "Permission Granted: " + permissions[i]);
+                    } else if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                        Log.d("Permissions", "Permission Denied: " + permissions[i]);
                     }
                 }
             }
@@ -102,34 +95,36 @@ public class MainActivity extends Activity implements View.OnClickListener, Robo
     }
 
     private void initViews() {
-        mBtn0 = (Button) findViewById( R.id.btn_0 );
-        mBtn90 = (Button) findViewById( R.id.btn_90 );
-        mBtn180 = (Button) findViewById( R.id.btn_180 );
-        mBtn270 = (Button) findViewById( R.id.btn_270 );
-        mBtnStop = (Button) findViewById( R.id.btn_stop );
+        mBtn0 = (Button) findViewById(R.id.btn_0);
+        mBtn90 = (Button) findViewById(R.id.btn_90);
+        mBtn180 = (Button) findViewById(R.id.btn_180);
+        mBtn270 = (Button) findViewById(R.id.btn_270);
+        mBtnStop = (Button) findViewById(R.id.btn_stop);
 
-        mBtn0.setOnClickListener( this );
-        mBtn90.setOnClickListener( this );
-        mBtn180.setOnClickListener( this );
-        mBtn270.setOnClickListener( this );
-        mBtnStop.setOnClickListener( this );
+        mBtn0.setOnClickListener(this);
+        mBtn90.setOnClickListener(this);
+        mBtn180.setOnClickListener(this);
+        mBtn270.setOnClickListener(this);
+        mBtnStop.setOnClickListener(this);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        if( Build.VERSION.SDK_INT < Build.VERSION_CODES.M
-                || checkSelfPermission( Manifest.permission.ACCESS_COARSE_LOCATION ) == PackageManager.PERMISSION_GRANTED ) {
-            startDiscovery();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
         }
+        startDiscovery();
     }
 
     private void startDiscovery() {
         //If the DiscoveryAgent is not already looking for robots, start discovery.
-        if( !mDiscoveryAgent.isDiscovering() ) {
+        if (!mDiscoveryAgent.isDiscovering()) {
             try {
-                mDiscoveryAgent.startDiscovery( this );
+                mDiscoveryAgent.startDiscovery(this);
             } catch (DiscoveryException e) {
                 Log.e("Sphero", "DiscoveryException: " + e.getMessage());
             }
@@ -139,12 +134,12 @@ public class MainActivity extends Activity implements View.OnClickListener, Robo
     @Override
     protected void onStop() {
         //If the DiscoveryAgent is in discovery mode, stop it.
-        if( mDiscoveryAgent.isDiscovering() ) {
+        if (mDiscoveryAgent.isDiscovering()) {
             mDiscoveryAgent.stopDiscovery();
         }
 
         //If a robot is connected to the device, disconnect it
-        if( mRobot != null ) {
+        if (mRobot != null) {
             mRobot.disconnect();
             mRobot = null;
         }
@@ -155,13 +150,13 @@ public class MainActivity extends Activity implements View.OnClickListener, Robo
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mDiscoveryAgent.addRobotStateListener( null );
+        mDiscoveryAgent.addRobotStateListener(null);
     }
 
     @Override
     public void onClick(View v) {
         //If the robot is null, then it is probably not connected and nothing needs to be done
-        if( mRobot == null ) {
+        if (mRobot == null) {
             return;
         }
 
@@ -170,25 +165,25 @@ public class MainActivity extends Activity implements View.OnClickListener, Robo
             All directions are based on the back LED being considered the back of the robot.
             0 moves in the opposite direction of the back LED.
          */
-        switch( v.getId() ) {
+        switch(v.getId()) {
             case R.id.btn_0: {
                 //Forward
-                mRobot.drive( 0.0f, ROBOT_VELOCITY );
+                mRobot.drive(0.0f, ROBOT_VELOCITY);
                 break;
             }
             case R.id.btn_90: {
                 //To the right
-                mRobot.drive( 90.0f, ROBOT_VELOCITY );
+                mRobot.drive(90.0f, ROBOT_VELOCITY);
                 break;
             }
             case R.id.btn_180: {
                 //Backward
-                mRobot.drive( 180.0f, ROBOT_VELOCITY );
+                mRobot.drive(180.0f, ROBOT_VELOCITY);
                 break;
             }
             case R.id.btn_270: {
                 //To the left
-                mRobot.drive( 270.0f, ROBOT_VELOCITY );
+                mRobot.drive(270.0f, ROBOT_VELOCITY);
                 break;
             }
             case R.id.btn_stop: {
@@ -205,7 +200,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Robo
             case Online: {
                 //Save the robot as a ConvenienceRobot for additional utility methods
                 mRobot = new ConvenienceRobot(robot);
-                mRobot.setLed( 255, 255, 255 );
                 break;
             }
         }
