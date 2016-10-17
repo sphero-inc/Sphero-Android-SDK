@@ -34,7 +34,7 @@ public class MainActivity extends Activity implements RobotChangedStateListener 
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 42;
 
     @Override
-    protected void onCreate( Bundle savedInstanceState ) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -45,38 +45,31 @@ public class MainActivity extends Activity implements RobotChangedStateListener 
             DiscoveryAgentLE checks only for Bluetooth LE robots.
        */
         mDiscoveryAgent = new DualStackDiscoveryAgent();
-        mDiscoveryAgent.addRobotStateListener( this );
+        mDiscoveryAgent.addRobotStateListener(this);
 
-        /*
-            Since Android Marshmallow Android requires location services to scan for Bluetooth Low Energy peripherals.
-            This makes us very sad :(
-            https://developer.android.com/reference/android/bluetooth/le/BluetoothLeScanner.html#startScan(android.bluetooth.le.ScanCallback)
-
-            If you are able to target API <= 22 but want your app to run on API >= 23 you need to add coarse or fine location permissions in your AndroidManifest.xml.
-         */
-        if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ) {
-            int hasLocationPermission = checkSelfPermission( Manifest.permission.ACCESS_COARSE_LOCATION );
-            if( hasLocationPermission != PackageManager.PERMISSION_GRANTED ) {
-                Log.e( "Sphero", "Location permission has not already been granted" );
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int hasLocationPermission = checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION);
+            if (hasLocationPermission != PackageManager.PERMISSION_GRANTED) {
+                Log.e("Sphero", "Location permission has not already been granted");
                 List<String> permissions = new ArrayList<String>();
-                permissions.add( Manifest.permission.ACCESS_COARSE_LOCATION);
-                requestPermissions(permissions.toArray(new String[permissions.size()] ), REQUEST_CODE_LOCATION_PERMISSION );
+                permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+                requestPermissions(permissions.toArray(new String[permissions.size()]), REQUEST_CODE_LOCATION_PERMISSION);
             } else {
-                Log.d( "Sphero", "Location permission already granted" );
+                Log.d("Sphero", "Location permission already granted");
             }
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch ( requestCode ) {
+        switch (requestCode) {
             case REQUEST_CODE_LOCATION_PERMISSION: {
-                for( int i = 0; i < permissions.length; i++ ) {
-                    if( grantResults[i] == PackageManager.PERMISSION_GRANTED ) {
+                for (int i = 0; i < permissions.length; i++) {
+                    if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
                         startDiscovery();
-                        Log.d( "Permissions", "Permission Granted: " + permissions[i] );
-                    } else if( grantResults[i] == PackageManager.PERMISSION_DENIED ) {
-                        Log.d( "Permissions", "Permission Denied: " + permissions[i] );
+                        Log.d("Permissions", "Permission Granted: " + permissions[i]);
+                    } else if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                        Log.d("Permissions", "Permission Denied: " + permissions[i]);
                     }
                 }
             }
@@ -88,14 +81,14 @@ public class MainActivity extends Activity implements RobotChangedStateListener 
     }
 
     //Turn the robot LED on or off every two seconds
-    private void blink( final boolean lit ) {
-        if( mRobot == null )
+    private void blink(final boolean lit) {
+        if (mRobot == null)
             return;
 
-        if( lit ) {
-            mRobot.setLed( 0.0f, 0.0f, 0.0f );
+        if (lit) {
+            mRobot.setLed(0.0f, 0.0f, 0.0f);
         } else {
-            mRobot.setLed( 0.0f, 0.0f, 1.0f );
+            mRobot.setLed(0.0f, 0.0f, 1.0f);
         }
 
         final Handler handler = new Handler();
@@ -110,15 +103,17 @@ public class MainActivity extends Activity implements RobotChangedStateListener 
     protected void onStart() {
         super.onStart();
 
-        if( Build.VERSION.SDK_INT < Build.VERSION_CODES.M
-                || checkSelfPermission( Manifest.permission.ACCESS_COARSE_LOCATION ) == PackageManager.PERMISSION_GRANTED ) {
-            startDiscovery();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
         }
+        startDiscovery();
     }
 
     private void startDiscovery() {
         //If the DiscoveryAgent is not already looking for robots, start discovery.
-        if( !mDiscoveryAgent.isDiscovering() ) {
+        if (!mDiscoveryAgent.isDiscovering()) {
             try {
                 mDiscoveryAgent.startDiscovery(getApplicationContext());
             } catch (DiscoveryException e) {
@@ -130,12 +125,12 @@ public class MainActivity extends Activity implements RobotChangedStateListener 
     @Override
     protected void onStop() {
         //If the DiscoveryAgent is in discovery mode, stop it.
-        if( mDiscoveryAgent.isDiscovering() ) {
+        if (mDiscoveryAgent.isDiscovering()) {
             mDiscoveryAgent.stopDiscovery();
         }
 
         //If a robot is connected to the device, disconnect it
-        if( mRobot != null ) {
+        if (mRobot != null) {
             mRobot.disconnect();
             mRobot = null;
         }
@@ -150,21 +145,21 @@ public class MainActivity extends Activity implements RobotChangedStateListener 
     }
 
     @Override
-    public void handleRobotChangedState( Robot robot, RobotChangedStateNotificationType type ) {
-        switch( type ) {
+    public void handleRobotChangedState(Robot robot, RobotChangedStateNotificationType type) {
+        switch(type) {
             case Online: {
 
                 //If robot uses Bluetooth LE, Developer Mode can be turned on.
                 //This turns off DOS protection. This generally isn't required.
-                if( robot instanceof RobotLE) {
-                    ( (RobotLE) robot ).setDeveloperMode( true );
+                if (robot instanceof RobotLE) {
+                    ((RobotLE) robot).setDeveloperMode(true);
                 }
 
                 //Save the robot as a ConvenienceRobot for additional utility methods
-                mRobot = new ConvenienceRobot( robot );
+                mRobot = new ConvenienceRobot(robot);
 
                 //Start blinking the robot's LED
-                blink( false );
+                blink(false);
                 break;
             }
         }

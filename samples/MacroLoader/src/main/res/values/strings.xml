@@ -1,11 +1,6 @@
 <resources>
-    <string name="app_name">MacroLoader</string>
+    <string name="app_name">Locator</string>
 
-    <string name="macro_strobe">Strobe</string>
-    <string name="macro_rainbow">Rainbow</string>
-    <string name="macro_clover">Clover</string>
-    <string name="macro_small_dance">Small Dance</string>
-    <string name="macro_medium_square">Medium Square</string>
-    <string name="macro_large_dance">Large Dance</string>
-    <string name="macro_stop">Stop</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 </resources>

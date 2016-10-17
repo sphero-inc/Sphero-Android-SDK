@@ -9,9 +9,9 @@ import java.io.InputStream;
 public class FileManager {
 
     //Take an input stream representing an Oval program file and return the content as a String
-    public static String getOvalProgram( InputStream inputStream ) throws IOException, MacroCommandCreationException {
+    public static String getOvalProgram(InputStream inputStream) throws IOException, MacroCommandCreationException {
 
-        if( inputStream == null ) {
+        if (inputStream == null) {
             return null;
         }
 

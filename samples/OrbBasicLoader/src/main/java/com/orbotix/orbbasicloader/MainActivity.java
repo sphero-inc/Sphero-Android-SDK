@@ -37,10 +37,8 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 42;
 
-    private ConvenienceRobot mRobot;
-
     private DualStackDiscoveryAgent mDiscoveryAgent;
-
+    private ConvenienceRobot mRobot;
     private OrbBasicControl mOrbBasicControl;
 
     private ListView mListView;
@@ -66,34 +64,27 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
             DiscoveryAgentLE checks only for Bluetooth LE robots.
         */
         mDiscoveryAgent = new DualStackDiscoveryAgent();
-        mDiscoveryAgent.addRobotStateListener( this );
+        mDiscoveryAgent.addRobotStateListener(this);
 
-        /*
-            Since Android Marshmallow Android requires location services to scan for Bluetooth Low Energy peripherals.
-            This makes us very sad :(
-            https://developer.android.com/reference/android/bluetooth/le/BluetoothLeScanner.html#startScan(android.bluetooth.le.ScanCallback)
-
-            If you are able to target API <= 22 but want your app to run on API >= 23 you need to add coarse or fine location permissions in your AndroidManifest.xml.
-         */
-        if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ) {
-            int hasLocationPermission = checkSelfPermission( Manifest.permission.ACCESS_COARSE_LOCATION );
-            if( hasLocationPermission != PackageManager.PERMISSION_GRANTED ) {
-                Log.e( "Sphero", "Location permission has not already been granted" );
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int hasLocationPermission = checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION);
+            if (hasLocationPermission != PackageManager.PERMISSION_GRANTED) {
+                Log.e("Sphero", "Location permission has not already been granted");
                 List<String> permissions = new ArrayList<String>();
-                permissions.add( Manifest.permission.ACCESS_COARSE_LOCATION);
-                requestPermissions(permissions.toArray(new String[permissions.size()] ), REQUEST_CODE_LOCATION_PERMISSION );
+                permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+                requestPermissions(permissions.toArray(new String[permissions.size()]), REQUEST_CODE_LOCATION_PERMISSION);
             } else {
-                Log.d( "Sphero", "Location permission already granted" );
+                Log.d("Sphero", "Location permission already granted");
             }
         }
     }
 
     private void initViews() {
         mListView = (ListView) findViewById(R.id.list);
-        mDisplayText = (TextView) findViewById( R.id.text_display );
-        mAbortBtn = (Button) findViewById( R.id.btn_abort );
-        mExecuteBtn = (Button) findViewById( R.id.btn_execute );
-        mEraseBtn = (Button) findViewById( R.id.btn_erase );
+        mDisplayText = (TextView) findViewById(R.id.text_display);
+        mAbortBtn = (Button) findViewById(R.id.btn_abort);
+        mExecuteBtn = (Button) findViewById(R.id.btn_execute);
+        mEraseBtn = (Button) findViewById(R.id.btn_erase);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.orb_basic_programs));
         mListView.setAdapter(adapter);
@@ -106,14 +97,14 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch ( requestCode ) {
+        switch (requestCode) {
             case REQUEST_CODE_LOCATION_PERMISSION: {
-                for( int i = 0; i < permissions.length; i++ ) {
-                    if( grantResults[i] == PackageManager.PERMISSION_GRANTED ) {
+                for (int i = 0; i < permissions.length; i++) {
+                    if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
                         startDiscovery();
-                        Log.d( "Permissions", "Permission Granted: " + permissions[i] );
-                    } else if( grantResults[i] == PackageManager.PERMISSION_DENIED ) {
-                        Log.d( "Permissions", "Permission Denied: " + permissions[i] );
+                        Log.d("Permissions", "Permission Granted: " + permissions[i]);
+                    } else if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                        Log.d("Permissions", "Permission Denied: " + permissions[i]);
                     }
                 }
             }
@@ -124,21 +115,22 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        if( Build.VERSION.SDK_INT < Build.VERSION_CODES.M
-                || checkSelfPermission( Manifest.permission.ACCESS_COARSE_LOCATION ) == PackageManager.PERMISSION_GRANTED ) {
-            startDiscovery();
-        }
-    }
+	@Override
+	protected void onStart() {
+		super.onStart();
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+				return;
+			}
+		}
+		startDiscovery();
+	}
 
     private void startDiscovery() {
         //If the DiscoveryAgent is not already looking for robots, start discovery.
-        if( !mDiscoveryAgent.isDiscovering() ) {
+        if (!mDiscoveryAgent.isDiscovering()) {
             try {
-                mDiscoveryAgent.startDiscovery( this );
+                mDiscoveryAgent.startDiscovery(this);
             } catch (DiscoveryException e) {
                 Log.e("Sphero", "DiscoveryException: " + e.getMessage());
             }
@@ -148,17 +140,17 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     @Override
     protected void onStop() {
         //If the DiscoveryAgent is in discovery mode, stop it.
-        if( mDiscoveryAgent.isDiscovering() ) {
+        if (mDiscoveryAgent.isDiscovering()) {
             mDiscoveryAgent.stopDiscovery();
         }
 
         //If a robot is connected to the device, disconnect it
-        if( mRobot != null ) {
+        if (mRobot != null) {
             mRobot.disconnect();
             mRobot = null;
         }
 
-        if( mOrbBasicControl != null ) {
+        if (mOrbBasicControl != null) {
             mOrbBasicControl = null;
         }
 
@@ -172,8 +164,8 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     }
 
     //Take the name of an Orb Basic program file from the Assets folder and load it onto the robot
-    private void setupProgram( String programFileName ) {
-        if( mOrbBasicControl == null || TextUtils.isEmpty( programFileName ) )
+    private void setupProgram(String programFileName) {
+        if (mOrbBasicControl == null || TextUtils.isEmpty(programFileName))
             return;
 
         try {
@@ -182,67 +174,67 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
             in.read(program);
 
             //Set program stores the program bytes in the OrbBasicControl
-            mOrbBasicControl.setProgram( program );
+            mOrbBasicControl.setProgram(program);
 
             //Load program copies the program bytes to the robot for execution
             mOrbBasicControl.loadProgram();
-        } catch( IOException e ) {
-            Log.e( "Sphero", "IO Exception reading program: " + e.getMessage() );
+        } catch(IOException e) {
+            Log.e("Sphero", "IO Exception reading program: " + e.getMessage());
         }
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
-        if( mOrbBasicControl == null )
+        if (mOrbBasicControl == null)
             return;
 
-        if( getString(R.string.ob_color_drive ).equalsIgnoreCase(adapter.getItemAtPosition( position ).toString() ) ) {
-            setupProgram( "color_drive.orbbas" );
+        if (getString(R.string.ob_color_drive).equalsIgnoreCase(adapter.getItemAtPosition(position).toString())) {
+            setupProgram("color_drive.orbbas");
             shouldStop = true;
-        } else if( getString( R.string.ob_data ).equalsIgnoreCase( adapter.getItemAtPosition( position ).toString() ) ) {
-            setupProgram( "data_example.orbbas" );
-        } else if( getString( R.string.ob_program_error ).equalsIgnoreCase( adapter.getItemAtPosition( position ).toString() ) ) {
-            setupProgram( "program_error.orbbas" );
-        } else if( getString( R.string.ob_simple_assignment ).equalsIgnoreCase( adapter.getItemAtPosition( position ).toString() ) ) {
-            setupProgram( "simple_assignment.orbbas" );
-        } else if( getString( R.string.ob_syntax_error ).equalsIgnoreCase( adapter.getItemAtPosition( position ).toString() ) ) {
-            setupProgram( "syntax_error.orbbas" );
-        } else if( getString( R.string.ob_toss_double_shake ).equalsIgnoreCase( adapter.getItemAtPosition( position ).toString() ) ) {
-            setupProgram( "toss_double-shake.orbbas");
+        } else if (getString(R.string.ob_data).equalsIgnoreCase(adapter.getItemAtPosition(position).toString())) {
+            setupProgram("data_example.orbbas");
+        } else if (getString(R.string.ob_program_error).equalsIgnoreCase(adapter.getItemAtPosition(position).toString())) {
+            setupProgram("program_error.orbbas");
+        } else if (getString(R.string.ob_simple_assignment).equalsIgnoreCase(adapter.getItemAtPosition(position).toString())) {
+            setupProgram("simple_assignment.orbbas");
+        } else if (getString(R.string.ob_syntax_error).equalsIgnoreCase(adapter.getItemAtPosition(position).toString())) {
+            setupProgram("syntax_error.orbbas");
+        } else if (getString(R.string.ob_toss_double_shake).equalsIgnoreCase(adapter.getItemAtPosition(position).toString())) {
+            setupProgram("toss_double-shake.orbbas");
         }
     }
 
     @Override
     public void onEraseCompleted(boolean success) {
-        if( success ) {
-            mDisplayText.setText( "All Orb Basic programs erased from robot" );
+        if (success) {
+            mDisplayText.setText("All Orb Basic programs erased from robot");
             shouldStop = false;
         } else {
-            mDisplayText.setText( "Orb Basic programs failed to be erased from robot" );
+            mDisplayText.setText("Orb Basic programs failed to be erased from robot");
         }
     }
 
     //Program sent to the robot
     @Override
     public void onLoadProgramComplete(boolean success) {
-        if( success ) {
-            mDisplayText.setText( "Orb Basic program loaded to robot" );
+        if (success) {
+            mDisplayText.setText("Orb Basic program loaded to robot");
         } else {
-            mDisplayText.setText( "Orb Basic program failed to load to robot" );
+            mDisplayText.setText("Orb Basic program failed to load to robot");
         }
     }
 
     @Override
     public void onPrintMessage(String message) {
-        mDisplayText.setText( "Print: " + message );
+        mDisplayText.setText("Print: " + message);
     }
 
     @Override
     public void onErrorMessage(String message) {
         //Note, "User abort" isn't really an error, it just notifies you if the user has
         //aborted the program manually
-        mDisplayText.setText( "Error Message: " + message );
-        if( shouldStop )
+        mDisplayText.setText("Error Message: " + message);
+        if (shouldStop)
             mRobot.stop();
     }
 
@@ -256,12 +248,12 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         switch (type) {
             case Online: {
                 //Save the robot as a ConvenienceRobot for additional utility methods
-                mRobot = new ConvenienceRobot( robot );
+                mRobot = new ConvenienceRobot(robot);
 
                 //Create an OrbBasicControl for loading programs onto the robot
-                mOrbBasicControl = new OrbBasicControl( robot );
-                mOrbBasicControl.addEventListener( this );
-                mDisplayText.setText( "Robot connected!" );
+                mOrbBasicControl = new OrbBasicControl(robot);
+                mOrbBasicControl.addEventListener(this);
+                mDisplayText.setText("Robot connected!");
                 break;
             }
         }
@@ -269,10 +261,10 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
     @Override
     public void onClick(View v) {
-        if( mOrbBasicControl == null )
+        if (mOrbBasicControl == null)
             return;
 
-        switch( v.getId() ) {
+        switch(v.getId()) {
             case R.id.btn_abort: {
                 //Stop any running programs on the robot
                 mOrbBasicControl.abortProgram();
@@ -285,7 +277,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
             }
             case R.id.btn_execute: {
                 //Start running any Orb Basic programs stored on the robot.
-                mDisplayText.setText( "Executing program" );
+                mDisplayText.setText("Executing program");
                 mOrbBasicControl.executeProgram();
                 break;
             }

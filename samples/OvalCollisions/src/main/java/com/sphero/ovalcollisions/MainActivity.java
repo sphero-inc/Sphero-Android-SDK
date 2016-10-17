@@ -24,10 +24,8 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
 
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 42;
 
-    private ConvenienceRobot mRobot;
-
     private DualStackDiscoveryAgent mDiscoveryAgent;
-
+    private ConvenienceRobot mRobot;
     private OvalControl mOvalControl;
 
     @Override
@@ -44,36 +42,29 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
         mDiscoveryAgent = new DualStackDiscoveryAgent();
         mDiscoveryAgent.addRobotStateListener(this);
 
-        /*
-            Since Android Marshmallow Android requires location services to scan for Bluetooth Low Energy peripherals.
-            This makes us very sad :(
-            https://developer.android.com/reference/android/bluetooth/le/BluetoothLeScanner.html#startScan(android.bluetooth.le.ScanCallback)
-
-            If you are able to target API <= 22 but want your app to run on API >= 23 you need to add coarse or fine location permissions in your AndroidManifest.xml.
-         */
-        if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ) {
-            int hasLocationPermission = checkSelfPermission( Manifest.permission.ACCESS_COARSE_LOCATION );
-            if( hasLocationPermission != PackageManager.PERMISSION_GRANTED ) {
-                Log.e( "Sphero", "Location permission has not already been granted" );
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int hasLocationPermission = checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION);
+            if (hasLocationPermission != PackageManager.PERMISSION_GRANTED) {
+                Log.e("Sphero", "Location permission has not already been granted");
                 List<String> permissions = new ArrayList<String>();
-                permissions.add( Manifest.permission.ACCESS_COARSE_LOCATION);
-                requestPermissions(permissions.toArray(new String[permissions.size()] ), REQUEST_CODE_LOCATION_PERMISSION );
+                permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+                requestPermissions(permissions.toArray(new String[permissions.size()]), REQUEST_CODE_LOCATION_PERMISSION);
             } else {
-                Log.d( "Sphero", "Location permission already granted" );
+                Log.d("Sphero", "Location permission already granted");
             }
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch ( requestCode ) {
+        switch (requestCode) {
             case REQUEST_CODE_LOCATION_PERMISSION: {
-                for( int i = 0; i < permissions.length; i++ ) {
-                    if( grantResults[i] == PackageManager.PERMISSION_GRANTED ) {
+                for (int i = 0; i < permissions.length; i++) {
+                    if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
                         startDiscovery();
-                        Log.d( "Permissions", "Permission Granted: " + permissions[i] );
-                    } else if( grantResults[i] == PackageManager.PERMISSION_DENIED ) {
-                        Log.d( "Permissions", "Permission Denied: " + permissions[i] );
+                        Log.d("Permissions", "Permission Granted: " + permissions[i]);
+                    } else if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                        Log.d("Permissions", "Permission Denied: " + permissions[i]);
                     }
                 }
             }
@@ -84,21 +75,22 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        if( Build.VERSION.SDK_INT < Build.VERSION_CODES.M
-                || checkSelfPermission( Manifest.permission.ACCESS_COARSE_LOCATION ) == PackageManager.PERMISSION_GRANTED ) {
-            startDiscovery();
-        }
-    }
+	@Override
+	protected void onStart() {
+		super.onStart();
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+				return;
+			}
+		}
+		startDiscovery();
+	}
 
     private void startDiscovery() {
         //If the DiscoveryAgent is not already looking for robots, start discovery.
-        if( !mDiscoveryAgent.isDiscovering() ) {
+        if (!mDiscoveryAgent.isDiscovering()) {
             try {
-                mDiscoveryAgent.startDiscovery( this );
+                mDiscoveryAgent.startDiscovery(this);
             } catch (DiscoveryException e) {
                 Log.e("Sphero", "DiscoveryException: " + e.getMessage());
             }
@@ -141,14 +133,7 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
     }
 
     @Override
-    public void onOvalControlInitialized(OvalControl ovalControl) {
-        //Reset the OVM so you're working with a clean slate
-        //Send the programs when the OVM resets
-        mOvalControl.resetOvm(true);
-    }
-
-    @Override
-    public void onProgramFailedToSend(OvalControl control, String failedProgram, String message) {
+    public void onProgramFailedToSend(OvalControl ovalControl, String failedProgram, String message) {
 
     }
 
@@ -168,6 +153,13 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
         if (program != null) {
             mOvalControl.sendOval(program);
         }
+    }
+
+    @Override
+    public void onOvalControlInitialized(OvalControl ovalControl) {
+        //Reset the OVM so you're working with a clean slate
+        //Send the programs when the OVM resets
+        mOvalControl.resetOvm(true);
     }
 
     @Override

@@ -15,10 +15,10 @@ import android.widget.TextView;
 
 import com.orbotix.ConvenienceRobot;
 import com.orbotix.DualStackDiscoveryAgent;
+import com.orbotix.command.AbortMacroCommand;
 import com.orbotix.common.DiscoveryException;
 import com.orbotix.common.Robot;
 import com.orbotix.common.RobotChangedStateListener;
-import com.orbotix.command.AbortMacroCommand;
 import com.orbotix.macro.MacroObject;
 import com.orbotix.macro.cmd.BackLED;
 import com.orbotix.macro.cmd.Delay;
@@ -45,7 +45,6 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 42;
 
     private ConvenienceRobot mRobot;
-    
     private DualStackDiscoveryAgent mDiscoveryAgent;
 
     private ListView mListView;
@@ -70,40 +69,33 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
             DiscoveryAgentLE checks only for Bluetooth LE robots.
         */
         mDiscoveryAgent = new DualStackDiscoveryAgent();
-        mDiscoveryAgent.addRobotStateListener( this );
+        mDiscoveryAgent.addRobotStateListener(this);
 
         initViews();
 
-        /*
-            Since Android Marshmallow Android requires location services to scan for Bluetooth Low Energy peripherals.
-            This makes us very sad :(
-            https://developer.android.com/reference/android/bluetooth/le/BluetoothLeScanner.html#startScan(android.bluetooth.le.ScanCallback)
-
-            If you are able to target API <= 22 but want your app to run on API >= 23 you need to add coarse or fine location permissions in your AndroidManifest.xml.
-         */
-        if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ) {
-            int hasLocationPermission = checkSelfPermission( Manifest.permission.ACCESS_COARSE_LOCATION );
-            if( hasLocationPermission != PackageManager.PERMISSION_GRANTED ) {
-                Log.e( "Sphero", "Location permission has not already been granted" );
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int hasLocationPermission = checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION);
+            if (hasLocationPermission != PackageManager.PERMISSION_GRANTED) {
+                Log.e("Sphero", "Location permission has not already been granted");
                 List<String> permissions = new ArrayList<String>();
-                permissions.add( Manifest.permission.ACCESS_COARSE_LOCATION);
-                requestPermissions(permissions.toArray(new String[permissions.size()] ), REQUEST_CODE_LOCATION_PERMISSION );
+                permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+                requestPermissions(permissions.toArray(new String[permissions.size()]), REQUEST_CODE_LOCATION_PERMISSION);
             } else {
-                Log.d( "Sphero", "Location permission already granted" );
+                Log.d("Sphero", "Location permission already granted");
             }
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch ( requestCode ) {
+        switch (requestCode) {
             case REQUEST_CODE_LOCATION_PERMISSION: {
-                for( int i = 0; i < permissions.length; i++ ) {
-                    if( grantResults[i] == PackageManager.PERMISSION_GRANTED ) {
+                for (int i = 0; i < permissions.length; i++) {
+                    if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
                         startDiscovery();
-                        Log.d( "Permissions", "Permission Granted: " + permissions[i] );
-                    } else if( grantResults[i] == PackageManager.PERMISSION_DENIED ) {
-                        Log.d( "Permissions", "Permission Denied: " + permissions[i] );
+                        Log.d("Permissions", "Permission Granted: " + permissions[i]);
+                    } else if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                        Log.d("Permissions", "Permission Denied: " + permissions[i]);
                     }
                 }
             }
@@ -118,17 +110,19 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
     protected void onStart() {
         super.onStart();
 
-        if( Build.VERSION.SDK_INT < Build.VERSION_CODES.M
-                || checkSelfPermission( Manifest.permission.ACCESS_COARSE_LOCATION ) == PackageManager.PERMISSION_GRANTED ) {
-            startDiscovery();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
         }
+        startDiscovery();
     }
 
     private void startDiscovery() {
         //If the DiscoveryAgent is not already looking for robots, start discovery.
-        if( !mDiscoveryAgent.isDiscovering() ) {
+        if (!mDiscoveryAgent.isDiscovering()) {
             try {
-                mDiscoveryAgent.startDiscovery( this );
+                mDiscoveryAgent.startDiscovery(this);
             } catch (DiscoveryException e) {
                 Log.e("Sphero", "DiscoveryException: " + e.getMessage());
             }
@@ -138,12 +132,12 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
     @Override
     protected void onStop() {
         //If the DiscoveryAgent is in discovery mode, stop it.
-        if( mDiscoveryAgent.isDiscovering() ) {
+        if (mDiscoveryAgent.isDiscovering()) {
             mDiscoveryAgent.stopDiscovery();
         }
 
         //If a robot is connected to the device, disconnect it
-        if( mRobot != null ) {
+        if (mRobot != null) {
             mRobot.disconnect();
             mRobot = null;
         }
@@ -158,50 +152,50 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
     }
 
     private void initViews() {
-        mListView = (ListView) findViewById( R.id.list );
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>( this, android.R.layout.simple_list_item_1, getResources().getStringArray( R.array.macros ) );
-        mListView.setAdapter( adapter );
-        mListView.setOnItemClickListener( this );
+        mListView = (ListView) findViewById(R.id.list);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.macros));
+        mListView.setAdapter(adapter);
+        mListView.setOnItemClickListener(this);
 
-        mSpeedSeekBar = (SeekBar) findViewById( R.id.seekbar_speed );
-        mDelaySeekBar = (SeekBar) findViewById( R.id.seekbar_delay );
-        mLoopsSeekBar = (SeekBar) findViewById( R.id.seekbar_loops );
+        mSpeedSeekBar = (SeekBar) findViewById(R.id.seekbar_speed);
+        mDelaySeekBar = (SeekBar) findViewById(R.id.seekbar_delay);
+        mLoopsSeekBar = (SeekBar) findViewById(R.id.seekbar_loops);
 
-        mDelaySeekBar.setOnSeekBarChangeListener( this );
-        mSpeedSeekBar.setOnSeekBarChangeListener( this );
-        mLoopsSeekBar.setOnSeekBarChangeListener( this );
+        mDelaySeekBar.setOnSeekBarChangeListener(this);
+        mSpeedSeekBar.setOnSeekBarChangeListener(this);
+        mLoopsSeekBar.setOnSeekBarChangeListener(this);
 
-        mSpeedText = (TextView) findViewById( R.id.text_speed );
-        mDelayText = (TextView) findViewById( R.id.text_delay );
-        mLoopText = (TextView) findViewById( R.id.text_loops );
+        mSpeedText = (TextView) findViewById(R.id.text_speed);
+        mDelayText = (TextView) findViewById(R.id.text_delay);
+        mLoopText = (TextView) findViewById(R.id.text_loops);
 
     }
 
     //Set the robot to a default 'clean' state between running macros
     private void setRobotToDefaultState() {
-        if( mRobot == null )
+        if (mRobot == null)
             return;
 
-        mRobot.sendCommand( new AbortMacroCommand() );
-        mRobot.setLed( 1.0f, 1.0f, 1.0f );
-        mRobot.enableStabilization( true );
-        mRobot.setBackLedBrightness( 0.0f );
+        mRobot.sendCommand(new AbortMacroCommand());
+        mRobot.setLed(1.0f, 1.0f, 1.0f);
+        mRobot.enableStabilization(true);
+        mRobot.setBackLedBrightness(0.0f);
         mRobot.stop();
     }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        switch( seekBar.getId() ) {
+        switch(seekBar.getId()) {
             case R.id.seekbar_speed: {
-                mSpeedText.setText( String.valueOf( progress ) + "%" );
+                mSpeedText.setText(String.valueOf(progress) + "%");
                 break;
             }
             case R.id.seekbar_delay: {
-                mDelayText.setText( String.valueOf( progress ) );
+                mDelayText.setText(String.valueOf(progress));
                 break;
             }
             case R.id.seekbar_loops: {
-                mLoopText.setText( String.valueOf( progress ) );
+                mLoopText.setText(String.valueOf(progress));
                 break;
             }
         }
@@ -221,20 +215,20 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
     public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
 
         //Start the selected macro
-        String item = adapter.getItemAtPosition( position ).toString();
-        if( getString( R.string.macro_color ).equalsIgnoreCase( item ) ) {
+        String item = adapter.getItemAtPosition(position).toString();
+        if (getString(R.string.macro_color).equalsIgnoreCase(item)) {
             runColorMacro();
-        } else if( getString( R.string.macro_square ).equalsIgnoreCase( item ) ) {
+        } else if (getString(R.string.macro_square).equalsIgnoreCase(item)) {
             runSquareMacro();
-        } else if( getString( R.string.macro_shape ).equalsIgnoreCase( item ) ) {
+        } else if (getString(R.string.macro_shape).equalsIgnoreCase(item)) {
             runShapeMacro();
-        } else if( getString( R.string.macro_figure_8 ).equalsIgnoreCase( item ) ) {
+        } else if (getString(R.string.macro_figure_8).equalsIgnoreCase(item)) {
             runFigureEightMacro();
-        } else if( getString( R.string.macro_vibrate ).equalsIgnoreCase( item ) ) {
+        } else if (getString(R.string.macro_vibrate).equalsIgnoreCase(item)) {
             runVibrateMacro();
-        } else if (getString( R.string.macro_spin ).equalsIgnoreCase( item ) ) {
+        } else if (getString(R.string.macro_spin).equalsIgnoreCase(item)) {
             runSpinMacro();
-        } else if( getString( R.string.macro_abort ).equalsIgnoreCase( item ) ) {
+        } else if (getString(R.string.macro_abort).equalsIgnoreCase(item)) {
             setRobotToDefaultState();
         }
     }
@@ -254,7 +248,7 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
 
     //Fade the robot LED between three colors in a loop
     private void runColorMacro() {
-        if( mRobot == null )
+        if (mRobot == null)
             return;
 
         setRobotToDefaultState();
@@ -262,35 +256,35 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
         MacroObject macro = new MacroObject();
 
         //Loop as many times as the loop seekbar value
-        macro.addCommand( new LoopStart( mLoopsSeekBar.getProgress() ) );
+        macro.addCommand(new LoopStart(mLoopsSeekBar.getProgress()));
 
         //Fade to cyan. Duration of the fade is set to the value of the delay seekbar
-        macro.addCommand( new Fade( 0, 255, 255, mDelaySeekBar.getProgress() ) );
+        macro.addCommand(new Fade(0, 255, 255, mDelaySeekBar.getProgress()));
         //Set a delay so that the next command isn't processed until the previous one is done
-        macro.addCommand( new Delay( mDelaySeekBar.getProgress() ) );
+        macro.addCommand(new Delay(mDelaySeekBar.getProgress()));
 
         //Fade to magenta. Duration of the fade is set to the value of the delay seekbar
-        macro.addCommand( new Fade( 255, 0, 255, mDelaySeekBar.getProgress() ) );
+        macro.addCommand(new Fade(255, 0, 255, mDelaySeekBar.getProgress()));
         //Set a delay so that the next command isn't processed until the previous one is done
-        macro.addCommand( new Delay( mDelaySeekBar.getProgress() ) );
+        macro.addCommand(new Delay(mDelaySeekBar.getProgress()));
 
         //Fade to yellow. Duration of the fade is set to the value of the delay seekbar
-        macro.addCommand( new Fade( 255, 255, 0, mDelaySeekBar.getProgress() ) );
+        macro.addCommand(new Fade(255, 255, 0, mDelaySeekBar.getProgress()));
         //Set a delay so that the next command isn't processed until the previous one is done
-        macro.addCommand( new Delay( mDelaySeekBar.getProgress() ) );
+        macro.addCommand(new Delay(mDelaySeekBar.getProgress()));
 
         //End the current loop and go back to LoopStart if more iterations expected
-        macro.addCommand( new LoopEnd() );
+        macro.addCommand(new LoopEnd());
 
         //Send the macro to the robot and play
-        macro.setMode( MacroObject.MacroObjectMode.Normal );
-        mRobot.playMacro( macro );
+        macro.setMode(MacroObject.MacroObjectMode.Normal);
+        mRobot.playMacro(macro);
     }
 
     //Move the robot in a pattern based on the speed and loop seekbar values
     private void runShapeMacro() {
         //If the looping value is set to null or the robot isn't connected, return
-        if( mRobot == null || mLoopsSeekBar.getProgress() == 0 )
+        if (mRobot == null || mLoopsSeekBar.getProgress() == 0)
             return;
 
         setRobotToDefaultState();
@@ -299,20 +293,20 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
         float speed = mSpeedSeekBar.getProgress() * 0.01f;
 
         //Set the robot LED color to blue
-        macro.addCommand( new RGB( 0, 0, 255, 255 ) );
+        macro.addCommand(new RGB(0, 0, 255, 255));
 
         //Loop through driving in various directions
-        for( int i = 0; i < mLoopsSeekBar.getProgress(); i++ ) {
-            macro.addCommand( new Roll( speed, i * ( 360 / mLoopsSeekBar.getProgress() ), 0 ) );
-            macro.addCommand( new Delay( mDelaySeekBar.getProgress() ) );
-            macro.addCommand( new Roll( 0.0f, i * ( 260 / mLoopsSeekBar.getProgress() ), 255 ) );
+        for (int i = 0; i < mLoopsSeekBar.getProgress(); i++) {
+            macro.addCommand(new Roll(speed, i * (360 / mLoopsSeekBar.getProgress()), 0));
+            macro.addCommand(new Delay(mDelaySeekBar.getProgress()));
+            macro.addCommand(new Roll(0.0f, i * (260 / mLoopsSeekBar.getProgress()), 255));
         }
 
         //Stop the robot
-        macro.addCommand( new Roll( 0.0f, 0, 255 ) );
+        macro.addCommand(new Roll(0.0f, 0, 255));
 
         //Send the macro to the robot and play
-        macro.setMode( MacroObject.MacroObjectMode.Normal );
+        macro.setMode(MacroObject.MacroObjectMode.Normal);
         macro.setRobot(mRobot.getRobot());
         macro.playMacro();
 
@@ -320,7 +314,7 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
 
     //Move the robot in the shape of a square with each edge being a new color
     private void runSquareMacro() {
-        if( mRobot == null )
+        if (mRobot == null)
             return;
 
         setRobotToDefaultState();
@@ -329,51 +323,51 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
         MacroObject macro = new MacroObject();
 
         //Set the robot LED to green
-        macro.addCommand( new RGB( 0, 255, 0, 255 ) );
+        macro.addCommand(new RGB(0, 255, 0, 255));
         //Move the robot forward
-        macro.addCommand( new Roll( speed, 0, 0 ) );
+        macro.addCommand(new Roll(speed, 0, 0));
         //Wait until the robot should stop moving
-        macro.addCommand( new Delay( mDelaySeekBar.getProgress() ) );
+        macro.addCommand(new Delay(mDelaySeekBar.getProgress()));
         //Stop
-        macro.addCommand( new Roll( 0.0f, 0, 255 ) );
+        macro.addCommand(new Roll(0.0f, 0, 255));
 
         //Set the robot LED to blue
-        macro.addCommand( new RGB( 0, 0, 255, 255 ) );
+        macro.addCommand(new RGB(0, 0, 255, 255));
         //Move the robot to the right
-        macro.addCommand( new Roll( speed, 90, 0 ) );
+        macro.addCommand(new Roll(speed, 90, 0));
         //Wait until the robot should stop moving
-        macro.addCommand( new Delay( mDelaySeekBar.getProgress() ) );
+        macro.addCommand(new Delay(mDelaySeekBar.getProgress()));
         //Stop
-        macro.addCommand( new Roll( 0.0f, 90, 255 ) );
+        macro.addCommand(new Roll(0.0f, 90, 255));
 
         //Set the robot LED to yellow
-        macro.addCommand( new RGB( 255, 255, 0, 255 ) );
+        macro.addCommand(new RGB(255, 255, 0, 255));
         //Move the robot backwards
-        macro.addCommand( new Roll( speed, 180, 0 ) );
+        macro.addCommand(new Roll(speed, 180, 0));
         //Wait until the robot should stop moving
-        macro.addCommand( new Delay( mDelaySeekBar.getProgress() ) );
+        macro.addCommand(new Delay(mDelaySeekBar.getProgress()));
         //Stop
-        macro.addCommand( new Roll( 0.0f, 180, 255 ) );
+        macro.addCommand(new Roll(0.0f, 180, 255));
 
         //Set the robot LED to red
-        macro.addCommand( new RGB( 255, 0, 0, 255 ) );
+        macro.addCommand(new RGB(255, 0, 0, 255));
         //Move the robot to the left
-        macro.addCommand( new Roll( 255, 270, 0 ) );
+        macro.addCommand(new Roll(255, 270, 0));
         //Wait until the robot should stop moving
-        macro.addCommand( new Delay( mDelaySeekBar.getProgress() ) );
+        macro.addCommand(new Delay(mDelaySeekBar.getProgress()));
         //Stop
-        macro.addCommand( new Roll( 0.0f, 270, 255 ) );
+        macro.addCommand(new Roll(0.0f, 270, 255));
 
         //Send the macro to the robot and play
-        macro.setMode( MacroObject.MacroObjectMode.Normal );
-        macro.setRobot( mRobot.getRobot() );
+        macro.setMode(MacroObject.MacroObjectMode.Normal);
+        macro.setRobot(mRobot.getRobot());
         macro.playMacro();
 
     }
 
     //Drive the robot in a figure 8 formation
     private void runFigureEightMacro() {
-        if( mRobot == null )
+        if (mRobot == null)
             return;
 
         setRobotToDefaultState();
@@ -382,27 +376,27 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
 
         MacroObject macro = new MacroObject();
 
-        macro.addCommand( new Roll( speed, 0, 1000 ) );
-        macro.addCommand( new LoopStart( mLoopsSeekBar.getProgress() ) );
+        macro.addCommand(new Roll(speed, 0, 1000));
+        macro.addCommand(new LoopStart(mLoopsSeekBar.getProgress()));
         //Pivot
-        macro.addCommand( new RotateOverTime( 360, mDelaySeekBar.getProgress() ) );
-        macro.addCommand( new Delay( mDelaySeekBar.getProgress() ) );
+        macro.addCommand(new RotateOverTime(360, mDelaySeekBar.getProgress()));
+        macro.addCommand(new Delay(mDelaySeekBar.getProgress()));
         //Pivot
-        macro.addCommand( new RotateOverTime( -360, mDelaySeekBar.getProgress() ) );
-        macro.addCommand( new Delay( mDelaySeekBar.getProgress() ) );
-        macro.addCommand( new LoopEnd() );
+        macro.addCommand(new RotateOverTime(-360, mDelaySeekBar.getProgress()));
+        macro.addCommand(new Delay(mDelaySeekBar.getProgress()));
+        macro.addCommand(new LoopEnd());
         //Stop
-        macro.addCommand( new Roll( 0.0f, 0, 255 ) );
+        macro.addCommand(new Roll(0.0f, 0, 255));
 
         //Send the macro to the robot and play
-        macro.setMode( MacroObject.MacroObjectMode.Normal );
-        macro.setRobot( mRobot.getRobot() );
+        macro.setMode(MacroObject.MacroObjectMode.Normal);
+        macro.setRobot(mRobot.getRobot());
         macro.playMacro();
     }
 
     //Flip the robot forward and backwards while changing the LED color
     private void runVibrateMacro() {
-        if( mRobot == null )
+        if (mRobot == null)
             return;
 
         setRobotToDefaultState();
@@ -410,27 +404,27 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
         MacroObject macro = new MacroObject();
 
         //Stabilization must be turned off before you can issue motor commands
-        macro.addCommand( new Stabilization( false, 0 ) );
+        macro.addCommand(new Stabilization(false, 0));
 
-        macro.addCommand( new LoopStart( mLoopsSeekBar.getProgress() ) );
+        macro.addCommand(new LoopStart(mLoopsSeekBar.getProgress()));
         //Change the LED to red
-        macro.addCommand( new RGB( 255, 0, 0, 0 ) );
+        macro.addCommand(new RGB(255, 0, 0, 0));
         //Run the robot's motors backwards
-        macro.addCommand( new RawMotor( RawMotor.DriveMode.REVERSE, 255, RawMotor.DriveMode.REVERSE, 255, 100 ) );
-        macro.addCommand( new Delay( 100 ) );
+        macro.addCommand(new RawMotor(RawMotor.DriveMode.REVERSE, 255, RawMotor.DriveMode.REVERSE, 255, 100));
+        macro.addCommand(new Delay(100));
         //Change the LED to green
-        macro.addCommand( new RGB( 0, 255, 0, 0 ) );
+        macro.addCommand(new RGB(0, 255, 0, 0));
         //Run the robot's motors forward
-        macro.addCommand( new RawMotor(RawMotor.DriveMode.FORWARD, 255, RawMotor.DriveMode.FORWARD, 255, 100 ) );
-        macro.addCommand( new Delay( 100 ) );
-        macro.addCommand( new LoopEnd() );
+        macro.addCommand(new RawMotor(RawMotor.DriveMode.FORWARD, 255, RawMotor.DriveMode.FORWARD, 255, 100));
+        macro.addCommand(new Delay(100));
+        macro.addCommand(new LoopEnd());
 
         //Turn stabilization back on
-        macro.addCommand( new Stabilization( true, 0 ) );
+        macro.addCommand(new Stabilization(true, 0));
 
         //Send the macro to the robot and play
-        macro.setMode( MacroObject.MacroObjectMode.Normal );
-        macro.setRobot( mRobot.getRobot() );
+        macro.setMode(MacroObject.MacroObjectMode.Normal);
+        macro.setRobot(mRobot.getRobot());
         macro.playMacro();
     }
 
@@ -442,16 +436,16 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
         MacroObject macro = new MacroObject();
 
         //Set the back LED to full brightness
-        macro.addCommand( new BackLED( 255, 0 ) );
+        macro.addCommand(new BackLED(255, 0));
 
         //Loop through rotating the robot
-        macro.addCommand( new LoopStart( mLoopsSeekBar.getProgress() ) );
-        macro.addCommand( new RotateOverTime( 360, (int) ( 500 * speed ) ) );
-        macro.addCommand( new Delay( (int) ( 500 * speed ) ) );
-        macro.addCommand( new LoopEnd() );
+        macro.addCommand(new LoopStart(mLoopsSeekBar.getProgress()));
+        macro.addCommand(new RotateOverTime(360, (int) (500 * speed)));
+        macro.addCommand(new Delay((int) (500 * speed)));
+        macro.addCommand(new LoopEnd());
 
         //Dim the back LED
-        macro.addCommand( new BackLED( 0, 0 ) );
+        macro.addCommand(new BackLED(0, 0));
 
         //Send the macro to the robot and play
         macro.setMode(MacroObject.MacroObjectMode.Normal);
