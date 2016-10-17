@@ -23,3 +23,11 @@ scope_settings.xml
 modules.xml
 
 jniLibs/
+
+# me
+build/
+*.iml
+gradle/
+gradlew
+gradlew.bat
+libs/
