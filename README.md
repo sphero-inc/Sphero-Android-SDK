@@ -2,6 +2,6 @@
 
 # Android Developer Documentation
 
-Verison 3.1.65
+Verison 3.2.312
 
 For documentation on this SDK and others, visit the [SDK Documentation](http://sdk.sphero.com)
