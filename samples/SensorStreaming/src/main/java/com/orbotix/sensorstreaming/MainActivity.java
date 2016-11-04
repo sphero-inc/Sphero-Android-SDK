@@ -71,6 +71,7 @@ public class MainActivity extends Activity implements RobotChangedStateListener,
             DiscoveryAgentClassic checks only for Bluetooth Classic robots.
             DualStackDiscoveryAgent checks only for Bluetooth LE robots.
         */
+        mDiscoveryAgent = new DualStackDiscoveryAgent();
         mDiscoveryAgent.addRobotStateListener(this);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
